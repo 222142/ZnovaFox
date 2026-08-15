@@ -1,0 +1,3769 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f7f8fc;
+    color: #151515;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.container {
+    width: min(1200px, 92%);
+    margin: auto;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.site-header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: #ffffff;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.header-inner {
+    min-height: 68px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+}
+
+.logo {
+    color: #151515;
+    text-decoration: none;
+
+    font-size: 24px;
+    font-weight: 800;
+
+    white-space: nowrap;
+}
+
+.logo span {
+    color: #6c4cff;
+}
+
+.desktop-nav {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+}
+
+.desktop-nav a {
+    color: #333;
+    text-decoration: none;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    transition: color 0.2s ease;
+}
+
+.desktop-nav a:hover {
+    color: #6c4cff;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.theme-btn,
+.menu-btn {
+    width: 42px;
+    height: 42px;
+
+    border: 1px solid #dddddd;
+    border-radius: 12px;
+
+    background: #ffffff;
+    color: #222222;
+
+    cursor: pointer;
+
+    font-size: 18px;
+}
+
+.menu-btn {
+    display: none;
+}
+
+.mobile-nav {
+    display: none;
+}
+
+
+/* =========================
+   HERO
+========================= */
+
+.hero {
+    padding: 20px 0;
+    text-align: center;
+
+    background: linear-gradient(
+        135deg,
+        #ffffff,
+        #f0edff
+    );
+}
+
+.live-status {
+    margin-bottom: 15px;
+
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.live-status span {
+    display: inline-block;
+
+    width: 9px;
+    height: 9px;
+
+    margin-right: 5px;
+
+    background: red;
+    border-radius: 50%;
+
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+
+    50% {
+        opacity: 0.25;
+    }
+
+}
+
+.hero h1 {
+    font-size: clamp(36px, 6vw, 64px);
+
+    line-height: 1.05;
+
+    margin-bottom: 20px;
+}
+
+.hero-text {
+    max-width: 650px;
+
+    margin: auto;
+
+    color: #666666;
+
+    line-height: 1.6;
+}
+
+
+/* =========================================
+   ZNOVaFOX - CLEAN PROFESSIONAL SEARCH
+========================================= */
+
+.search-box {
+    display: flex;
+    align-items: center;
+
+    width: 100%;
+    max-width: 650px;
+    height: 56px;
+
+    margin: 30px auto 0;
+
+    background: #ffffff;
+
+    border: 1px solid #e1e5eb;
+    border-radius: 14px;
+
+    overflow: hidden;
+
+    box-shadow: 0 5px 18px rgba(0, 0, 0, .06);
+
+    transition:
+        border-color .2s ease,
+        box-shadow .2s ease;
+}
+
+
+/* INPUT */
+
+.search-box input {
+    flex: 1;
+
+    min-width: 0;
+    height: 100%;
+
+    padding: 0 18px;
+
+    border: none;
+    outline: none;
+
+    background: transparent;
+
+    color: #151515;
+
+    font-size: 15px;
+    font-family: inherit;
+}
+
+
+.search-box input::placeholder {
+    color: #8a8f98;
+}
+
+
+/* BUTTON */
+
+.search-box button {
+    width: 58px;
+    height: 100%;
+
+    border: none;
+
+    background: #6c4cff;
+    color: #ffffff;
+
+    cursor: pointer;
+
+    font-size: 17px;
+
+    transition: background .2s ease;
+}
+
+
+/* HOVER */
+
+.search-box:hover {
+    border-color: #cfc9ff;
+
+    box-shadow:
+        0 7px 22px rgba(0, 0, 0, .08);
+}
+
+
+/* FOCUS */
+
+.search-box:focus-within {
+    border-color: #6c4cff;
+
+    box-shadow:
+        0 0 0 3px rgba(108, 76, 255, .08);
+}
+
+
+.search-box button:hover {
+    background: #5b40df;
+}
+
+
+/* =========================================
+   DARK MODE
+========================================= */
+
+body.dark .search-box {
+    background: #191c22;
+
+    border-color: #30343c;
+
+    box-shadow:
+        0 6px 20px rgba(0, 0, 0, .25);
+}
+
+body.dark .search-box input {
+    color: #ffffff;
+}
+
+body.dark .search-box input::placeholder {
+    color: #858c98;
+}
+
+body.dark .search-box:hover {
+    border-color: #3b444f;
+}
+
+body.dark .search-box:focus-within {
+    border-color: #22c55e;
+
+    box-shadow:
+        0 0 0 3px rgba(34, 197, 94, .08);
+}
+
+body.dark .search-box button {
+    background: #22c55e;
+    color: #07130b;
+}
+
+body.dark .search-box button:hover {
+    background: #16a34a;
+    color: #ffffff;
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 600px) {
+
+    .search-box {
+        height: 52px;
+        margin-top: 25px;
+        border-radius: 13px;
+    }
+
+    .search-box input {
+        padding: 0 15px;
+        font-size: 14px;
+    }
+
+    .search-box button {
+        width: 52px;
+        font-size: 16px;
+    }
+}
+/* =========================
+   CATEGORIES
+========================= */
+
+.categories {
+    padding: 20px 0;
+}
+
+.categories h2 {
+    margin-bottom: 25px;
+}
+
+.category-grid {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 18px;
+}
+
+.category-card {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 8px;
+
+    padding: 25px;
+
+    background: #ffffff;
+
+    border: 1px solid #e8e8e8;
+    border-radius: 18px;
+
+    text-decoration: none;
+
+    color: #151515;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.category-card:hover {
+    transform: translateY(-4px);
+
+    box-shadow:
+        0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+.category-card strong {
+    font-size: 17px;
+}
+
+.category-card span {
+    color: #777777;
+
+    font-size: 14px;
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+footer {
+    padding: 30px 0;
+
+    text-align: center;
+
+    background: #151515;
+    color: #ffffff;
+}
+
+
+/* =========================
+   DARK MODE
+========================= */
+
+body.dark {
+    background: #0f1115;
+    color: #ffffff;
+}
+
+
+/* Header */
+
+body.dark .site-header {
+    background: #181b21;
+    border-bottom-color: #30343c;
+}
+
+body.dark .logo {
+    color: #ffffff;
+}
+
+body.dark .desktop-nav a {
+    color: #eeeeee;
+}
+
+body.dark .desktop-nav a:hover {
+    color: #a994ff;
+}
+
+
+/* Buttons */
+
+body.dark .theme-btn,
+body.dark .menu-btn {
+    background: #22262d;
+    color: #ffffff;
+
+    border-color: #3a3f48;
+}
+
+
+/* Hero */
+
+body.dark .hero {
+    background: linear-gradient(
+        135deg,
+        #0f1115,
+        #211d36
+    );
+}
+
+body.dark .hero-text {
+    color: #b8b8b8;
+}
+
+
+/* Search */
+
+body.dark .search-box {
+    background: #1b1f26;
+    border-color: #363b45;
+}
+
+body.dark .search-box input {
+    color: #ffffff;
+}
+
+
+/* Categories */
+
+body.dark .categories {
+    background: #0f1115;
+}
+
+body.dark .category-card {
+    background: #191c22;
+    border-color: #30343c;
+    color: #ffffff;
+}
+
+body.dark .category-card span {
+    color: #aaaaaa;
+}
+
+body.dark .category-card:hover {
+    box-shadow:
+        0 10px 25px rgba(0, 0, 0, 0.35);
+}
+
+
+/* Mobile menu */
+
+body.dark .mobile-nav {
+    background: #181b21;
+    border-color: #30343c;
+}
+
+body.dark .mobile-nav a {
+    color: #ffffff;
+}
+
+body.dark .mobile-nav a:hover {
+    background: #252a33;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 900px) {
+
+    .desktop-nav {
+        display: none;
+    }
+
+    .menu-btn {
+        display: block;
+    }
+
+    .mobile-nav {
+        display: none;
+
+        flex-direction: column;
+
+        gap: 4px;
+
+        padding: 12px 4%;
+
+        border-top: 1px solid #eeeeee;
+
+        background: #ffffff;
+    }
+
+    .mobile-nav.active {
+        display: flex;
+    }
+
+    .mobile-nav a {
+        padding: 14px;
+
+        border-radius: 10px;
+
+        color: #222222;
+
+        text-decoration: none;
+
+        font-weight: 600;
+    }
+
+    .mobile-nav a:hover {
+        background: #f2f0ff;
+    }
+
+}
+
+
+/* =========================
+   SMALL MOBILE
+========================= */
+
+@media (max-width: 700px) {
+
+    .container {
+        width: 94%;
+    }
+
+    .hero {
+        padding: 50px 0;
+    }
+
+    .hero h1 {
+        font-size: 38px;
+    }
+
+    .category-grid {
+        grid-template-columns: repeat(2, 1fr);
+
+        gap: 12px;
+    }
+
+    .category-card {
+        padding: 18px;
+    }
+
+    .search-box {
+        height: 52px;
+    }
+
+}
+
+
+@media (max-width: 420px) {
+
+    .logo {
+        font-size: 21px;
+    }
+
+    .theme-btn,
+    .menu-btn {
+        width: 38px;
+        height: 38px;
+    }
+
+    .hero h1 {
+        font-size: 34px;
+    }
+
+}
+/* =========================
+   GOVERNMENT FILTER
+========================= */
+
+.government-filter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+
+    margin-bottom: 25px;
+}
+
+.filter-btn {
+    padding: 9px 16px;
+
+    border: 1px solid #dddddd;
+    border-radius: 20px;
+
+    background: #ffffff;
+    color: #333333;
+
+    cursor: pointer;
+
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.filter-btn:hover {
+    border-color: #6c4cff;
+}
+
+.filter-btn.active {
+    background: #6c4cff;
+    color: #ffffff;
+    border-color: #6c4cff;
+}
+
+
+/* DARK MODE */
+
+body.dark .filter-btn {
+    background: #1b1f26;
+    color: #ffffff;
+    border-color: #363b45;
+}
+
+body.dark .filter-btn.active {
+    background: #6c4cff;
+    border-color: #6c4cff;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+
+    .government-filter {
+        gap: 7px;
+    }
+
+    .filter-btn {
+        padding: 8px 12px;
+        font-size: 13px;
+    }
+
+}
+
+
+/* =====================================================
+   HERO WHATSAPP + LIVE
+===================================================== */
+
+.hero-status-area {
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 14px;
+
+    margin-bottom: 25px;
+
+}
+
+
+/* =====================================================
+   WHATSAPP BUTTON
+===================================================== */
+
+.whatsapp-button {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 9px;
+
+    padding: 10px 18px;
+
+    border-radius: 30px;
+
+    background: #12ac4a;
+
+    color: #fff;
+
+    text-decoration: none;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    box-shadow:
+        0 5px 18px rgba(37, 211, 102, .20);
+
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease,
+        background .2s ease;
+
+}
+
+
+.whatsapp-button:hover {
+
+    transform:
+        translateY(-2px);
+
+    background: #088d35;
+
+    box-shadow:
+        0 8px 22px rgba(39, 211, 105, 0.3);
+
+}
+
+
+.whatsapp-icon {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    width: 22px;
+
+    height: 22px;
+
+    border-radius: 50%;
+
+    background: rgba(255,255,255,.2);
+
+    font-size: 13px;
+
+}
+
+
+.live-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;  
+    margin: 15px auto;         
+    width: fit-content;
+
+    background: #e6ffe6;
+    color: green;
+    padding: 6px 15px;
+    border-radius: 20px;
+    font-weight: bold;
+}
+.dot {
+    height: 10px;
+    width: 10px;
+    background-color: rgb(250, 8, 21);
+    border-radius: 50%;
+    margin-right: 6px;
+    animation: blink 0.4s infinite; 
+}
+
+@keyframes blink {
+    0% {opacity: 1;}
+    50% {opacity: 0;}
+    100% {opacity: 1;}
+}
+.live-btn {
+    box-shadow: 0 0 13px rgb(233, 16, 16);
+}
+@media (max-width: 600px) {
+
+    .hero-status-area {
+
+        gap: 12px;
+
+        margin-bottom: 20px;
+
+    }
+
+
+    .whatsapp-button {
+
+        padding: 9px 16px;
+
+        font-size: 13px;
+
+    }
+
+
+    .live-status {
+
+        min-width: 80px;
+
+        padding: 6px 14px;
+
+    }
+
+}
+
+
+
+/* =====================================================
+   ZNOVaFOX ATTRACTIVE CONTAINER HOVER EFFECT
+===================================================== */
+
+/* Category Cards */
+
+.category-card {
+
+    transition:
+        transform .25s ease,
+        background .25s ease,
+        border-color .25s ease,
+        box-shadow .25s ease;
+
+}
+
+
+.category-card:hover {
+
+    transform: translateY(-6px);
+
+    background: #f0f7ff;
+
+    border-color: #4f8cff;
+
+    box-shadow:
+        0 12px 30px rgba(79, 140, 255, .20);
+
+}
+
+
+/* Service Cards */
+
+.service-card {
+
+    transition:
+        transform .25s ease,
+        background .25s ease,
+        border-color .25s ease,
+        box-shadow .25s ease;
+
+}
+
+
+.service-card:hover {
+
+    transform: translateY(-5px);
+
+    background: #f5f1ff;
+
+    border-color: #8b5cf6;
+
+    box-shadow:
+        0 12px 28px rgba(139, 92, 246, .20);
+
+}
+
+
+/* Information Cards */
+
+.information-card {
+
+    transition:
+        transform .25s ease,
+        background .25s ease,
+        border-color .25s ease,
+        box-shadow .25s ease;
+
+}
+
+
+.information-card:hover {
+
+    transform: translateY(-5px);
+
+    background: #f0fff8;
+
+    border-color: #20b978;
+
+    box-shadow:
+        0 12px 28px rgba(32, 185, 120, .18);
+
+}
+
+
+/* Information Blocks */
+
+.info-block {
+
+    transition:
+        transform .25s ease,
+        border-color .25s ease,
+        box-shadow .25s ease;
+
+}
+
+
+.info-block:hover {
+
+    transform: translateY(-3px);
+
+    border-color: #4f8cff;
+
+    box-shadow:
+        0 10px 28px rgba(79, 140, 255, .12);
+
+}
+
+
+/* About / Disclaimer */
+
+.info-about,
+.info-disclaimer {
+
+    transition:
+        transform .25s ease,
+        border-color .25s ease,
+        box-shadow .25s ease;
+
+}
+
+
+.info-about:hover,
+.info-disclaimer:hover {
+
+    transform: translateY(-3px);
+
+    border-color: #7c5cff;
+
+    box-shadow:
+        0 10px 28px rgba(124, 92, 255, .12);
+
+}
+
+
+/* Quick Information Cards */
+
+.info-quick > div {
+
+    transition:
+        transform .25s ease,
+        background .25s ease,
+        border-color .25s ease,
+        box-shadow .25s ease;
+
+}
+
+
+.info-quick > div:hover {
+
+    transform: translateY(-5px);
+
+    background: #fff8ed;
+
+    border-color: #ff9f43;
+
+    box-shadow:
+        0 12px 28px rgba(255, 159, 67, .18);
+
+}
+
+
+/* Information Links */
+
+.info-link-grid a {
+
+    transition:
+        transform .2s ease,
+        background .2s ease,
+        border-color .2s ease;
+
+}
+
+
+.info-link-grid a:hover {
+
+    transform: translateX(4px);
+
+    background: #eef5ff;
+
+    border-color: #4f8cff;
+
+}
+
+
+/* =====================================================
+   MOUSE CLICK EFFECT
+===================================================== */
+
+.category-card:active,
+.service-card:active,
+.information-card:active,
+.info-block:active,
+.info-about:active,
+.info-disclaimer:active,
+.info-quick > div:active {
+
+    transform: scale(.97);
+
+}
+
+
+/* =====================================================
+   MOBILE DEVICES
+===================================================== */
+
+/*
+   Mobile में mouse hover नहीं होता,
+   इसलिए tap पर unnecessary effect नहीं रखा गया।
+*/
+
+@media (hover: none) {
+
+    .category-card:hover,
+    .service-card:hover,
+    .information-card:hover,
+    .info-block:hover,
+    .info-about:hover,
+    .info-disclaimer:hover,
+    .info-quick > div:hover {
+
+        transform: none;
+
+        box-shadow: none;
+
+    }
+
+}
+
+
+/* =====================================================
+   ZNOVaFOX DARK MODE
+   GREEN CONTAINER HOVER + CLICK EFFECT
+===================================================== */
+
+
+/* ------------------------------
+   DARK MODE CONTAINERS
+------------------------------ */
+
+body.dark .category-card,
+body.dark .service-card,
+body.dark .information-card,
+body.dark .info-block,
+body.dark .info-about,
+body.dark .info-disclaimer,
+body.dark .info-quick > div {
+
+    transition:
+        background .25s ease,
+        border-color .25s ease,
+        box-shadow .25s ease,
+        transform .2s ease;
+
+}
+
+
+/* ------------------------------
+   MOUSE HOVER
+------------------------------ */
+
+body.dark .category-card:hover,
+body.dark .service-card:hover,
+body.dark .information-card:hover,
+body.dark .info-block:hover,
+body.dark .info-about:hover,
+body.dark .info-disclaimer:hover,
+body.dark .info-quick > div:hover {
+
+    background: #10251b !important;
+
+    border-color: #22c55e !important;
+
+    box-shadow:
+        0 0 0 1px rgba(34, 197, 94, .25),
+        0 12px 35px rgba(34, 197, 94, .20);
+
+    transform: translateY(-5px);
+
+}
+
+
+/* ------------------------------
+   CLICK / PRESS EFFECT
+------------------------------ */
+
+body.dark .category-card:active,
+body.dark .service-card:active,
+body.dark .information-card:active,
+body.dark .info-block:active,
+body.dark .info-about:active,
+body.dark .info-disclaimer:active,
+body.dark .info-quick > div:active {
+
+    background: #123d24 !important;
+
+    border-color: #39ff7a !important;
+
+    box-shadow:
+        0 0 0 2px rgba(34, 197, 94, .30),
+        0 0 30px rgba(34, 197, 94, .35);
+
+    transform: scale(.97);
+
+}
+
+
+/* ------------------------------
+   INFORMATION LINKS
+------------------------------ */
+
+body.dark .info-link-grid a {
+
+    transition:
+        background .2s ease,
+        color .2s ease,
+        border-color .2s ease,
+        transform .2s ease;
+
+}
+
+
+body.dark .info-link-grid a:hover {
+
+    background: #10351f !important;
+
+    color: #5cff91 !important;
+
+    border-color: #22c55e !important;
+
+    transform: translateX(4px);
+
+}
+
+
+/* ------------------------------
+   QUICK INFORMATION
+------------------------------ */
+
+body.dark .info-quick > div:hover {
+
+    background: #102b1c !important;
+
+    border-color: #22c55e !important;
+
+}
+
+
+/* ------------------------------
+   MOBILE
+------------------------------ */
+
+@media (hover: none) {
+
+    body.dark .category-card:hover,
+    body.dark .service-card:hover,
+    body.dark .information-card:hover,
+    body.dark .info-block:hover,
+    body.dark .info-about:hover,
+    body.dark .info-disclaimer:hover,
+    body.dark .info-quick > div:hover {
+
+        transform: none;
+
+    }
+
+}
+
+/* =====================================================
+   ZNOVaFOX PROFESSIONAL FOOTER
+===================================================== */
+
+.znova-footer {
+
+    background: #101114;
+
+    color: #ffffff;
+
+    padding: 65px 0 25px;
+
+    border-top:
+        1px solid #25272c;
+
+}
+
+
+/* =====================================================
+   FOOTER TOP
+===================================================== */
+
+.footer-top {
+
+    display: grid;
+
+    grid-template-columns:
+        1.7fr 1fr 1fr 1fr;
+
+    gap: 45px;
+
+}
+
+
+/* =====================================================
+   BRAND
+===================================================== */
+
+.footer-logo {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    color: #ffffff;
+
+    text-decoration: none;
+
+    font-size: 26px;
+
+}
+
+
+.footer-logo-icon {
+
+    font-size: 32px;
+
+}
+
+
+.footer-description {
+
+    max-width: 390px;
+
+    margin:
+        18px 0;
+
+    color: #9da1aa;
+
+    font-size: 14px;
+
+    line-height: 1.8;
+
+}
+
+
+.footer-live-status {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    color: #a7adb7;
+
+    font-size: 13px;
+
+}
+
+
+.footer-live-status span {
+
+    width: 8px;
+
+    height: 8px;
+
+    border-radius: 50%;
+
+    background: #22c55e;
+
+    animation:
+        footerLive 1.5s infinite;
+
+}
+
+
+@keyframes footerLive {
+
+    0%,
+    100% {
+
+        opacity: 1;
+
+    }
+
+    50% {
+
+        opacity: .25;
+
+    }
+
+}
+
+
+/* =====================================================
+   FOOTER COLUMNS
+===================================================== */
+
+.footer-column {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 11px;
+
+}
+
+
+.footer-column h3 {
+
+    margin:
+        0 0 12px;
+
+    font-size: 17px;
+
+}
+
+
+.footer-column a {
+
+    color: #9da1aa;
+
+    text-decoration: none;
+
+    font-size: 14px;
+
+    transition:
+        color .2s ease,
+        transform .2s ease;
+
+}
+
+
+.footer-column a:hover {
+
+    color: #22c55e;
+
+    transform:
+        translateX(4px);
+
+}
+
+
+
+/* =====================================================
+   SOCIAL MEDIA SVG LOGOS
+===================================================== */
+
+.footer-social-btn {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    width: 44px;
+
+    height: 44px;
+
+    border-radius: 50%;
+
+    background: #1d2025;
+
+    color: #ffffff;
+
+    text-decoration: none;
+
+    transition:
+        transform .25s ease,
+        background .25s ease,
+        box-shadow .25s ease;
+
+}
+
+
+.footer-social-btn svg {
+
+    width: 21px;
+
+    height: 21px;
+
+    fill: currentColor;
+
+}
+
+
+.footer-social-btn:hover {
+
+    transform:
+        translateY(-5px) scale(1.05);
+
+}
+
+
+/* YouTube */
+
+.footer-social-btn.youtube:hover {
+
+    background: #ff0000;
+
+    color: #ffffff;
+
+    box-shadow:
+        0 8px 22px rgba(255, 0, 0, .30);
+
+}
+
+
+/* WhatsApp */
+
+.footer-social-btn.whatsapp:hover {
+
+    background: #25d366;
+
+    color: #ffffff;
+
+    box-shadow:
+        0 8px 22px rgba(37, 211, 102, .30);
+
+}
+
+
+/* Instagram */
+
+.footer-social-btn.instagram:hover {
+
+    background: #e1306c;
+
+    color: #ffffff;
+
+    box-shadow:
+        0 8px 22px rgba(225, 48, 108, .30);
+
+}
+
+
+/* Telegram */
+
+.footer-social-btn.telegram:hover {
+
+    background: #229ed9;
+
+    color: #ffffff;
+
+    box-shadow:
+        0 8px 22px rgba(34, 158, 217, .30);
+
+}
+
+
+/* Facebook */
+
+.footer-social-btn.facebook:hover {
+
+    background: #1877f2;
+
+    color: #ffffff;
+
+    box-shadow:
+        0 8px 22px rgba(24, 119, 242, .30);
+
+}
+
+
+/* X */
+
+.footer-social-btn.twitter:hover {
+
+    background: #000000;
+
+    color: #ffffff;
+
+    box-shadow:
+        0 8px 22px rgba(255, 255, 255, .12);
+
+}
+
+
+/* DARK MODE */
+
+body.dark .footer-social-btn {
+
+    background: #151a17;
+
+}
+
+
+body.dark .footer-social-btn:hover {
+
+    color: #ffffff;
+
+}
+
+
+
+/* =====================================================
+   ZNOVaFOX RESPONSIVE PROFESSIONAL FOOTER
+===================================================== */
+
+.znova-footer {
+
+    width: 100%;
+
+    background: #101114;
+
+    color: #ffffff;
+
+    padding: 65px 0 25px;
+
+    border-top: 1px solid #292c32;
+
+    box-sizing: border-box;
+
+}
+
+
+/* =====================================================
+   FOOTER CONTAINER
+===================================================== */
+
+.znova-footer .container {
+
+    width: min(1200px, calc(100% - 40px));
+
+    margin: 0 auto;
+
+}
+
+
+/* =====================================================
+   ZNOVaFOX ABOUT
+===================================================== */
+
+.footer-about {
+
+    max-width: 900px;
+
+}
+
+
+.footer-logo {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    color: #ffffff;
+
+    text-decoration: none;
+
+    font-size: 30px;
+
+    font-weight: 700;
+
+}
+
+
+.footer-logo-icon {
+
+    font-size: 35px;
+
+}
+
+
+.footer-description {
+
+    max-width: 900px;
+
+    margin: 18px 0 0;
+
+    color: #a5aab3;
+
+    font-size: 14px;
+
+    line-height: 1.85;
+
+}
+
+
+/* =====================================================
+   DISCLAIMER
+===================================================== */
+
+.footer-disclaimer {
+
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 15px;
+
+    width: 100%;
+
+    margin-top: 32px;
+
+    padding: 21px;
+
+    box-sizing: border-box;
+
+    background: #17191d;
+
+    border: 1px solid #292c32;
+
+    border-radius: 14px;
+
+    transition:
+        border-color .25s ease,
+        background .25s ease,
+        box-shadow .25s ease;
+
+}
+
+
+.footer-disclaimer:hover {
+
+    border-color: #3b414a;
+
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, .15);
+
+}
+
+
+.disclaimer-icon {
+
+    flex: 0 0 auto;
+
+    font-size: 22px;
+
+    line-height: 1;
+
+}
+
+
+.footer-disclaimer h3 {
+
+    margin: 0 0 8px;
+
+    font-size: 16px;
+
+}
+
+
+.footer-disclaimer p {
+
+    margin: 0;
+
+    color: #999fa9;
+
+    font-size: 13px;
+
+    line-height: 1.75;
+
+}
+
+
+/* =====================================================
+   FOOTER COLUMNS
+===================================================== */
+
+.footer-columns {
+
+    display: grid;
+
+    grid-template-columns:
+        minmax(180px, 250px)
+        minmax(180px, 250px);
+
+    gap: 80px;
+
+    margin-top: 45px;
+
+}
+
+
+.footer-column {
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 12px;
+
+}
+
+
+.footer-column h3 {
+
+    margin: 0 0 7px;
+
+    color: #ffffff;
+
+    font-size: 17px;
+
+    font-weight: 600;
+
+}
+
+
+.footer-column a {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    color: #999fa9;
+
+    text-decoration: none;
+
+    font-size: 14px;
+
+    line-height: 1.5;
+
+    transition:
+        color .2s ease,
+        transform .2s ease;
+
+}
+
+
+.footer-column a:hover {
+
+    color: #22c55e;
+
+    transform: translateX(5px);
+
+}
+
+
+/* =====================================================
+   SOCIAL SECTION
+===================================================== */
+
+.footer-social-section {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 30px;
+
+    margin-top: 50px;
+
+}
+
+
+.footer-social-text {
+
+    flex: 1;
+
+}
+
+
+.footer-social-text h3 {
+
+    margin: 0 0 7px;
+
+    font-size: 18px;
+
+}
+
+
+.footer-social-text p {
+
+    margin: 0;
+
+    color: #8f949d;
+
+    font-size: 13px;
+
+    line-height: 1.6;
+
+}
+
+
+/* =====================================================
+   SOCIAL ICON ROW
+===================================================== */
+
+.footer-social-links {
+
+    display: flex;
+
+    flex-direction: row;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 10px;
+
+    flex-wrap: nowrap;
+
+    flex-shrink: 0;
+
+}
+
+
+.footer-social-btn {
+
+    flex: 0 0 44px;
+
+    width: 44px;
+
+    height: 44px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #1d2025;
+
+    color: #ffffff;
+
+    text-decoration: none;
+
+    box-sizing: border-box;
+
+    transition:
+        transform .25s ease,
+        background .25s ease,
+        box-shadow .25s ease;
+
+}
+
+
+.footer-social-btn svg {
+
+    width: 21px;
+
+    height: 21px;
+
+    fill: currentColor;
+
+}
+
+
+.footer-social-btn:hover {
+
+    transform:
+        translateY(-5px) scale(1.06);
+
+}
+
+
+/* =====================================================
+   SOCIAL COLORS
+===================================================== */
+
+.footer-social-btn.youtube:hover {
+
+    background: #ff0000;
+
+    box-shadow:
+        0 8px 22px rgba(255, 0, 0, .30);
+
+}
+
+
+.footer-social-btn.whatsapp:hover {
+
+    background: #25d366;
+
+    box-shadow:
+        0 8px 22px rgba(37, 211, 102, .30);
+
+}
+
+
+.footer-social-btn.instagram:hover {
+
+    background: #e1306c;
+
+    box-shadow:
+        0 8px 22px rgba(225, 48, 108, .30);
+
+}
+
+
+.footer-social-btn.telegram:hover {
+
+    background: #229ed9;
+
+    box-shadow:
+        0 8px 22px rgba(34, 158, 217, .30);
+
+}
+
+
+.footer-social-btn.facebook:hover {
+
+    background: #1877f2;
+
+    box-shadow:
+        0 8px 22px rgba(24, 119, 242, .30);
+
+}
+
+
+.footer-social-btn.twitter:hover {
+
+    background: #000000;
+
+    box-shadow:
+        0 8px 22px rgba(255, 255, 255, .12);
+
+}
+
+
+/* =====================================================
+   FOOTER DIVIDER
+===================================================== */
+
+.footer-divider {
+
+    width: 100%;
+
+    height: 1px;
+
+    margin: 38px 0 20px;
+
+    background: #292c32;
+
+}
+
+
+/* =====================================================
+   FOOTER BOTTOM
+===================================================== */
+
+.footer-bottom {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+}
+
+
+.footer-bottom p {
+
+    margin: 0;
+
+    color: #777d87;
+
+    font-size: 13px;
+
+}
+
+
+.footer-bottom strong {
+
+    color: #ffffff;
+
+}
+
+
+.footer-bottom-links {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: flex-end;
+
+    gap: 20px;
+
+}
+
+
+.footer-bottom-links a {
+
+    color: #777d87;
+
+    text-decoration: none;
+
+    font-size: 13px;
+
+    transition: color .2s ease;
+
+}
+
+
+.footer-bottom-links a:hover {
+
+    color: #22c55e;
+
+}
+
+
+/* =====================================================
+   DARK MODE
+===================================================== */
+
+body.dark .znova-footer {
+
+    background: #080a09;
+
+    border-top-color: #1b2b21;
+
+}
+
+
+body.dark .footer-disclaimer {
+
+    background: #0d1510;
+
+    border-color: #1b2b21;
+
+}
+
+
+body.dark .footer-divider {
+
+    background: #1b2b21;
+
+}
+
+
+/* =====================================================
+   TABLET
+===================================================== */
+
+@media (max-width: 900px) {
+
+    .znova-footer {
+
+        padding: 55px 0 25px;
+
+    }
+
+
+    .znova-footer .container {
+
+        width: min(100% - 32px, 760px);
+
+    }
+
+
+    .footer-columns {
+
+        gap: 45px;
+
+    }
+
+
+    .footer-social-section {
+
+        align-items: flex-start;
+
+    }
+
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 700px) {
+
+    .znova-footer {
+
+        padding: 45px 0 20px;
+
+    }
+
+
+    .znova-footer .container {
+
+        width: calc(100% - 28px);
+
+    }
+
+
+    /* ABOUT */
+
+    .footer-about {
+
+        width: 100%;
+
+    }
+
+
+    .footer-logo {
+
+        font-size: 26px;
+
+    }
+
+
+    .footer-logo-icon {
+
+        font-size: 31px;
+
+    }
+
+
+    .footer-description {
+
+        font-size: 13px;
+
+        line-height: 1.8;
+
+    }
+
+
+    /* DISCLAIMER */
+
+    .footer-disclaimer {
+
+        padding: 17px;
+
+        gap: 11px;
+
+        border-radius: 12px;
+
+    }
+
+
+    .footer-disclaimer p {
+
+        font-size: 12px;
+
+        line-height: 1.7;
+
+    }
+
+
+    /* COLUMNS */
+
+    .footer-columns {
+
+        grid-template-columns: 1fr 1fr;
+
+        gap: 25px;
+
+        margin-top: 35px;
+
+    }
+
+
+    .footer-column {
+
+        gap: 10px;
+
+    }
+
+
+    .footer-column h3 {
+
+        font-size: 15px;
+
+    }
+
+
+    .footer-column a {
+
+        font-size: 13px;
+
+    }
+
+
+    /* SOCIAL */
+
+    .footer-social-section {
+
+        flex-direction: column;
+
+        align-items: center;
+
+        justify-content: center;
+
+        gap: 18px;
+
+        margin-top: 40px;
+
+        text-align: center;
+
+    }
+
+
+    .footer-social-text {
+
+        width: 100%;
+
+    }
+
+
+    .footer-social-text h3 {
+
+        font-size: 17px;
+
+    }
+
+
+    .footer-social-text p {
+
+        font-size: 12px;
+
+    }
+
+
+    /* ICONS */
+
+    .footer-social-links {
+
+        gap: 7px;
+
+        width: 100%;
+
+        justify-content: center;
+
+    }
+
+
+    .footer-social-btn {
+
+        flex: 0 0 39px;
+
+        width: 39px;
+
+        height: 39px;
+
+    }
+
+
+    .footer-social-btn svg {
+
+        width: 18px;
+
+        height: 18px;
+
+    }
+
+
+    /* BOTTOM */
+
+    .footer-bottom {
+
+        flex-direction: column;
+
+        justify-content: center;
+
+        text-align: center;
+
+        gap: 13px;
+
+    }
+
+
+    .footer-bottom-links {
+
+        justify-content: center;
+
+        flex-wrap: wrap;
+
+        gap: 8px 16px;
+
+    }
+
+}
+
+
+/* =====================================================
+   SMALL MOBILE
+===================================================== */
+
+@media (max-width: 400px) {
+
+    .znova-footer .container {
+
+        width: calc(100% - 22px);
+
+    }
+
+
+    .footer-description {
+
+        font-size: 12px;
+
+    }
+
+
+    .footer-disclaimer {
+
+        padding: 14px;
+
+    }
+
+
+    .footer-columns {
+
+        gap: 15px;
+
+    }
+
+
+    .footer-column a {
+
+        font-size: 12px;
+
+    }
+
+
+    .footer-social-links {
+
+        gap: 5px;
+
+    }
+
+
+    .footer-social-btn {
+
+        flex: 0 0 36px;
+
+        width: 36px;
+
+        height: 36px;
+
+    }
+
+
+    .footer-social-btn svg {
+
+        width: 17px;
+
+        height: 17px;
+
+    }
+
+}
+/* =====================================================
+   GOVERNMENT SERVICE CARDS
+===================================================== */
+
+.service-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 25px;
+}
+
+.service-card {
+    display: block;
+    padding: 24px;
+
+    text-decoration: none;
+
+    background: var(--card-bg, #ffffff);
+    color: inherit;
+
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 16px;
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        border-color 0.25s ease,
+        background 0.25s ease;
+}
+
+.service-card:hover {
+    transform: translateY(-6px);
+
+    border-color: #2563eb;
+
+    box-shadow:
+        0 12px 30px rgba(37, 99, 235, 0.18);
+}
+
+.service-icon {
+    font-size: 34px;
+    margin-bottom: 12px;
+}
+
+.service-card h3 {
+    margin: 0 0 8px;
+    font-size: 19px;
+}
+
+.service-card p {
+    margin: 0 0 14px;
+
+    line-height: 1.6;
+
+    opacity: 0.75;
+}
+
+.service-link {
+    font-weight: 600;
+    font-size: 14px;
+}
+
+
+/* =====================================================
+   DARK MODE GREEN HOVER
+===================================================== */
+
+body.dark .service-card {
+    background: #111827;
+    border-color: rgba(255, 255, 255, 0.08);
+}
+
+body.dark .service-card:hover {
+    background: #10251b;
+
+    border-color: #22c55e;
+
+    box-shadow:
+        0 0 0 1px rgba(34, 197, 94, 0.25),
+        0 12px 35px rgba(34, 197, 94, 0.20);
+}
+
+body.dark .service-card:active {
+    background: #123d24;
+
+    border-color: #39ff7a;
+
+    transform: scale(0.97);
+
+    box-shadow:
+        0 0 0 2px rgba(34, 197, 94, 0.25),
+        0 0 25px rgba(34, 197, 94, 0.35);
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 768px) {
+
+    .service-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .service-card {
+        padding: 20px;
+    }
+
+}
+/* =====================================================
+   GOVERNMENT SEARCH & FILTER
+===================================================== */
+
+.government-tools {
+    display: grid;
+    grid-template-columns: 1fr 220px;
+    gap: 14px;
+    margin: 25px 0 30px;
+}
+
+.government-tools input,
+.government-tools select {
+    width: 100%;
+    box-sizing: border-box;
+
+    padding: 14px 16px;
+
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: 12px;
+
+    background: #ffffff;
+    color: #111827;
+
+    font-size: 15px;
+    outline: none;
+
+    transition:
+        border-color .25s ease,
+        box-shadow .25s ease,
+        background .25s ease;
+}
+
+.government-tools input:focus,
+.government-tools select:focus {
+    border-color: #2563eb;
+
+    box-shadow:
+        0 0 0 3px rgba(37, 99, 235, .12);
+}
+
+
+/* DARK MODE */
+
+body.dark .government-tools input,
+body.dark .government-tools select {
+    background: #111827;
+    color: #ffffff;
+
+    border-color: rgba(255, 255, 255, .12);
+}
+
+body.dark .government-tools input:focus,
+body.dark .government-tools select:focus {
+    border-color: #22c55e;
+
+    box-shadow:
+        0 0 0 3px rgba(34, 197, 94, .12);
+}
+
+
+/* MOBILE */
+
+@media (max-width: 768px) {
+
+    .government-tools {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .government-tools input,
+    .government-tools select {
+        padding: 13px 14px;
+    }
+
+}
+/* =====================================================
+   ZNOVaFOX - LATEST UPDATES
+===================================================== */
+
+.updates-section {
+    padding: 55px 0;
+}
+
+.updates-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    margin-top: 25px;
+}
+
+
+/* UPDATE CARD */
+
+.update-card {
+    display: flex;
+    flex-direction: column;
+
+    padding: 24px;
+
+    min-height: 190px;
+
+    border: 1px solid #e2e8f0;
+    border-radius: 18px;
+
+    background: var(--card-bg, #ffffff);
+
+    color: inherit;
+    text-decoration: none;
+
+    transition:
+        transform .25s ease,
+        background .25s ease,
+        border-color .25s ease,
+        box-shadow .25s ease;
+}
+
+
+/* HOVER */
+
+.update-card:hover {
+    transform: translateY(-5px);
+
+    border-color: #3b82f6;
+
+    background: #f8fbff;
+
+    box-shadow:
+        0 12px 30px rgba(0, 0, 0, .10);
+}
+
+
+/* BADGE */
+
+.update-badge {
+    display: inline-flex;
+
+    width: fit-content;
+
+    padding: 6px 10px;
+
+    margin-bottom: 15px;
+
+    border-radius: 20px;
+
+    font-size: 11px;
+    font-weight: 700;
+
+    letter-spacing: .5px;
+}
+
+
+/* BADGE COLORS */
+
+.update-badge.government {
+    background: #e8f2ff;
+    color: #2563eb;
+}
+
+.update-badge.jobs {
+    background: #fff4df;
+    color: #b45309;
+}
+
+.update-badge.education {
+    background: #eaf8ef;
+    color: #15803d;
+}
+
+.update-badge.ai {
+    background: #f2eaff;
+    color: #7c3aed;
+}
+
+
+/* CARD TITLE */
+
+.update-card h3 {
+    margin: 0 0 9px;
+
+    font-size: 20px;
+    line-height: 1.3;
+}
+
+
+/* CARD DESCRIPTION */
+
+.update-card p {
+    margin: 0;
+
+    font-size: 14px;
+    line-height: 1.6;
+
+    opacity: .72;
+}
+
+
+/* CARD LINK */
+
+.update-link {
+    margin-top: auto;
+    padding-top: 18px;
+
+    font-size: 14px;
+    font-weight: 700;
+}
+
+
+/* =====================================================
+   DARK MODE
+===================================================== */
+
+body.dark .update-card {
+    background: #111827;
+
+    border-color: #263244;
+}
+
+body.dark .update-card:hover {
+    background: #10251b;
+
+    border-color: #22c55e;
+
+    box-shadow:
+        0 0 0 1px rgba(34, 197, 94, .25),
+        0 12px 35px rgba(34, 197, 94, .20);
+}
+
+body.dark .update-card:active {
+    background: #123d24;
+
+    border-color: #39ff7a;
+
+    transform: scale(.97);
+
+    box-shadow:
+        0 0 0 2px rgba(34, 197, 94, .25),
+        0 0 25px rgba(34, 197, 94, .35);
+}
+
+
+/* DARK BADGES */
+
+body.dark .update-badge.government {
+    background: #172554;
+    color: #60a5fa;
+}
+
+body.dark .update-badge.jobs {
+    background: #422006;
+    color: #fbbf24;
+}
+
+body.dark .update-badge.education {
+    background: #052e16;
+    color: #4ade80;
+}
+
+body.dark .update-badge.ai {
+    background: #2e1065;
+    color: #c084fc;
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 700px) {
+
+    .updates-section {
+        padding: 40px 0;
+    }
+
+    .updates-grid {
+        grid-template-columns: 1fr;
+
+        gap: 16px;
+    }
+
+    .update-card {
+        min-height: 170px;
+
+        padding: 20px;
+
+        border-radius: 16px;
+    }
+
+    .update-card h3 {
+        font-size: 18px;
+    }
+
+}
+/* ================================
+   SHOPPING PAGE
+================================ */
+
+.shopping-page {
+    padding: 55px 0 70px;
+}
+
+.shopping-header {
+    max-width: 700px;
+    margin: 0 auto 35px;
+    text-align: center;
+}
+
+.shopping-header h1 {
+    margin: 10px 0;
+}
+
+.shopping-header p {
+    opacity: .7;
+    line-height: 1.6;
+}
+
+
+/* GRID */
+
+.shopping-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+
+/* CARD */
+
+.shopping-card {
+    overflow: hidden;
+
+    background: #ffffff;
+
+    border: 1px solid #e2e8f0;
+    border-radius: 18px;
+
+    transition: .25s ease;
+}
+
+
+/* IMAGE */
+
+.product-image {
+    height: 190px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #f8fafc;
+
+    font-size: 65px;
+}
+
+
+/* CONTENT */
+
+.product-content {
+    padding: 20px;
+}
+
+.product-category {
+    display: inline-block;
+
+    padding: 5px 9px;
+
+    border-radius: 20px;
+
+    background: #eef2ff;
+    color: #4f46e5;
+
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.product-content h3 {
+    margin: 12px 0 8px;
+}
+
+.product-description {
+    font-size: 14px;
+    line-height: 1.6;
+    opacity: .7;
+}
+
+.product-rating {
+    margin-top: 12px;
+}
+
+.product-price {
+    margin: 10px 0 18px;
+
+    font-size: 21px;
+    font-weight: 800;
+}
+
+
+/* BUTTONS */
+
+.shopping-buttons {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 7px;
+}
+
+.shop-btn {
+    padding: 10px 4px;
+
+    border-radius: 9px;
+
+    text-align: center;
+
+    color: white;
+    text-decoration: none;
+
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.amazon {
+    background: #111827;
+}
+
+.flipkart {
+    background: #2563eb;
+}
+
+.meesho {
+    background: #e11d48;
+}
+
+
+/* LIGHT HOVER */
+
+.shopping-card:hover {
+    transform: translateY(-5px);
+
+    border-color: #4f8cff;
+
+    box-shadow:
+        0 12px 30px rgba(79,140,255,.16);
+}
+
+
+/* DARK MODE */
+
+body.dark .shopping-card {
+    background: #111827;
+    border-color: #263244;
+}
+
+body.dark .product-image {
+    background: #0f141c;
+}
+
+body.dark .shopping-card:hover {
+    background: #10251b;
+
+    border-color: #22c55e;
+
+    box-shadow:
+        0 12px 35px rgba(34,197,94,.20);
+}
+
+
+/* MOBILE */
+
+@media (max-width: 900px) {
+
+    .shopping-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
+
+@media (max-width: 600px) {
+
+    .shopping-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
+/* ================================
+   SHOPPING SEARCH
+================================ */
+
+.shopping-tools {
+    margin-bottom: 30px;
+}
+
+#shoppingSearch {
+    width: 100%;
+    padding: 15px 18px;
+
+    border: 1px solid #dfe3ea;
+    border-radius: 12px;
+
+    background: #ffffff;
+    color: #111827;
+
+    font-size: 15px;
+    outline: none;
+}
+
+#shoppingSearch:focus {
+    border-color: #6c4cff;
+}
+
+
+/* CATEGORIES */
+
+.shopping-categories {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px;
+
+    margin-top: 15px;
+}
+
+.shopping-filter {
+    padding: 9px 15px;
+
+    border: 1px solid #dfe3ea;
+    border-radius: 20px;
+
+    background: #ffffff;
+    color: #333;
+
+    cursor: pointer;
+
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.shopping-filter:hover {
+    border-color: #6c4cff;
+}
+
+.shopping-filter.active {
+    background: #6c4cff;
+    border-color: #6c4cff;
+    color: #ffffff;
+}
+
+
+/* DARK MODE */
+
+body.dark #shoppingSearch {
+    background: #111827;
+    color: #ffffff;
+    border-color: #303846;
+}
+
+body.dark .shopping-filter {
+    background: #111827;
+    color: #ffffff;
+    border-color: #303846;
+}
+
+body.dark .shopping-filter.active {
+    background: #22c55e;
+    border-color: #22c55e;
+    color: #07130b;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+
+    .shopping-categories {
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        padding-bottom: 5px;
+    }
+
+    .shopping-filter {
+        white-space: nowrap;
+    }
+
+}
+/* =====================================================
+   ZNOVaFOX SHOPPING PAGE
+===================================================== */
+
+.shopping-hero {
+    padding: 20px 0 0;
+}
+
+
+/* PAGE */
+
+.shopping-page {
+    padding: 45px 0 70px;
+}
+
+
+/* HEADER */
+
+.shopping-header {
+    max-width: 700px;
+
+    margin: 0 auto 35px;
+
+    text-align: center;
+}
+
+.shopping-header h1 {
+    margin: 10px 0;
+}
+
+.shopping-header p {
+    opacity: .7;
+
+    line-height: 1.6;
+}
+
+
+/* =====================================================
+   SEARCH & FILTER
+===================================================== */
+
+.shopping-tools {
+    margin-bottom: 30px;
+}
+
+
+#shoppingSearch {
+
+    width: 100%;
+
+    padding: 15px 18px;
+
+    border: 1px solid #dfe3ea;
+
+    border-radius: 12px;
+
+    background: #ffffff;
+
+    color: #111827;
+
+    font-size: 15px;
+
+    outline: none;
+
+    transition:
+        border-color .25s ease,
+        box-shadow .25s ease,
+        background .25s ease;
+
+}
+
+
+#shoppingSearch:focus {
+
+    border-color: #6c4cff;
+
+    box-shadow:
+        0 0 0 3px rgba(108,76,255,.10);
+
+}
+
+
+/* CATEGORIES */
+
+.shopping-categories {
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 9px;
+
+    margin-top: 15px;
+
+}
+
+
+.shopping-filter {
+
+    padding: 9px 15px;
+
+    border: 1px solid #dfe3ea;
+
+    border-radius: 20px;
+
+    background: #ffffff;
+
+    color: #333333;
+
+    cursor: pointer;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    transition:
+        background .2s ease,
+        color .2s ease,
+        border-color .2s ease,
+        transform .2s ease;
+
+}
+
+
+.shopping-filter:hover {
+
+    border-color: #6c4cff;
+
+    transform: translateY(-2px);
+
+}
+
+
+.shopping-filter.active {
+
+    background: #6c4cff;
+
+    border-color: #6c4cff;
+
+    color: #ffffff;
+
+}
+
+
+/* =====================================================
+   PRODUCT GRID
+===================================================== */
+
+.shopping-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 20px;
+
+}
+
+
+/* =====================================================
+   PRODUCT CARD
+===================================================== */
+
+.shopping-card {
+
+    overflow: hidden;
+
+    background: #ffffff;
+
+    border: 1px solid #e2e8f0;
+
+    border-radius: 18px;
+
+    transition:
+        transform .25s ease,
+        background .25s ease,
+        border-color .25s ease,
+        box-shadow .25s ease;
+
+}
+
+
+/* =====================================================
+   LIGHT MODE HOVER
+===================================================== */
+
+.shopping-card:hover {
+
+    transform: translateY(-6px);
+
+    background: #f0f7ff;
+
+    border-color: #4f8cff;
+
+    box-shadow:
+        0 12px 30px rgba(79,140,255,.18);
+
+}
+
+
+.shopping-card:active {
+
+    transform: scale(.97);
+
+}
+
+
+/* IMAGE */
+
+.product-image {
+
+    height: 190px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background: #f8fafc;
+
+    font-size: 65px;
+
+    transition:
+        background .25s ease;
+
+}
+
+
+/* CONTENT */
+
+.product-content {
+
+    padding: 20px;
+
+}
+
+
+.product-category {
+
+    display: inline-block;
+
+    padding: 5px 9px;
+
+    border-radius: 20px;
+
+    background: #eef2ff;
+
+    color: #4f46e5;
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+}
+
+
+.product-content h3 {
+
+    margin: 12px 0 8px;
+
+}
+
+
+.product-description {
+
+    font-size: 14px;
+
+    line-height: 1.6;
+
+    opacity: .7;
+
+}
+
+
+.product-rating {
+
+    margin-top: 12px;
+
+}
+
+
+.product-price {
+
+    margin: 10px 0 18px;
+
+    font-size: 21px;
+
+    font-weight: 800;
+
+}
+
+
+/* =====================================================
+   SHOPPING BUTTONS
+===================================================== */
+
+.shopping-buttons {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 7px;
+
+}
+
+
+.shop-btn {
+
+    padding: 10px 4px;
+
+    border-radius: 9px;
+
+    text-align: center;
+
+    color: #ffffff;
+
+    text-decoration: none;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    transition:
+        transform .2s ease,
+        opacity .2s ease;
+
+}
+
+
+.shop-btn:hover {
+
+    transform: translateY(-2px);
+
+    opacity: .9;
+
+}
+
+
+.amazon {
+
+    background: #111827;
+
+}
+
+
+.flipkart {
+
+    background: #2563eb;
+
+}
+
+
+.meesho {
+
+    background: #e11d48;
+
+}
+
+
+/* =====================================================
+   NO PRODUCTS
+===================================================== */
+
+.no-products {
+
+    display: none;
+
+    padding: 30px 0;
+
+    text-align: center;
+
+    opacity: .65;
+
+}
+
+
+/* =====================================================
+   DARK MODE
+===================================================== */
+
+body.dark .shopping-page {
+
+    background: #0f1115;
+
+}
+
+
+body.dark #shoppingSearch {
+
+    background: #111827;
+
+    color: #ffffff;
+
+    border-color: #303846;
+
+}
+
+
+body.dark #shoppingSearch::placeholder {
+
+    color: #9ca3af;
+
+}
+
+
+body.dark #shoppingSearch:focus {
+
+    border-color: #22c55e;
+
+    box-shadow:
+        0 0 0 3px rgba(34,197,94,.12);
+
+}
+
+
+body.dark .shopping-filter {
+
+    background: #111827;
+
+    color: #ffffff;
+
+    border-color: #303846;
+
+}
+
+
+body.dark .shopping-filter:hover {
+
+    border-color: #22c55e;
+
+}
+
+
+body.dark .shopping-filter.active {
+
+    background: #22c55e;
+
+    border-color: #22c55e;
+
+    color: #07130b;
+
+}
+
+
+/* DARK CARD */
+
+body.dark .shopping-card {
+
+    background: #191c22;
+
+    color: #ffffff;
+
+    border-color: #30343c;
+
+}
+
+
+/* =====================================================
+   DARK MODE GREEN HOVER
+===================================================== */
+
+body.dark .shopping-card:hover {
+
+    background: #10251b;
+
+    border-color: #22c55e;
+
+    box-shadow:
+        0 0 0 1px rgba(34,197,94,.25),
+        0 12px 35px rgba(34,197,94,.20);
+
+    transform: translateY(-6px);
+
+}
+
+
+/* DARK CLICK */
+
+body.dark .shopping-card:active {
+
+    background: #123d24;
+
+    border-color: #39ff7a;
+
+    box-shadow:
+        0 0 0 2px rgba(34,197,94,.30),
+        0 0 30px rgba(34,197,94,.35);
+
+    transform: scale(.97);
+
+}
+
+
+/* DARK IMAGE */
+
+body.dark .product-image {
+
+    background: #0f141c;
+
+}
+
+
+/* DARK CATEGORY */
+
+body.dark .product-category {
+
+    background: #172554;
+
+    color: #93c5fd;
+
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 900px) {
+
+    .shopping-grid {
+
+        grid-template-columns:
+            repeat(2, 1fr);
+
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .shopping-page {
+
+        padding:
+            30px 0 50px;
+
+    }
+
+
+    .shopping-grid {
+
+        grid-template-columns: 1fr;
+
+        gap: 16px;
+
+    }
+
+
+    .shopping-categories {
+
+        overflow-x: auto;
+
+        flex-wrap: nowrap;
+
+        padding-bottom: 5px;
+
+    }
+
+
+    .shopping-filter {
+
+        white-space: nowrap;
+
+    }
+
+
+    .product-image {
+
+        height: 170px;
+
+    }
+
+}
+/* =========================================
+   SHOPPING LIVE CENTER
+========================================= */
+
+.shopping-hero {
+    width: 100%;
+    padding: 18px 0 5px;
+    text-align: center;
+}
+
+.shopping-hero .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.shopping-hero .live-status {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    margin: 0;
+    padding: 7px 15px;
+
+    background: #e6ffe6;
+    color: #15803d;
+
+    border-radius: 20px;
+
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.shopping-hero .live-status span {
+    width: 9px;
+    height: 9px;
+
+    margin-right: 7px;
+
+    background: red;
+    border-radius: 50%;
+
+    animation: shoppingLiveBlink .7s infinite;
+}
+
+@keyframes shoppingLiveBlink {
+    0%, 100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: .2;
+    }
+}
+
+
+/* =========================================
+   DARK MODE
+========================================= */
+
+body.dark .shopping-hero .live-status {
+    background: #10251b;
+    color: #4ade80;
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 600px) {
+
+    .shopping-hero {
+        padding: 15px 0 3px;
+    }
+
+    .shopping-hero .live-status {
+        font-size: 13px;
+        padding: 6px 13px;
+    }
+
+}
+@media (max-width: 600px) {
+    .hero {
+        padding: 12px 0 25px;
+    }
+
+    .hero .live-status {
+        margin-bottom: 10px;
+    }
+
+    .hero h1 {
+        margin-bottom: 12px;
+        line-height: 1.1;
+    }
+
+    .hero-text {
+        line-height: 1.5;
+    }
+
+    .search-box {
+        margin-top: 20px;
+    }
+}
+
