@@ -1,0 +1,1013 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Businesses - ZnovaFox</title>
+
+    <meta
+        name="description"
+        content="Useful business services, business portals and entrepreneur resources in one place."
+    >
+
+    <link
+        rel="stylesheet"
+        href="../css/main.css"
+    >
+
+    <style>
+
+        .business-page {
+            padding: 45px 0 70px;
+        }
+
+        .business-header {
+            max-width: 720px;
+            margin: 0 auto 35px;
+            text-align: center;
+        }
+
+        .business-header h2 {
+            margin-bottom: 10px;
+        }
+
+        .business-header p {
+            opacity: .75;
+            line-height: 1.6;
+        }
+
+        .business-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .business-card {
+            display: flex;
+            flex-direction: column;
+
+            padding: 23px;
+
+            border: 1px solid #ddd;
+            border-radius: 18px;
+
+            background: var(--card-bg, #fff);
+
+            color: inherit;
+            text-decoration: none;
+
+            transition:
+                transform .2s ease,
+                box-shadow .2s ease;
+        }
+
+        .business-card:hover {
+            transform: translateY(-4px);
+
+            box-shadow:
+                0 10px 30px
+                rgba(0,0,0,.08);
+        }
+
+        .business-icon {
+            font-size: 38px;
+            margin-bottom: 14px;
+        }
+
+        .business-card strong {
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+
+        .business-card span {
+            font-size: 14px;
+            line-height: 1.6;
+            opacity: .72;
+        }
+
+        .business-tag {
+            display: inline-block;
+
+            width: fit-content;
+
+            margin-top: 17px;
+
+            padding: 5px 9px;
+
+            border-radius: 20px;
+
+            font-size: 12px;
+
+            background: #eee;
+        }
+
+        body.dark .business-card {
+            border-color: #333;
+        }
+
+        body.dark .business-tag {
+            background: #252a32;
+        }
+
+        @media (max-width: 900px) {
+
+            .business-grid {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+        }
+
+        @media (max-width: 600px) {
+
+            .business-page {
+                padding-top: 30px;
+            }
+
+            .business-grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
+/* =====================================================
+   BUSINESS - LIGHT MODE HOVER
+===================================================== */
+
+.business-card {
+    transition:
+        transform .25s ease,
+        background .25s ease,
+        border-color .25s ease,
+        box-shadow .25s ease;
+}
+
+.business-card:hover {
+    transform: translateY(-6px);
+
+    background: #fff8ed;
+
+    border-color: #ff9f43;
+
+    box-shadow:
+        0 12px 28px rgba(255, 159, 67, .18);
+}
+
+
+/* CLICK EFFECT */
+
+.business-card:active {
+    transform: scale(.97);
+}
+
+
+/* =====================================================
+   BUSINESS - DARK MODE
+===================================================== */
+
+body.dark .business-card {
+    background: #191c22;
+
+    color: #ffffff;
+
+    border-color: #30343c;
+}
+
+body.dark .business-card:hover {
+    background: #10251b;
+
+    border-color: #22c55e;
+
+    box-shadow:
+        0 0 0 1px rgba(34, 197, 94, .25),
+        0 12px 35px rgba(34, 197, 94, .20);
+
+    transform: translateY(-6px);
+}
+
+
+/* CLICK */
+
+body.dark .business-card:active {
+    background: #123d24;
+
+    border-color: #39ff7a;
+
+    box-shadow:
+        0 0 0 2px rgba(34, 197, 94, .30),
+        0 0 30px rgba(34, 197, 94, .35);
+
+    transform: scale(.97);
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (hover: none) {
+
+    .business-card:hover {
+        transform: none;
+        box-shadow: none;
+    }
+
+    body.dark .business-card:hover {
+        transform: none;
+        box-shadow: none;
+    }
+
+}
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header class="site-header">
+
+    <div class="container header-inner">
+
+
+        <a
+            href="../index.html"
+            class="logo"
+        >
+            🦊 <span>Znova</span>Fox
+        </a>
+
+
+        <nav class="desktop-nav">
+
+            <a href="../index.html">
+                Home
+            </a>
+
+            <a href="ai-tools.html">
+                AI Tools
+            </a>
+
+            <a href="online-tools.html">
+                Tools
+            </a>
+
+            <a href="government.html">
+                Government
+            </a>
+
+            <a href="jobs.html">
+                Jobs
+            </a>
+
+            <a href="education.html">
+                Education
+            </a>
+ <a href="pages/shopping.html">Shopping</a>
+        </nav>
+
+
+        <div class="header-actions">
+
+            <button
+                class="theme-btn"
+                id="themeBtn"
+                aria-label="Change theme"
+            >
+                🌙
+            </button>
+
+            <button
+                class="menu-btn"
+                id="menuBtn"
+                aria-label="Open menu"
+            >
+                ☰
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <nav
+        class="mobile-nav"
+        id="mobileNav"
+    >
+
+        <a href="../index.html">
+            🏠 Home
+        </a>
+
+        <a href="ai-tools.html">
+            🤖 AI Tools
+        </a>
+
+        <a href="online-tools.html">
+            🛠️ Online Tools
+        </a>
+
+        <a href="government.html">
+            🇮🇳 Government
+        </a>
+
+        <a href="jobs.html">
+            💼 Jobs
+        </a>
+
+        <a href="education.html">
+            📚 Education
+        </a>
+
+        <a href="shopping.html">
+            🛒 Shopping
+        </a>
+
+        <a href="businesses.html">
+            🔗 Businesses
+        </a>
+
+    </nav>
+
+</header>
+
+
+
+<main>
+
+
+<section class="hero">
+
+    <div class="container">
+
+        <p class="live-status">
+            <span></span> LIVE
+        </p>
+
+        <h1>
+            Business Services
+        </h1>
+
+        <p class="hero-text">
+            Useful business portals and
+            entrepreneur resources in one place.
+        </p>
+
+    </div>
+
+</section>
+
+
+
+<section class="business-page">
+
+    <div class="container">
+
+
+        <div class="business-header">
+
+            <h2>
+                Explore Business Services
+            </h2>
+
+            <p>
+                Quick access to useful business,
+                registration and entrepreneur portals.
+            </p>
+
+        </div>
+
+
+        <div class="business-grid">
+
+
+            <!-- Udyam -->
+
+            <a
+                href="https://udyamregistration.gov.in/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="business-card"
+            >
+
+                <div class="business-icon">
+                    🏢
+                </div>
+
+                <strong>
+                    Udyam Registration
+                </strong>
+
+                <span>
+                    Official MSME registration
+                    portal of the Government of India.
+                </span>
+
+                <small class="business-tag">
+                    Official Portal ↗
+                </small>
+
+            </a>
+
+
+
+            <!-- GST -->
+
+            <a
+                href="https://www.gst.gov.in/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="business-card"
+            >
+
+                <div class="business-icon">
+                    🧾
+                </div>
+
+                <strong>
+                    GST Portal
+                </strong>
+
+                <span>
+                    GST registration, returns
+                    and taxpayer services.
+                </span>
+
+                <small class="business-tag">
+                    Official Portal ↗
+                </small>
+
+            </a>
+
+
+
+            <!-- Startup India -->
+
+            <a
+                href="https://www.startupindia.gov.in/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="business-card"
+            >
+
+                <div class="business-icon">
+                    🚀
+                </div>
+
+                <strong>
+                    Startup India
+                </strong>
+
+                <span>
+                    Resources and information
+                    for startups and entrepreneurs.
+                </span>
+
+                <small class="business-tag">
+                    Official Portal ↗
+                </small>
+
+            </a>
+
+
+
+            <!-- MCA -->
+
+            <a
+                href="https://www.mca.gov.in/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="business-card"
+            >
+
+                <div class="business-icon">
+                    🏛️
+                </div>
+
+                <strong>
+                    MCA
+                </strong>
+
+                <span>
+                    Ministry of Corporate Affairs
+                    corporate services and information.
+                </span>
+
+                <small class="business-tag">
+                    Official Website ↗
+                </small>
+
+            </a>
+
+
+
+            <!-- GeM -->
+
+            <a
+                href="https://gem.gov.in/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="business-card"
+            >
+
+                <div class="business-icon">
+                    🛒
+                </div>
+
+                <strong>
+                    Government e-Marketplace
+                </strong>
+
+                <span>
+                    Government procurement and
+                    seller-related services.
+                </span>
+
+                <small class="business-tag">
+                    Official Portal ↗
+                </small>
+
+            </a>
+
+
+
+            <!-- MSME -->
+
+            <a
+                href="https://msme.gov.in/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="business-card"
+            >
+
+                <div class="business-icon">
+                    📊
+                </div>
+
+                <strong>
+                    Ministry of MSME
+                </strong>
+
+                <span>
+                    Government information,
+                    schemes and MSME resources.
+                </span>
+
+                <small class="business-tag">
+                    Official Website ↗
+                </small>
+
+            </a>
+
+
+
+            <!-- Income Tax -->
+
+            <a
+                href="https://www.incometax.gov.in/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="business-card"
+            >
+
+                <div class="business-icon">
+                    💰
+                </div>
+
+                <strong>
+                    Income Tax
+                </strong>
+
+                <span>
+                    Tax-related online services
+                    for taxpayers and businesses.
+                </span>
+
+                <small class="business-tag">
+                    Official Portal ↗
+                </small>
+
+            </a>
+
+
+
+            <!-- e-Tender -->
+
+            <a
+                href="https://etenders.gov.in/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="business-card"
+            >
+
+                <div class="business-icon">
+                    📑
+                </div>
+
+                <strong>
+                    Government e-Tenders
+                </strong>
+
+                <span>
+                    Access government tender
+                    information and opportunities.
+                </span>
+
+                <small class="business-tag">
+                    Official Portal ↗
+                </small>
+
+            </a>
+
+
+
+            <!-- Business Directory -->
+
+            <a
+                href="#"
+                class="business-card"
+            >
+
+                <div class="business-icon">
+                    🔗
+                </div>
+
+                <strong>
+                    Business Directory
+                </strong>
+
+                <span>
+                    ZnovaFox business listings and
+                    useful business links will be added here.
+                </span>
+
+                <small class="business-tag">
+                    Coming Soon
+                </small>
+
+            </a>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+</main>
+
+
+
+<!-- =====================================================
+     ZNOVaFOX PROFESSIONAL FOOTER
+===================================================== -->
+
+<footer class="znova-footer">
+
+    <div class="container">
+
+        <!-- ==========================================
+             ZNOVaFOX DESCRIPTION
+        =========================================== -->
+
+        <div class="footer-about">
+
+            <a href="index.html" class="footer-logo">
+
+                <span class="footer-logo-icon">🦊</span>
+
+                <span>
+                    <b>Znova</b>Fox
+                </span>
+
+            </a>
+
+
+            <p class="footer-description">
+
+                <strong>ZnovaFox</strong> is an independent digital platform designed to bring useful online tools, AI resources, government services, job information, education resources and other helpful digital content together in one place. Our goal is 
+                to make useful information easier to discover through a simple, fast and user-friendly platform.
+
+            </p>
+
+        </div>
+
+
+
+        <!-- ==========================================
+             DISCLAIMER
+        =========================================== -->
+
+        <div class="footer-disclaimer">
+
+            <div class="disclaimer-icon">
+                ⚠️
+            </div>
+
+            <div>
+
+                <h3>
+                    Disclaimer
+                </h3>
+
+                <p>
+
+                    ZnovaFox is an independent informational
+                    platform and is not affiliated with,
+                    endorsed by, or officially connected
+                    with any government department,
+                    organization, company or third-party
+                    service unless specifically stated.
+
+                    Government websites, job notifications,
+                    services and external resources are
+                    provided through links to their respective
+                    official or external websites.
+
+                    Users should always verify important
+                    information from the concerned official
+                    website before taking any action.
+
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ==========================================
+             FOOTER COLUMNS
+        =========================================== -->
+
+        <div class="footer-columns">
+
+
+            <!-- QUICK LINKS -->
+
+            <div class="footer-column">
+
+                <h3>
+                    Quick Links
+                </h3>
+
+               <a  href="../index.html">
+                    🏠 Home
+                </a>
+
+                <a href="government.html">
+                    🇮🇳 Government
+                </a>
+
+                <a href="jobs.html">
+                    💼 Jobs
+                </a>
+
+                <a href="education.html">
+                    📚 Education
+                </a>
+
+                <a href="ai-tools.html">
+                    🤖 AI Tools
+                </a>
+
+                <a href="online-tools.html">
+                    🛠️ Online Tools
+                </a>
+
+            </div>
+
+
+
+            <!-- INFORMATION -->
+
+            <div class="footer-column">
+
+                <h3>
+                    Information
+                </h3>
+
+                <a href="about.html">
+                    ℹ️ About ZnovaFox
+                </a>
+
+                <a href="contact.html">
+                    📞 Contact Us
+                </a>
+
+                <a href="privacy.html">
+                    🔒 Privacy Policy
+                </a>
+
+                <a href="terms.html">
+                    📜 Terms & Conditions
+                </a>
+
+                <a href="disclaimer.html">
+                    ⚠️ Disclaimer
+                </a>
+
+                <a href="sitemap.html">
+                    🗺️ Sitemap
+                </a>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- ==========================================
+             SOCIAL SECTION
+        =========================================== -->
+
+        <div class="footer-social-section">
+
+            <div class="footer-social-text">
+
+                <h3>
+                    Connect With ZnovaFox
+                </h3>
+
+                <p>
+                    Follow ZnovaFox for latest updates,
+                    useful tools and important information.
+                </p>
+
+            </div>
+
+
+            <div class="footer-social-links">
+
+                <!-- YouTube -->
+
+                <a
+                    href="#"
+                    class="footer-social-btn youtube"
+                    aria-label="YouTube"
+                    title="YouTube"
+                >
+
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8ZM9.6 15.7V8.3l6.5 3.7-6.5 3.7Z"
+                        />
+                    </svg>
+
+                </a>
+
+
+                <!-- WhatsApp -->
+
+                <a
+                    href="https://whatsapp.com/channel/0029Vb7uQ8fIN9iqD4lz582T"
+                    class="footer-social-btn whatsapp"
+                    aria-label="WhatsApp"
+                    title="WhatsApp"
+                >
+
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M20.5 3.5A11.9 11.9 0 0 0 12 0C5.4 0 .1 5.3.1 11.9c0 2.1.5 4.1 1.5 5.9L0 24l6.4-1.7a11.9 11.9 0 0 0 5.6 1.4h.1c6.6 0 11.9-5.3 11.9-11.9 0-3.2-1.2-6.1-3.5-8.3Z"
+                        />
+                    </svg>
+
+                </a>
+
+
+                <!-- Instagram -->
+
+                <a
+                    href="#"
+                    class="footer-social-btn instagram"
+                    aria-label="Instagram"
+                    title="Instagram"
+                >
+
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5Zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7Zm5 3.5A4.5 4.5 0 1 1 7.5 12 4.5 4.5 0 0 1 12 7.5Z"
+                        />
+                    </svg>
+
+                </a>
+
+
+                <!-- Telegram -->
+
+                <a
+                    href="#"
+                    class="footer-social-btn telegram"
+                    aria-label="Telegram"
+                    title="Telegram"
+                >
+
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M21.8 3.2 2.7 10.6c-1.3.5-1.3 1.2-.2 1.5l4.9 1.5 1.9 5.8c.2.6.1.8.7.8.5 0 .7-.2.9-.5l2.4-2.3 5 3.7c.9.5 1.6.3 1.8-.8l3.2-15.1c.3-1.3-.5-1.9-1.5-1.4Z"
+                        />
+                    </svg>
+
+                </a>
+
+
+                <!-- Facebook -->
+
+                <a
+                    href="#"
+                    class="footer-social-btn facebook"
+                    aria-label="Facebook"
+                    title="Facebook"
+                >
+
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M14 8h3V4h-3c-3.3 0-5 2-5 5v3H6v4h3v8h4v-8h3.5l.5-4H13V9c0-.7.3-1 1-1Z"
+                        />
+                    </svg>
+
+                </a>
+
+
+                <!-- X -->
+
+                <a
+                    href="#"
+                    class="footer-social-btn twitter"
+                    aria-label="X"
+                    title="X"
+                >
+
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M18.2 2H22l-8.3 9.5L23.5 22h-7.6l-6-7.8L3.1 22H0l7.8-8.9L.5 2h7.8l5.4 7L18.2 2Z"
+                        />
+                    </svg>
+
+                </a>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ==========================================
+             FOOTER BOTTOM
+        =========================================== -->
+
+        <div class="footer-divider"></div>
+
+
+        <div class="footer-bottom">
+
+            <p>
+                © 2026 <strong>ZnovaFox</strong>.
+                All rights reserved.
+            </p>
+
+
+            <div class="footer-bottom-links">
+
+                 <a href="privacy.html">
+                    Privacy
+                </a>
+
+                <a href="terms.html">
+                    Terms
+                </a>
+
+                <a href="disclaimer.html">
+                    Disclaimer
+                </a>
+
+                <a href="contact.html">
+                    Contact
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+</footer>
+
+
+
+<script src="../js/main.js"></script>
+
+
+</body>
+
+</html>

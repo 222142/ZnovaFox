@@ -1,0 +1,1328 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Games - ZnovaFox</title>
+
+    <link rel="stylesheet" href="../css/main.css">
+
+    <style>
+
+        /* =========================================
+           GAMES PAGE
+        ========================================= */
+
+        .games-page {
+            padding: 45px 0 70px;
+        }
+
+        .games-header {
+            max-width: 700px;
+            margin: 0 auto 35px;
+            text-align: center;
+        }
+
+        .games-header h1 {
+            margin: 10px 0;
+            font-size: clamp(30px, 5vw, 46px);
+        }
+
+        .games-header p {
+            max-width: 600px;
+            margin: auto;
+            line-height: 1.7;
+            opacity: .68;
+        }
+
+
+        /* =========================================
+           GAME CONTAINER
+        ========================================= */
+
+        .games-container {
+            padding: 24px;
+
+            background: #ffffff;
+
+            border: 1px solid #e4e7ed;
+
+            border-radius: 24px;
+
+            box-shadow:
+                0 10px 35px rgba(0,0,0,.05);
+        }
+
+
+        /* =========================================
+           GRID
+        ========================================= */
+
+        .games-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 18px;
+        }
+
+
+        /* =========================================
+           GAME CARD
+        ========================================= */
+
+        .game-card {
+
+            position: relative;
+
+            min-height: 175px;
+
+            padding: 22px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+
+            justify-content: center;
+
+            text-align: center;
+
+            text-decoration: none;
+
+            color: inherit;
+
+            background: #ffffff;
+
+            border: 1px solid #e3e6ec;
+
+            border-radius: 18px;
+
+            overflow: hidden;
+
+            transition:
+                transform .25s ease,
+                background .25s ease,
+                border-color .25s ease,
+                box-shadow .25s ease;
+        }
+
+
+        .game-icon {
+            width: 58px;
+            height: 58px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            margin-bottom: 12px;
+
+            border-radius: 16px;
+
+            background: #f4f5f8;
+
+            font-size: 32px;
+
+            transition:
+                transform .25s ease,
+                background .25s ease;
+        }
+
+
+        .game-card strong {
+            font-size: 17px;
+
+            margin-bottom: 6px;
+        }
+
+
+        .game-card span {
+            max-width: 190px;
+
+            font-size: 12px;
+
+            line-height: 1.5;
+
+            opacity: .62;
+        }
+
+
+        .play-label {
+            margin-top: 12px;
+
+            font-size: 11px;
+
+            font-weight: 700;
+
+            opacity: .65;
+        }
+
+
+        /* =========================================
+           HOVER
+        ========================================= */
+
+        .game-card:hover {
+            transform: translateY(-6px);
+        }
+
+        .game-card:hover .game-icon {
+            transform: scale(1.08);
+        }
+
+
+        /* BLUE */
+
+        .game-blue:hover {
+            background: #eff6ff;
+            border-color: #3b82f6;
+
+            box-shadow:
+                0 14px 32px rgba(59,130,246,.16);
+        }
+
+        .game-blue:hover .game-icon {
+            background: #dbeafe;
+        }
+
+
+        /* GREEN */
+
+        .game-green:hover {
+            background: #f0fdf4;
+            border-color: #22c55e;
+
+            box-shadow:
+                0 14px 32px rgba(34,197,94,.16);
+        }
+
+        .game-green:hover .game-icon {
+            background: #dcfce7;
+        }
+
+
+        /* PURPLE */
+
+        .game-purple:hover {
+            background: #faf5ff;
+            border-color: #a855f7;
+
+            box-shadow:
+                0 14px 32px rgba(168,85,247,.16);
+        }
+
+        .game-purple:hover .game-icon {
+            background: #f3e8ff;
+        }
+
+
+        /* ORANGE */
+
+        .game-orange:hover {
+            background: #fff7ed;
+            border-color: #f97316;
+
+            box-shadow:
+                0 14px 32px rgba(249,115,22,.16);
+        }
+
+        .game-orange:hover .game-icon {
+            background: #ffedd5;
+        }
+
+
+        /* PINK */
+
+        .game-pink:hover {
+            background: #fdf2f8;
+            border-color: #ec4899;
+
+            box-shadow:
+                0 14px 32px rgba(236,72,153,.16);
+        }
+
+        .game-pink:hover .game-icon {
+            background: #fce7f3;
+        }
+
+
+        /* RED */
+
+        .game-red:hover {
+            background: #fff1f2;
+            border-color: #ef4444;
+
+            box-shadow:
+                0 14px 32px rgba(239,68,68,.16);
+        }
+
+        .game-red:hover .game-icon {
+            background: #fee2e2;
+        }
+
+
+        /* CYAN */
+
+        .game-cyan:hover {
+            background: #ecfeff;
+            border-color: #06b6d4;
+
+            box-shadow:
+                0 14px 32px rgba(6,182,212,.16);
+        }
+
+        .game-cyan:hover .game-icon {
+            background: #cffafe;
+        }
+
+
+        /* YELLOW */
+
+        .game-yellow:hover {
+            background: #fefce8;
+            border-color: #eab308;
+
+            box-shadow:
+                0 14px 32px rgba(234,179,8,.16);
+        }
+
+        .game-yellow:hover .game-icon {
+            background: #fef9c3;
+        }
+
+
+        /* =========================================
+           CLICK
+        ========================================= */
+
+        .game-card:active {
+            transform: scale(.97);
+        }
+
+
+        /* =========================================
+           DARK MODE CONTAINER
+        ========================================= */
+
+        body.dark .games-container {
+            background: #11151c;
+
+            border-color: #292f39;
+
+            box-shadow:
+                0 10px 35px rgba(0,0,0,.25);
+        }
+
+
+        body.dark .game-card {
+            background: #191c22;
+
+            color: #ffffff;
+
+            border-color: #30343c;
+        }
+
+
+        /* DARK BLUE */
+
+        body.dark .game-blue:hover {
+            background: #10233d;
+            border-color: #3b82f6;
+
+            box-shadow:
+                0 0 0 1px rgba(59,130,246,.2),
+                0 14px 35px rgba(59,130,246,.20);
+        }
+
+        body.dark .game-blue:hover .game-icon {
+            background: #183b67;
+        }
+
+
+        /* DARK GREEN */
+
+        body.dark .game-green:hover {
+            background: #10251b;
+            border-color: #22c55e;
+
+            box-shadow:
+                0 0 0 1px rgba(34,197,94,.2),
+                0 14px 35px rgba(34,197,94,.20);
+        }
+
+        body.dark .game-green:hover .game-icon {
+            background: #164c2a;
+        }
+
+
+        /* DARK PURPLE */
+
+        body.dark .game-purple:hover {
+            background: #241535;
+            border-color: #a855f7;
+
+            box-shadow:
+                0 0 0 1px rgba(168,85,247,.2),
+                0 14px 35px rgba(168,85,247,.20);
+        }
+
+        body.dark .game-purple:hover .game-icon {
+            background: #47246b;
+        }
+
+
+        /* DARK ORANGE */
+
+        body.dark .game-orange:hover {
+            background: #302016;
+            border-color: #f97316;
+
+            box-shadow:
+                0 0 0 1px rgba(249,115,22,.2),
+                0 14px 35px rgba(249,115,22,.20);
+        }
+
+        body.dark .game-orange:hover .game-icon {
+            background: #633514;
+        }
+
+
+        /* DARK PINK */
+
+        body.dark .game-pink:hover {
+            background: #301624;
+            border-color: #ec4899;
+
+            box-shadow:
+                0 0 0 1px rgba(236,72,153,.2),
+                0 14px 35px rgba(236,72,153,.20);
+        }
+
+        body.dark .game-pink:hover .game-icon {
+            background: #612344;
+        }
+
+
+        /* DARK RED */
+
+        body.dark .game-red:hover {
+            background: #321515;
+            border-color: #ef4444;
+
+            box-shadow:
+                0 0 0 1px rgba(239,68,68,.2),
+                0 14px 35px rgba(239,68,68,.20);
+        }
+
+        body.dark .game-red:hover .game-icon {
+            background: #632020;
+        }
+
+
+        /* DARK CYAN */
+
+        body.dark .game-cyan:hover {
+            background: #102b31;
+            border-color: #06b6d4;
+
+            box-shadow:
+                0 0 0 1px rgba(6,182,212,.2),
+                0 14px 35px rgba(6,182,212,.20);
+        }
+
+        body.dark .game-cyan:hover .game-icon {
+            background: #15535e;
+        }
+
+
+        /* DARK YELLOW */
+
+        body.dark .game-yellow:hover {
+            background: #302d12;
+            border-color: #eab308;
+
+            box-shadow:
+                0 0 0 1px rgba(234,179,8,.2),
+                0 14px 35px rgba(234,179,8,.20);
+        }
+
+        body.dark .game-yellow:hover .game-icon {
+            background: #5b5314;
+        }
+
+
+        /* =========================================
+           TABLET
+        ========================================= */
+
+        @media (max-width: 900px) {
+
+            .games-grid {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+        }
+
+
+        /* =========================================
+           MOBILE
+        ========================================= */
+
+        @media (max-width: 600px) {
+
+            .games-page {
+                padding: 30px 0 50px;
+            }
+
+            .games-container {
+                padding: 12px;
+
+                border-radius: 18px;
+            }
+
+            .games-grid {
+                grid-template-columns:
+                    repeat(2, 1fr);
+
+                gap: 10px;
+            }
+
+            .game-card {
+                min-height: 145px;
+
+                padding: 14px;
+
+                border-radius: 14px;
+            }
+
+            .game-icon {
+                width: 48px;
+                height: 48px;
+
+                font-size: 27px;
+
+                border-radius: 13px;
+            }
+
+            .game-card strong {
+                font-size: 14px;
+            }
+
+            .game-card span {
+                font-size: 10px;
+            }
+
+            .play-label {
+                font-size: 10px;
+            }
+
+        }
+        /* REAL CAR DRIVING - BIG CAR ICON */
+
+.car-game-icon {
+    width: 90px;
+    height: 65px;
+
+    margin-bottom: 16px;
+
+    background: linear-gradient(
+        135deg,
+        #fff7ed,
+        #ffedd5
+    );
+
+    border-radius: 18px;
+
+    font-size: 55px;
+
+    box-shadow:
+        0 8px 20px rgba(249,115,22,.15);
+
+    transform: scale(1.05);
+}
+
+.game-card:hover .car-game-icon {
+    transform: scale(1.18);
+
+    background: linear-gradient(
+        135deg,
+        #ffedd5,
+        #fed7aa
+    );
+
+    box-shadow:
+        0 12px 28px rgba(249,115,22,.25);
+}
+
+body.dark .car-game-icon {
+    background: #3a2415;
+
+    box-shadow:
+        0 8px 25px rgba(249,115,22,.18);
+}
+
+body.dark .game-card:hover .car-game-icon {
+    background: #633514;
+
+    box-shadow:
+        0 0 25px rgba(249,115,22,.30);
+}
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================================
+         HEADER
+    ========================================= -->
+
+    <header class="site-header">
+
+        <div class="container header-inner">
+
+            <a href="../index.html" class="logo">
+                🦊 <span>Znova</span>Fox
+            </a>
+
+
+            <nav class="desktop-nav">
+
+                <a href="../index.html">Home</a>
+
+                <a href="ai-tools.html">AI Tools</a>
+
+                <a href="online-tools.html">Tools</a>
+
+                <a href="government.html">Government</a>
+
+                <a href="jobs.html">Jobs</a>
+
+                <a href="education.html">Education</a>
+
+                <a href="shopping.html">Shopping</a>
+
+              
+            </nav>
+
+
+            <div class="header-actions">
+
+                <button
+                    class="theme-btn"
+                    id="themeBtn">
+                    🌙
+                </button>
+
+                <button
+                    class="menu-btn"
+                    id="menuBtn">
+                    ☰
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <nav
+            class="mobile-nav"
+            id="mobileNav">
+
+            <a href="../index.html">
+                🏠 Home
+            </a>
+
+            <a href="ai-tools.html">
+                🤖 AI Tools
+            </a>
+
+            <a href="online-tools.html">
+                🛠️ Online Tools
+            </a>
+
+            <a href="government.html">
+                🇮🇳 Government
+            </a>
+
+            <a href="jobs.html">
+                💼 Jobs
+            </a>
+
+            <a href="education.html">
+                📚 Education
+            </a>
+
+            <a href="shopping.html">
+                🛒 Shopping
+            </a>
+
+            <a href="games.html">
+                🎮 Games
+            </a>
+
+        </nav>
+
+    </header>
+
+
+
+    <!-- =========================================
+         GAMES
+    ========================================= -->
+
+    <main>
+
+        <section class="games-page">
+
+            <div class="container">
+
+
+                <div class="games-header">
+
+                    <span class="section-label">
+                        🎮 ZnovaFox Games
+                    </span>
+
+                    <h1>
+                        Play & Enjoy
+                    </h1>
+
+                    <p>
+                        Simple, fun and lightweight games
+                        you can play directly on ZnovaFox.
+                    </p>
+
+                </div>
+
+
+
+                <!-- GAME CONTAINER -->
+
+                <div class="games-container">
+
+                    <div class="games-grid">
+
+
+                        <!-- 1 LUDO -->
+
+                        <a
+                            href="ludo.html"
+                            class="game-card game-green">
+
+                            <div class="game-icon">
+                                🎲
+                            </div>
+
+                            <strong>
+                                Ludo
+                            </strong>
+
+                            <span>
+                                Classic board game
+                            </span>
+
+                            <div class="play-label">
+                                ▶ Play Game
+                            </div>
+
+                        </a>
+
+
+
+                        <!-- 2 BALL PUZZLE -->
+
+                        <a
+                            href="#"
+                            class="game-card game-red">
+
+                            <div class="game-icon">
+                                🔴
+                            </div>
+
+                            <strong>
+                                Ball Puzzle
+                            </strong>
+
+                            <span>
+                                Match and solve balls
+                            </span>
+
+                            <div class="play-label">
+                                ▶ Play Game
+                            </div>
+
+                        </a>
+
+
+
+                        <!-- 3 ARROW PUZZLE -->
+
+                        <a
+                            href="#"
+                            class="game-card game-blue">
+
+                            <div class="game-icon">
+                                ➡️
+                            </div>
+
+                            <strong>
+                                Arrow Puzzle
+                            </strong>
+
+                            <span>
+                                Solve the arrow path
+                            </span>
+
+                            <div class="play-label">
+                                ▶ Play Game
+                            </div>
+
+                        </a>
+
+
+
+                        <!-- 4 TIC TAC TOE -->
+
+                        <a
+                            href="#"
+                            class="game-card game-purple">
+
+                            <div class="game-icon">
+                                ❌⭕
+                            </div>
+
+                            <strong>
+                                Tic Tac Toe
+                            </strong>
+
+                            <span>
+                                Classic strategy game
+                            </span>
+
+                            <div class="play-label">
+                                ▶ Play Game
+                            </div>
+
+                        </a>
+
+
+
+                        <!-- 5 CAR JAM -->
+
+                        <a
+                            href="#"
+                            class="game-card game-orange">
+
+                            <div class="game-icon">
+                                🚗
+                            </div>
+
+                            <strong>
+                                Car Jam
+                            </strong>
+
+                            <span>
+                                Clear the traffic
+                            </span>
+
+                            <div class="play-label">
+                                ▶ Play Game
+                            </div>
+
+                        </a>
+
+
+
+                        <!-- 6 CROSS MATH -->
+
+                        <a
+                            href="#"
+                            class="game-card game-yellow">
+
+                            <div class="game-icon">
+                                ➕
+                            </div>
+
+                            <strong>
+                                Cross Math
+                            </strong>
+
+                            <span>
+                                Solve quick math puzzles
+                            </span>
+
+                            <div class="play-label">
+                                ▶ Play Game
+                            </div>
+
+                        </a>
+
+
+
+                        <!-- 7 WORD SEARCH -->
+
+                        <a
+                            href="#"
+                            class="game-card game-cyan">
+
+                            <div class="game-icon">
+                                🔎
+                            </div>
+
+                            <strong>
+                                Word Search
+                            </strong>
+
+                            <span>
+                                Find hidden words
+                            </span>
+
+                            <div class="play-label">
+                                ▶ Play Game
+                            </div>
+
+                        </a>
+
+
+
+                        <!-- 8 SHOOT BUBBLE -->
+
+                        <a
+                            href="#"
+                            class="game-card game-pink">
+
+                            <div class="game-icon">
+                                🫧
+                            </div>
+
+                            <strong>
+                                Shoot Bubble
+                            </strong>
+
+                            <span>
+                                Match and shoot bubbles
+                            </span>
+
+                            <div class="play-label">
+                                ▶ Play Game
+                            </div>
+
+                        </a>
+
+
+
+                        <!-- 9 CHESS -->
+
+                        <a
+                            href="#"
+                            class="game-card game-blue">
+
+                            <div class="game-icon">
+                                ♟️
+                            </div>
+
+                            <strong>
+                                Chess
+                            </strong>
+
+                            <span>
+                                Classic chess challenge
+                            </span>
+
+                            <div class="play-label">
+                                ▶ Play Game
+                            </div>
+
+                        </a>
+                        <!-- REAL CAR DRIVING -->
+
+<a
+    href="real-car-driving.html"
+    class="game-card game-orange">
+
+    <div class="game-icon car-game-icon">
+    🏎️
+</div>
+    <strong>
+        Real Car Driving
+    </strong>
+
+    <span>
+        Drive, collect coins and control
+        your car with steering.
+    </span>
+
+    <div class="play-label">
+        ▶ Play Game
+    </div>
+
+</a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+
+    <!-- =====================================================
+     ZNOVaFOX PROFESSIONAL FOOTER
+===================================================== -->
+
+<footer class="znova-footer">
+
+    <div class="container">
+
+        <!-- ==========================================
+             ZNOVaFOX DESCRIPTION
+        =========================================== -->
+
+        <div class="footer-about">
+
+            <a href="index.html" class="footer-logo">
+
+                <span class="footer-logo-icon">🦊</span>
+
+                <span>
+                    <b>Znova</b>Fox
+                </span>
+
+            </a>
+
+
+            <p class="footer-description">
+
+                <strong>ZnovaFox</strong> is an independent digital platform designed to bring useful online tools, AI resources, government services, job information, education resources and other helpful digital content together in one place. Our goal is 
+                to make useful information easier to discover through a simple, fast and user-friendly platform.
+
+            </p>
+
+        </div>
+
+
+
+        <!-- ==========================================
+             DISCLAIMER
+        =========================================== -->
+
+        <div class="footer-disclaimer">
+
+            <div class="disclaimer-icon">
+                ⚠️
+            </div>
+
+            <div>
+
+                <h3>
+                    Disclaimer
+                </h3>
+
+                <p>
+
+                    ZnovaFox is an independent informational
+                    platform and is not affiliated with,
+                    endorsed by, or officially connected
+                    with any government department,
+                    organization, company or third-party
+                    service unless specifically stated.
+
+                    Government websites, job notifications,
+                    services and external resources are
+                    provided through links to their respective
+                    official or external websites.
+
+                    Users should always verify important
+                    information from the concerned official
+                    website before taking any action.
+
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ==========================================
+             FOOTER COLUMNS
+        =========================================== -->
+
+        <div class="footer-columns">
+
+
+            <!-- QUICK LINKS -->
+
+            <div class="footer-column">
+
+                <h3>
+                    Quick Links
+                </h3>
+
+                <a  href="../index.html">
+                    🏠 Home
+                </a>
+
+                <a href="government.html">
+                    🇮🇳 Government
+                </a>
+
+                <a href="jobs.html">
+                    💼 Jobs
+                </a>
+
+                <a href="education.html">
+                    📚 Education
+                </a>
+
+                <a href="ai-tools.html">
+                    🤖 AI Tools
+                </a>
+
+                <a href="online-tools.html">
+                    🛠️ Online Tools
+                </a>
+
+            </div>
+
+
+
+            <!-- INFORMATION -->
+
+            <div class="footer-column">
+
+                <h3>
+                    Information
+                </h3>
+
+                <a href="about.html">
+                    ℹ️ About ZnovaFox
+                </a>
+
+                <a href="contact.html">
+                    📞 Contact Us
+                </a>
+
+                <a href="privacy.html">
+                    🔒 Privacy Policy
+                </a>
+
+                <a href="terms.html">
+                    📜 Terms & Conditions
+                </a>
+
+                <a href="disclaimer.html">
+                    ⚠️ Disclaimer
+                </a>
+
+                <a href="sitemap.html">
+                    🗺️ Sitemap
+                </a>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- ==========================================
+             SOCIAL SECTION
+        =========================================== -->
+
+        <div class="footer-social-section">
+
+            <div class="footer-social-text">
+
+                <h3>
+                    Connect With ZnovaFox
+                </h3>
+
+                <p>
+                    Follow ZnovaFox for latest updates,
+                    useful tools and important information.
+                </p>
+
+            </div>
+
+
+            <div class="footer-social-links">
+
+                <!-- YouTube -->
+
+                <a
+                    href="#"
+                    class="footer-social-btn youtube"
+                    aria-label="YouTube"
+                    title="YouTube"
+                >
+
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8ZM9.6 15.7V8.3l6.5 3.7-6.5 3.7Z"
+                        />
+                    </svg>
+
+                </a>
+
+
+                <!-- WhatsApp -->
+
+                <a
+                    href="https://whatsapp.com/channel/0029Vb7uQ8fIN9iqD4lz582T"
+                    class="footer-social-btn whatsapp"
+                    aria-label="WhatsApp"
+                    title="WhatsApp"
+                >
+
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M20.5 3.5A11.9 11.9 0 0 0 12 0C5.4 0 .1 5.3.1 11.9c0 2.1.5 4.1 1.5 5.9L0 24l6.4-1.7a11.9 11.9 0 0 0 5.6 1.4h.1c6.6 0 11.9-5.3 11.9-11.9 0-3.2-1.2-6.1-3.5-8.3Z"
+                        />
+                    </svg>
+
+                </a>
+
+
+                <!-- Instagram -->
+
+                <a
+                    href="#"
+                    class="footer-social-btn instagram"
+                    aria-label="Instagram"
+                    title="Instagram"
+                >
+
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5Zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7Zm5 3.5A4.5 4.5 0 1 1 7.5 12 4.5 4.5 0 0 1 12 7.5Z"
+                        />
+                    </svg>
+
+                </a>
+
+
+                <!-- Telegram -->
+
+                <a
+                    href="#"
+                    class="footer-social-btn telegram"
+                    aria-label="Telegram"
+                    title="Telegram"
+                >
+
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M21.8 3.2 2.7 10.6c-1.3.5-1.3 1.2-.2 1.5l4.9 1.5 1.9 5.8c.2.6.1.8.7.8.5 0 .7-.2.9-.5l2.4-2.3 5 3.7c.9.5 1.6.3 1.8-.8l3.2-15.1c.3-1.3-.5-1.9-1.5-1.4Z"
+                        />
+                    </svg>
+
+                </a>
+
+
+                <!-- Facebook -->
+
+                <a
+                    href="#"
+                    class="footer-social-btn facebook"
+                    aria-label="Facebook"
+                    title="Facebook"
+                >
+
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M14 8h3V4h-3c-3.3 0-5 2-5 5v3H6v4h3v8h4v-8h3.5l.5-4H13V9c0-.7.3-1 1-1Z"
+                        />
+                    </svg>
+
+                </a>
+
+
+                <!-- X -->
+
+                <a
+                    href="#"
+                    class="footer-social-btn twitter"
+                    aria-label="X"
+                    title="X"
+                >
+
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M18.2 2H22l-8.3 9.5L23.5 22h-7.6l-6-7.8L3.1 22H0l7.8-8.9L.5 2h7.8l5.4 7L18.2 2Z"
+                        />
+                    </svg>
+
+                </a>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ==========================================
+             FOOTER BOTTOM
+        =========================================== -->
+
+        <div class="footer-divider"></div>
+
+
+        <div class="footer-bottom">
+
+            <p>
+                © 2026 <strong>ZnovaFox</strong>.
+                All rights reserved.
+            </p>
+
+
+            <div class="footer-bottom-links">
+
+               <a href="privacy.html">
+                    Privacy
+                </a>
+
+                <a href="terms.html">
+                    Terms
+                </a>
+
+                <a href="disclaimer.html">
+                    Disclaimer
+                </a>
+
+                <a href="contact.html">
+                    Contact
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    </footer>
+
+
+
+    <script src="../js/main.js"></script>
+
+</body>
+
+</html>

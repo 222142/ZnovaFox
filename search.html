@@ -1,0 +1,905 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Search - ZnovaFox</title>
+
+    <meta
+        name="description"
+        content="Search services and resources on ZnovaFox."
+    >
+
+    <link
+        rel="stylesheet"
+        href="../css/main.css"
+    >
+
+    <style>
+
+        .search-page {
+            padding: 45px 0 70px;
+        }
+
+        .search-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .search-header h1 {
+            margin-bottom: 10px;
+        }
+
+        .search-header p {
+            opacity: .7;
+        }
+
+        .search-results {
+            max-width: 850px;
+            margin: 0 auto;
+
+            display: grid;
+            gap: 16px;
+        }
+
+        .search-result-card {
+
+            display: flex;
+            align-items: center;
+
+            gap: 16px;
+
+            padding: 20px;
+
+            border: 1px solid #ddd;
+            border-radius: 16px;
+
+            background: var(--card-bg, #fff);
+
+            color: inherit;
+            text-decoration: none;
+
+            transition:
+                transform .2s ease,
+                box-shadow .2s ease;
+        }
+
+        .search-result-card:hover {
+
+            transform:
+                translateY(-3px);
+
+            box-shadow:
+                0 10px 25px
+                rgba(0, 0, 0, .08);
+        }
+
+        .search-result-icon {
+            font-size: 30px;
+        }
+
+        .search-result-content {
+            flex: 1;
+        }
+
+        .search-result-content strong {
+            display: block;
+
+            font-size: 18px;
+
+            margin-bottom: 5px;
+        }
+
+        .search-result-content small {
+            display: block;
+
+            opacity: .6;
+
+            margin-bottom: 6px;
+        }
+
+        .search-result-content p {
+            margin: 0;
+
+            font-size: 14px;
+
+            opacity: .72;
+
+            line-height: 1.5;
+        }
+
+        .search-arrow {
+            font-size: 22px;
+        }
+
+        .no-results {
+            text-align: center;
+
+            padding: 50px 20px;
+        }
+
+        .no-results h2 {
+            margin-bottom: 10px;
+        }
+
+        .no-results p {
+            opacity: .7;
+        }
+
+        body.dark .search-result-card {
+            border-color: #333;
+        }
+
+        @media (max-width: 600px) {
+
+            .search-page {
+                padding: 30px 0 50px;
+            }
+
+            .search-result-card {
+                padding: 16px;
+            }
+
+            .search-result-icon {
+                font-size: 24px;
+            }
+
+            .search-result-content strong {
+                font-size: 16px;
+            }
+
+            .search-result-content p {
+                font-size: 13px;
+            }
+
+        }
+.search-page-box {
+    max-width: 700px;
+    margin: 0 auto 30px;
+}
+
+.search-page-box input {
+    width: 100%;
+}
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header class="site-header">
+
+    <div class="container header-inner">
+
+
+        <a
+            href="../index.html"
+            class="logo"
+        >
+            🦊 <span>Znova</span>Fox
+        </a>
+
+
+        <nav class="desktop-nav">
+
+            <a href="../index.html">
+                Home
+            </a>
+
+            <a href="ai-tools.html">
+                AI Tools
+            </a>
+
+            <a href="online-tools.html">
+                Tools
+            </a>
+
+            <a href="government.html">
+                Government
+            </a>
+
+            <a href="jobs.html">
+                Jobs
+            </a>
+
+            <a href="education.html">
+                Education
+            </a>
+
+        </nav>
+
+
+        <div class="header-actions">
+
+            <button
+                class="theme-btn"
+                id="themeBtn"
+                aria-label="Change theme"
+            >
+                🌙
+            </button>
+
+
+            <button
+                class="menu-btn"
+                id="menuBtn"
+                aria-label="Open menu"
+            >
+                ☰
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <nav
+        class="mobile-nav"
+        id="mobileNav"
+    >
+
+        <a href="../index.html">
+            🏠 Home
+        </a>
+
+        <a href="ai-tools.html">
+            🤖 AI Tools
+        </a>
+
+        <a href="online-tools.html">
+            🛠️ Online Tools
+        </a>
+
+        <a href="government.html">
+            🇮🇳 Government
+        </a>
+
+        <a href="jobs.html">
+            💼 Jobs
+        </a>
+
+        <a href="education.html">
+            📚 Education
+        </a>
+
+        <a href="shopping.html">
+            🛒 Shopping
+        </a>
+
+        <a href="businesses.html">
+            🔗 Businesses
+        </a>
+
+    </nav>
+
+</header>
+
+
+<main>
+
+
+<section class="hero">
+
+    <div class="container">
+
+        <p class="live-status">
+            <span></span> LIVE
+        </p>
+
+        <h1>
+            ZnovaFox Search
+        </h1>
+
+        <p class="hero-text">
+            Find useful services and resources
+            in one place.
+        </p>
+
+    </div>
+
+</section>
+
+
+<section class="search-page">
+
+    <div class="container">
+
+
+        <div class="search-header">
+            <div class="search-box search-page-box">
+
+    <input
+        type="search"
+        id="searchInput"
+        placeholder="Search ZnovaFox..."
+        autocomplete="off"
+    >
+
+    <button
+        id="searchBtn"
+        type="button"
+        aria-label="Search"
+    >
+        🔍
+    </button>
+
+</div>
+
+            <h1 id="searchTitle">
+                Search Results
+            </h1>
+
+            <p>
+                Select a result to continue.
+            </p>
+
+        </div>
+
+
+        <div
+            class="search-results"
+            id="searchResults"
+        >
+
+        </div>
+        
+<script>
+
+const searchResults =
+    document.getElementById("searchResults");
+
+const searchTitle =
+    document.getElementById("searchTitle");
+
+const params =
+    new URLSearchParams(window.location.search);
+
+const query =
+    (params.get("q") || "").toLowerCase().trim();
+
+
+const results = [
+
+    {
+        name: "SSC",
+        category: "Jobs",
+        description: "Staff Selection Commission official website.",
+        url: "https://ssc.gov.in/"
+    },
+
+    {
+        name: "UPSC",
+        category: "Jobs",
+        description: "Union Public Service Commission.",
+        url: "https://www.upsc.gov.in/"
+    },
+
+    {
+        name: "Aadhaar",
+        category: "Government",
+        description: "Aadhaar official services.",
+        url: "https://uidai.gov.in/"
+    },
+
+    {
+        name: "GST",
+        category: "Government",
+        description: "GST registration and services.",
+        url: "https://www.gst.gov.in/"
+    },
+
+    {
+        name: "DigiLocker",
+        category: "Government",
+        description: "Digital documents and certificates.",
+        url: "https://www.digilocker.gov.in/"
+    },
+
+    {
+        name: "Income Tax",
+        category: "Government",
+        description: "Income tax online services.",
+        url: "https://www.incometax.gov.in/"
+    },
+
+    {
+        name: "Scholarship",
+        category: "Education",
+        description: "National Scholarship Portal.",
+        url: "https://scholarships.gov.in/"
+    },
+
+    {
+        name: "UGC",
+        category: "Education",
+        description: "University Grants Commission.",
+        url: "https://www.ugc.gov.in/"
+    },
+
+    {
+        name: "AI Tools",
+        category: "AI",
+        description: "AI tools available on ZnovaFox.",
+        url: "ai-tools.html"
+    },
+
+    {
+        name: "Online Tools",
+        category: "Tools",
+        description: "Useful online tools.",
+        url: "online-tools.html"
+    },
+
+    {
+        name: "Businesses",
+        category: "Business",
+        description: "Business services and useful links.",
+        url: "businesses.html"
+    }
+
+];
+
+
+if (searchTitle) {
+
+    searchTitle.textContent =
+        query
+        ? 'Results for "' + query + '"'
+        : "Search Results";
+
+}
+
+
+const filtered =
+    results.filter(function(item) {
+
+        return (
+            item.name.toLowerCase().includes(query) ||
+            item.category.toLowerCase().includes(query) ||
+            item.description.toLowerCase().includes(query)
+        );
+
+    });
+
+
+if (filtered.length === 0) {
+
+    searchResults.innerHTML = `
+        <div class="no-results">
+
+            <h2>No results found</h2>
+
+            <p>
+                Try another keyword.
+            </p>
+
+        </div>
+    `;
+
+} else {
+
+    filtered.forEach(function(item) {
+
+        const card =
+            document.createElement("a");
+
+        card.className =
+            "search-result-card";
+
+        card.href =
+            item.url;
+
+        if (item.url.startsWith("http")) {
+
+            card.target = "_blank";
+
+            card.rel =
+                "noopener noreferrer";
+
+        }
+
+        card.innerHTML = `
+
+            <div class="search-result-icon">
+                🔎
+            </div>
+
+            <div class="search-result-content">
+
+                <strong>
+                    ${item.name}
+                </strong>
+
+                <small>
+                    ${item.category}
+                </small>
+
+                <p>
+                    ${item.description}
+                </p>
+
+            </div>
+
+            <div class="search-arrow">
+                →
+            </div>
+
+        `;
+
+        searchResults.appendChild(card);
+
+    });
+
+}
+
+</script>
+
+
+
+
+    </div>
+
+</section>
+
+
+</main>
+
+
+<!-- =====================================================
+     ZNOVaFOX PROFESSIONAL FOOTER
+===================================================== -->
+
+<footer class="znova-footer">
+
+    <div class="container">
+
+        <!-- ==========================================
+             ZNOVaFOX DESCRIPTION
+        =========================================== -->
+
+        <div class="footer-about">
+
+            <a href="index.html" class="footer-logo">
+
+                <span class="footer-logo-icon">🦊</span>
+
+                <span>
+                    <b>Znova</b>Fox
+                </span>
+
+            </a>
+
+
+            <p class="footer-description">
+
+                <strong>ZnovaFox</strong> is an independent digital platform designed to bring useful online tools, AI resources, government services, job information, education resources and other helpful digital content together in one place. Our goal is 
+                to make useful information easier to discover through a simple, fast and user-friendly platform.
+
+            </p>
+
+        </div>
+
+
+
+        <!-- ==========================================
+             DISCLAIMER
+        =========================================== -->
+
+        <div class="footer-disclaimer">
+
+            <div class="disclaimer-icon">
+                ⚠️
+            </div>
+
+            <div>
+
+                <h3>
+                    Disclaimer
+                </h3>
+
+                <p>
+
+                    ZnovaFox is an independent informational
+                    platform and is not affiliated with,
+                    endorsed by, or officially connected
+                    with any government department,
+                    organization, company or third-party
+                    service unless specifically stated.
+
+                    Government websites, job notifications,
+                    services and external resources are
+                    provided through links to their respective
+                    official or external websites.
+
+                    Users should always verify important
+                    information from the concerned official
+                    website before taking any action.
+
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ==========================================
+             FOOTER COLUMNS
+        =========================================== -->
+
+        <div class="footer-columns">
+
+
+            <!-- QUICK LINKS -->
+
+            <div class="footer-column">
+
+                <h3>
+                    Quick Links
+                </h3>
+
+               
+               <a  href="../index.html">
+                    🏠 Home
+                </a>
+
+                <a href="government.html">
+                    🇮🇳 Government
+                </a>
+
+                <a href="jobs.html">
+                    💼 Jobs
+                </a>
+
+                <a href="education.html">
+                    📚 Education
+                </a>
+
+                <a href="ai-tools.html">
+                    🤖 AI Tools
+                </a>
+
+                <a href="online-tools.html">
+                    🛠️ Online Tools
+                </a>
+
+            </div>
+
+
+
+            <!-- INFORMATION -->
+
+            <div class="footer-column">
+
+                <h3>
+                    Information
+                </h3>
+
+                <a href="about.html">
+                    ℹ️ About ZnovaFox
+                </a>
+
+                <a href="contact.html">
+                    📞 Contact Us
+                </a>
+
+                <a href="privacy.html">
+                    🔒 Privacy Policy
+                </a>
+
+                <a href="terms.html">
+                    📜 Terms & Conditions
+                </a>
+
+                <a href="disclaimer.html">
+                    ⚠️ Disclaimer
+                </a>
+
+                <a href="sitemap.html">
+                    🗺️ Sitemap
+                </a>
+
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- ==========================================
+             SOCIAL SECTION
+        =========================================== -->
+
+        <div class="footer-social-section">
+
+            <div class="footer-social-text">
+
+                <h3>
+                    Connect With ZnovaFox
+                </h3>
+
+                <p>
+                    Follow ZnovaFox for latest updates,
+                    useful tools and important information.
+                </p>
+
+            </div>
+
+
+            <div class="footer-social-links">
+
+                <!-- YouTube -->
+
+                <a
+                    href="#"
+                    class="footer-social-btn youtube"
+                    aria-label="YouTube"
+                    title="YouTube"
+                >
+
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8ZM9.6 15.7V8.3l6.5 3.7-6.5 3.7Z"
+                        />
+                    </svg>
+
+                </a>
+
+
+                <!-- WhatsApp -->
+
+                <a
+                    href="https://whatsapp.com/channel/0029Vb7uQ8fIN9iqD4lz582T"
+                    class="footer-social-btn whatsapp"
+                    aria-label="WhatsApp"
+                    title="WhatsApp"
+                >
+
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M20.5 3.5A11.9 11.9 0 0 0 12 0C5.4 0 .1 5.3.1 11.9c0 2.1.5 4.1 1.5 5.9L0 24l6.4-1.7a11.9 11.9 0 0 0 5.6 1.4h.1c6.6 0 11.9-5.3 11.9-11.9 0-3.2-1.2-6.1-3.5-8.3Z"
+                        />
+                    </svg>
+
+                </a>
+
+
+                <!-- Instagram -->
+
+                <a
+                    href="#"
+                    class="footer-social-btn instagram"
+                    aria-label="Instagram"
+                    title="Instagram"
+                >
+
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5Zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7Zm5 3.5A4.5 4.5 0 1 1 7.5 12 4.5 4.5 0 0 1 12 7.5Z"
+                        />
+                    </svg>
+
+                </a>
+
+
+                <!-- Telegram -->
+
+                <a
+                    href="#"
+                    class="footer-social-btn telegram"
+                    aria-label="Telegram"
+                    title="Telegram"
+                >
+
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M21.8 3.2 2.7 10.6c-1.3.5-1.3 1.2-.2 1.5l4.9 1.5 1.9 5.8c.2.6.1.8.7.8.5 0 .7-.2.9-.5l2.4-2.3 5 3.7c.9.5 1.6.3 1.8-.8l3.2-15.1c.3-1.3-.5-1.9-1.5-1.4Z"
+                        />
+                    </svg>
+
+                </a>
+
+
+                <!-- Facebook -->
+
+                <a
+                    href="#"
+                    class="footer-social-btn facebook"
+                    aria-label="Facebook"
+                    title="Facebook"
+                >
+
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M14 8h3V4h-3c-3.3 0-5 2-5 5v3H6v4h3v8h4v-8h3.5l.5-4H13V9c0-.7.3-1 1-1Z"
+                        />
+                    </svg>
+
+                </a>
+
+
+                <!-- X -->
+
+                <a
+                    href="#"
+                    class="footer-social-btn twitter"
+                    aria-label="X"
+                    title="X"
+                >
+
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M18.2 2H22l-8.3 9.5L23.5 22h-7.6l-6-7.8L3.1 22H0l7.8-8.9L.5 2h7.8l5.4 7L18.2 2Z"
+                        />
+                    </svg>
+
+                </a>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ==========================================
+             FOOTER BOTTOM
+        =========================================== -->
+
+        <div class="footer-divider"></div>
+
+
+        <div class="footer-bottom">
+
+            <p>
+                © 2026 <strong>ZnovaFox</strong>.
+                All rights reserved.
+            </p>
+
+
+            <div class="footer-bottom-links">
+
+                <a href="privacy.html">
+                    Privacy
+                </a>
+
+                <a href="terms.html">
+                    Terms
+                </a>
+
+                <a href="disclaimer.html">
+                    Disclaimer
+                </a>
+
+                <a href="contact.html">
+                    Contact
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+</footer>
+
+
+
+<script src="../js/main.js"></script>
+
+</body>
+
+</html>
+
