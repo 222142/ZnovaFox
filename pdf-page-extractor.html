@@ -1,0 +1,1611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>PDF Page Extractor - ZnovaFox</title>
+
+    <meta
+        name="description"
+        content="Extract selected pages from a PDF with ZnovaFox PDF Page Extractor."
+    >
+
+    <link rel="stylesheet" href="../../css/main.css">
+
+    <style>
+        .tool-section {
+            padding: 35px 0 50px;
+        }
+
+        .tool-box {
+            max-width: 760px;
+            margin: auto;
+            background: #fff;
+            border: 1px solid #e5e5e5;
+            border-radius: 20px;
+            padding: 24px;
+            box-shadow: 0 10px 30px rgba(0,0,0,.05);
+        }
+
+        .upload-box {
+            border: 2px dashed #cfcfcf;
+            border-radius: 16px;
+            padding: 35px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: .2s;
+        }
+
+        .upload-box:hover,
+        .upload-box.dragover {
+            border-color: #6c4cff;
+            background: #f8f6ff;
+        }
+
+        .upload-icon {
+            font-size: 42px;
+            margin-bottom: 10px;
+        }
+
+        .upload-box h3 {
+            margin-bottom: 7px;
+        }
+
+        .upload-box p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        #pdfInput {
+            display: none;
+        }
+
+        .file-info {
+            display: none;
+            margin-top: 18px;
+            padding: 15px;
+            border-radius: 12px;
+            background: #f5f5f7;
+        }
+
+        .file-info strong {
+            display: block;
+            margin-bottom: 6px;
+            word-break: break-word;
+        }
+
+        .file-info span {
+            color: #666;
+            font-size: 13px;
+        }
+
+        .extract-settings {
+            display: none;
+            margin-top: 22px;
+        }
+
+        .extract-settings h3 {
+            margin-bottom: 14px;
+        }
+
+        .range-label {
+            display: block;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .page-range {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #ddd;
+            border-radius: 11px;
+            font-size: 15px;
+            outline: none;
+        }
+
+        .page-range:focus {
+            border-color: #6c4cff;
+        }
+
+        .hint {
+            margin-top: 8px;
+            color: #777;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        .quick-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 13px;
+        }
+
+        .quick-btn {
+            border: 1px solid #ddd;
+            background: #fff;
+            color: #333;
+            padding: 8px 11px;
+            border-radius: 9px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .quick-btn:hover {
+            border-color: #6c4cff;
+            color: #6c4cff;
+        }
+
+        .selected-info {
+            margin-top: 15px;
+            padding: 13px;
+            border-radius: 11px;
+            background: #f7f4ff;
+            color: #4e3ab5;
+            font-size: 13px;
+            display: none;
+        }
+
+        .button-row {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            flex: 1;
+            border: none;
+            border-radius: 11px;
+            padding: 13px 16px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .primary-btn {
+            background: #6c4cff;
+            color: #fff;
+        }
+
+        .primary-btn:hover {
+            background: #5939e8;
+        }
+
+        .primary-btn:disabled {
+            opacity: .6;
+            cursor: not-allowed;
+        }
+
+        .secondary-btn {
+            background: #eee;
+            color: #222;
+        }
+
+        .secondary-btn:hover {
+            background: #ddd;
+        }
+
+        .progress-wrap {
+            display: none;
+            margin-top: 18px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 9px;
+            background: #eee;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            width: 0%;
+            height: 100%;
+            background: #6c4cff;
+            transition: width .25s ease;
+        }
+
+        .status {
+            margin-top: 9px;
+            text-align: center;
+            font-size: 13px;
+            color: #666;
+        }
+
+        .result {
+            display: none;
+            margin-top: 25px;
+            padding-top: 22px;
+            border-top: 1px solid #eee;
+        }
+
+        .result h3 {
+            margin-bottom: 15px;
+        }
+
+        .result-box {
+            padding: 16px;
+            border: 1px solid #ddd;
+            border-radius: 13px;
+        }
+
+        .result-details {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .result-stat {
+            text-align: center;
+            padding: 12px 8px;
+            background: #f7f7f7;
+            border-radius: 10px;
+        }
+
+        .result-stat span {
+            display: block;
+            font-size: 12px;
+            color: #777;
+            margin-bottom: 5px;
+        }
+
+        .result-stat strong {
+            font-size: 16px;
+        }
+
+        .download-btn {
+            width: 100%;
+            margin-top: 15px;
+            border: none;
+            background: #6c4cff;
+            color: #fff;
+            border-radius: 11px;
+            padding: 13px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .download-btn:hover {
+            background: #5939e8;
+        }
+
+        .note {
+            margin-top: 20px;
+            padding: 13px;
+            background: #f7f7f7;
+            border-radius: 11px;
+            font-size: 13px;
+            color: #666;
+            line-height: 1.5;
+        }
+
+        body.dark .tool-box {
+            background: #171717;
+            border-color: #2b2b2b;
+            box-shadow: none;
+        }
+
+        body.dark .upload-box {
+            border-color: #444;
+        }
+
+        body.dark .upload-box:hover,
+        body.dark .upload-box.dragover {
+            background: #211d31;
+            border-color: #8068ff;
+        }
+
+        body.dark .upload-box p,
+        body.dark .file-info span,
+        body.dark .hint,
+        body.dark .status,
+        body.dark .note,
+        body.dark .result-stat span {
+            color: #aaa;
+        }
+
+        body.dark .file-info,
+        body.dark .note,
+        body.dark .result-stat {
+            background: #222;
+        }
+
+        body.dark .page-range {
+            background: #222;
+            color: #fff;
+            border-color: #3a3a3a;
+        }
+
+        body.dark .quick-btn {
+            background: #222;
+            color: #eee;
+            border-color: #3a3a3a;
+        }
+
+        body.dark .quick-btn:hover {
+            border-color: #8068ff;
+            color: #a99cff;
+        }
+
+        body.dark .selected-info {
+            background: #211d31;
+            color: #c7bfff;
+        }
+
+        body.dark .secondary-btn {
+            background: #2c2c2c;
+            color: #fff;
+        }
+
+        body.dark .secondary-btn:hover {
+            background: #383838;
+        }
+
+        body.dark .result {
+            border-color: #333;
+        }
+
+        body.dark .result-box {
+            border-color: #383838;
+        }
+
+        @media (max-width: 600px) {
+            .tool-section {
+                padding: 22px 0 35px;
+            }
+
+            .tool-box {
+                padding: 17px;
+                border-radius: 16px;
+            }
+
+            .upload-box {
+                padding: 27px 14px;
+            }
+
+            .result-details {
+                grid-template-columns: 1fr;
+            }
+
+            .button-row {
+                flex-direction: column;
+            }
+
+            .quick-buttons {
+                gap: 6px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="site-header">
+
+    <div class="container header-inner">
+
+        <a href="../../index.html" class="logo">
+            Znova<span>Fox</span>
+        </a>
+
+        <nav class="desktop-nav">
+            <a href="../../index.html">Home</a>
+            <a href="../ai-tools.html">AI Tools</a>
+            <a href="../online-tools.html">Online Tools</a>
+            <a href="../government.html">Government</a>
+            <a href="../jobs.html">Jobs</a>
+        </nav>
+
+        <div class="header-actions">
+
+            <button
+                id="themeBtn"
+                class="theme-btn"
+                aria-label="Toggle theme"
+            >
+                🌙
+            </button>
+
+            <button
+                id="menuBtn"
+                class="menu-btn"
+                aria-label="Open menu"
+            >
+                ☰
+            </button>
+
+        </div>
+
+    </div>
+
+    <nav id="mobileNav" class="mobile-nav">
+        <a href="../../index.html">Home</a>
+        <a href="../ai-tools.html">AI Tools</a>
+        <a href="../online-tools.html">Online Tools</a>
+        <a href="../government.html">Government</a>
+        <a href="../jobs.html">Jobs</a>
+    </nav>
+
+</header>
+
+
+<section class="hero">
+
+    <div class="container">
+
+        <div class="live-status">
+            <span></span> LIVE
+        </div>
+
+        <h1>PDF Page Extractor</h1>
+
+        <p class="hero-text">
+            Extract selected pages from any PDF and create a new PDF.
+        </p>
+
+    </div>
+
+</section>
+
+
+<section class="tool-section">
+
+    <div class="container">
+
+        <div class="tool-box">
+
+            <label
+                for="pdfInput"
+                class="upload-box"
+                id="uploadBox"
+            >
+
+                <div class="upload-icon">
+                    📑
+                </div>
+
+                <h3>Upload PDF</h3>
+
+                <p>
+                    Click to choose a PDF or drag & drop it here
+                </p>
+
+                <input
+                    type="file"
+                    id="pdfInput"
+                    accept="application/pdf,.pdf"
+                >
+
+            </label>
+
+
+            <div
+                class="file-info"
+                id="fileInfo"
+            >
+
+                <strong id="fileName">
+                    No file selected
+                </strong>
+
+                <span id="fileDetails"></span>
+
+            </div>
+
+
+            <div
+                class="extract-settings"
+                id="extractSettings"
+            >
+
+                <h3>Select Pages</h3>
+
+
+                <label
+                    for="pageRange"
+                    class="range-label"
+                >
+                    Page numbers or ranges
+                </label>
+
+
+                <input
+                    type="text"
+                    id="pageRange"
+                    class="page-range"
+                    placeholder="Example: 1, 3, 5-8, 12"
+                >
+
+
+                <div class="hint">
+                    You can enter individual pages and ranges.
+                    Example: <b>1, 3, 5-8, 12</b>
+                </div>
+
+
+                <div
+                    class="quick-buttons"
+                    id="quickButtons"
+                >
+
+                    <button
+                        type="button"
+                        class="quick-btn"
+                        data-action="first"
+                    >
+                        First Page
+                    </button>
+
+                    <button
+                        type="button"
+                        class="quick-btn"
+                        data-action="last"
+                    >
+                        Last Page
+                    </button>
+
+                    <button
+                        type="button"
+                        class="quick-btn"
+                        data-action="first-five"
+                    >
+                        First 5
+                    </button>
+
+                    <button
+                        type="button"
+                        class="quick-btn"
+                        data-action="all"
+                    >
+                        All Pages
+                    </button>
+
+                </div>
+
+
+                <div
+                    class="selected-info"
+                    id="selectedInfo"
+                ></div>
+
+
+                <div class="button-row">
+
+                    <button
+                        class="btn primary-btn"
+                        id="extractBtn"
+                    >
+                        📑 Extract Pages
+                    </button>
+
+                    <button
+                        class="btn secondary-btn"
+                        id="clearBtn"
+                    >
+                        Clear
+                    </button>
+
+                </div>
+
+
+                <div
+                    class="progress-wrap"
+                    id="progressWrap"
+                >
+
+                    <div class="progress-bar">
+
+                        <div
+                            class="progress-fill"
+                            id="progressFill"
+                        ></div>
+
+                    </div>
+
+                    <div
+                        class="status"
+                        id="status"
+                    >
+                        Processing...
+                    </div>
+
+                </div>
+
+
+                <div
+                    class="result"
+                    id="result"
+                >
+
+                    <h3>Extraction Complete</h3>
+
+                    <div class="result-box">
+
+                        <div class="result-details">
+
+                            <div class="result-stat">
+
+                                <span>
+                                    Original Pages
+                                </span>
+
+                                <strong
+                                    id="originalPages"
+                                >
+                                    -
+                                </strong>
+
+                            </div>
+
+
+                            <div class="result-stat">
+
+                                <span>
+                                    Extracted Pages
+                                </span>
+
+                                <strong
+                                    id="extractedPages"
+                                >
+                                    -
+                                </strong>
+
+                            </div>
+
+
+                            <div class="result-stat">
+
+                                <span>
+                                    PDF Size
+                                </span>
+
+                                <strong
+                                    id="outputSize"
+                                >
+                                    -
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+                        <button
+                            class="download-btn"
+                            id="downloadBtn"
+                        >
+                            ⬇️ Download Extracted PDF
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <div class="note">
+
+                    🔒 Your PDF is processed directly in your browser.
+                    It is not uploaded to a ZnovaFox server.
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<footer>
+
+    <div class="container">
+
+        <p>
+            © 2026 ZnovaFox. All rights reserved.
+        </p>
+
+    </div>
+
+</footer>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+
+<script src="../../js/main.js"></script>
+
+
+<script>
+
+    const pdfInput =
+        document.getElementById("pdfInput");
+
+    const uploadBox =
+        document.getElementById("uploadBox");
+
+    const fileInfo =
+        document.getElementById("fileInfo");
+
+    const fileName =
+        document.getElementById("fileName");
+
+    const fileDetails =
+        document.getElementById("fileDetails");
+
+    const extractSettings =
+        document.getElementById("extractSettings");
+
+    const pageRange =
+        document.getElementById("pageRange");
+
+    const selectedInfo =
+        document.getElementById("selectedInfo");
+
+    const extractBtn =
+        document.getElementById("extractBtn");
+
+    const clearBtn =
+        document.getElementById("clearBtn");
+
+    const progressWrap =
+        document.getElementById("progressWrap");
+
+    const progressFill =
+        document.getElementById("progressFill");
+
+    const status =
+        document.getElementById("status");
+
+    const result =
+        document.getElementById("result");
+
+    const originalPages =
+        document.getElementById("originalPages");
+
+    const extractedPages =
+        document.getElementById("extractedPages");
+
+    const outputSize =
+        document.getElementById("outputSize");
+
+    const downloadBtn =
+        document.getElementById("downloadBtn");
+
+
+    let selectedFile = null;
+
+    let outputBlob = null;
+
+    let outputURL = null;
+
+    let totalPageCount = 0;
+
+
+    /* =========================
+       Upload
+    ========================= */
+
+    uploadBox.addEventListener(
+        "click",
+        () => {
+
+            pdfInput.click();
+
+        }
+    );
+
+
+    pdfInput.addEventListener(
+        "change",
+        () => {
+
+            if (pdfInput.files.length) {
+
+                loadPDF(
+                    pdfInput.files[0]
+                );
+
+            }
+
+        }
+    );
+
+
+    uploadBox.addEventListener(
+        "dragover",
+        event => {
+
+            event.preventDefault();
+
+            uploadBox.classList.add(
+                "dragover"
+            );
+
+        }
+    );
+
+
+    uploadBox.addEventListener(
+        "dragleave",
+        () => {
+
+            uploadBox.classList.remove(
+                "dragover"
+            );
+
+        }
+    );
+
+
+    uploadBox.addEventListener(
+        "drop",
+        event => {
+
+            event.preventDefault();
+
+            uploadBox.classList.remove(
+                "dragover"
+            );
+
+
+            const file =
+                event.dataTransfer.files[0];
+
+
+            if (!file) {
+                return;
+            }
+
+
+            if (
+                file.type !==
+                    "application/pdf" &&
+                !file.name
+                    .toLowerCase()
+                    .endsWith(".pdf")
+            ) {
+
+                alert(
+                    "Please select a PDF file."
+                );
+
+                return;
+
+            }
+
+
+            loadPDF(file);
+
+        }
+    );
+
+
+    async function loadPDF(file) {
+
+        try {
+
+            selectedFile = file;
+
+
+            const bytes =
+                await file.arrayBuffer();
+
+
+            const pdf =
+                await PDFLib
+                    .PDFDocument
+                    .load(bytes);
+
+
+            totalPageCount =
+                pdf.getPageCount();
+
+
+            fileName.textContent =
+                file.name;
+
+
+            fileDetails.textContent =
+                formatBytes(file.size) +
+                " • " +
+                totalPageCount +
+                (
+                    totalPageCount === 1
+                        ? " page"
+                        : " pages"
+                );
+
+
+            fileInfo.style.display =
+                "block";
+
+
+            extractSettings.style.display =
+                "block";
+
+
+            result.style.display =
+                "none";
+
+
+            selectedInfo.style.display =
+                "none";
+
+
+            pageRange.value =
+                "";
+
+        } catch (error) {
+
+            console.error(error);
+
+            alert(
+                "This PDF could not be opened. It may be password-protected or damaged."
+            );
+
+            clearAll();
+
+        }
+
+    }
+
+
+    /* =========================
+       Quick buttons
+    ========================= */
+
+    document
+        .querySelectorAll(".quick-btn")
+        .forEach(button => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    const action =
+                        button.dataset.action;
+
+
+                    if (!totalPageCount) {
+                        return;
+                    }
+
+
+                    if (action === "first") {
+
+                        pageRange.value =
+                            "1";
+
+                    }
+
+
+                    if (action === "last") {
+
+                        pageRange.value =
+                            String(
+                                totalPageCount
+                            );
+
+                    }
+
+
+                    if (action === "first-five") {
+
+                        const end =
+                            Math.min(
+                                5,
+                                totalPageCount
+                            );
+
+                        pageRange.value =
+                            "1-" + end;
+
+                    }
+
+
+                    if (action === "all") {
+
+                        pageRange.value =
+                            "1-" +
+                            totalPageCount;
+
+                    }
+
+
+                    updateSelectedInfo();
+
+                }
+
+            );
+
+        });
+
+
+    pageRange.addEventListener(
+        "input",
+        updateSelectedInfo
+    );
+
+
+    /* =========================
+       Selected page preview
+    ========================= */
+
+    function updateSelectedInfo() {
+
+        if (!pageRange.value.trim()) {
+
+            selectedInfo.style.display =
+                "none";
+
+            return;
+
+        }
+
+
+        try {
+
+            const pages =
+                parsePageRange(
+                    pageRange.value,
+                    totalPageCount
+                );
+
+
+            selectedInfo.textContent =
+                pages.length +
+                (
+                    pages.length === 1
+                        ? " page"
+                        : " pages"
+                ) +
+                " selected";
+
+
+            selectedInfo.style.display =
+                "block";
+
+        } catch (error) {
+
+            selectedInfo.textContent =
+                "⚠️ " + error.message;
+
+            selectedInfo.style.display =
+                "block";
+
+        }
+
+    }
+
+
+    /* =========================
+       Extract pages
+    ========================= */
+
+    extractBtn.addEventListener(
+        "click",
+        async () => {
+
+            if (!selectedFile) {
+
+                alert(
+                    "Please upload a PDF first."
+                );
+
+                return;
+
+            }
+
+
+            try {
+
+                extractBtn.disabled =
+                    true;
+
+
+                result.style.display =
+                    "none";
+
+
+                progressWrap.style.display =
+                    "block";
+
+
+                progressFill.style.width =
+                    "10%";
+
+
+                status.textContent =
+                    "Reading PDF...";
+
+
+                const bytes =
+                    await selectedFile
+                        .arrayBuffer();
+
+
+                const sourcePDF =
+                    await PDFLib
+                        .PDFDocument
+                        .load(bytes);
+
+
+                totalPageCount =
+                    sourcePDF.getPageCount();
+
+
+                const pageIndexes =
+                    parsePageRange(
+                        pageRange.value,
+                        totalPageCount
+                    );
+
+
+                if (!pageIndexes.length) {
+
+                    throw new Error(
+                        "Please select at least one page."
+                    );
+
+                }
+
+
+                progressFill.style.width =
+                    "30%";
+
+
+                status.textContent =
+                    "Extracting selected pages...";
+
+
+                const newPDF =
+                    await PDFLib
+                        .PDFDocument
+                        .create();
+
+
+                const copiedPages =
+                    await newPDF.copyPages(
+                        sourcePDF,
+                        pageIndexes
+                    );
+
+
+                for (
+                    let i = 0;
+                    i < copiedPages.length;
+                    i++
+                ) {
+
+                    newPDF.addPage(
+                        copiedPages[i]
+                    );
+
+
+                    const percent =
+                        30 +
+                        (
+                            (i + 1) /
+                            copiedPages.length
+                        ) * 50;
+
+
+                    progressFill.style.width =
+                        percent + "%";
+
+
+                    status.textContent =
+                        "Extracting page " +
+                        (i + 1) +
+                        " of " +
+                        copiedPages.length +
+                        "...";
+
+
+                    await new Promise(
+                        resolve =>
+                            setTimeout(
+                                resolve,
+                                0
+                            )
+                    );
+
+                }
+
+
+                progressFill.style.width =
+                    "85%";
+
+
+                status.textContent =
+                    "Creating PDF...";
+
+
+                const output =
+                    await newPDF.save({
+                        useObjectStreams: true
+                    });
+
+
+                outputBlob =
+                    new Blob(
+                        [output],
+                        {
+                            type:
+                                "application/pdf"
+                        }
+                    );
+
+
+                if (outputURL) {
+
+                    URL.revokeObjectURL(
+                        outputURL
+                    );
+
+                }
+
+
+                outputURL =
+                    URL.createObjectURL(
+                        outputBlob
+                    );
+
+
+                originalPages.textContent =
+                    totalPageCount;
+
+
+                extractedPages.textContent =
+                    pageIndexes.length;
+
+
+                outputSize.textContent =
+                    formatBytes(
+                        outputBlob.size
+                    );
+
+
+                progressFill.style.width =
+                    "100%";
+
+
+                status.textContent =
+                    "Pages extracted successfully.";
+
+
+                result.style.display =
+                    "block";
+
+
+            } catch (error) {
+
+                console.error(error);
+
+                alert(
+                    error.message ||
+                    "Unable to extract pages from this PDF."
+                );
+
+
+                status.textContent =
+                    "Extraction failed.";
+
+            } finally {
+
+                extractBtn.disabled =
+                    false;
+
+            }
+
+        }
+    );
+
+
+    /* =========================
+       Download
+    ========================= */
+
+    downloadBtn.addEventListener(
+        "click",
+        () => {
+
+            if (
+                !outputBlob ||
+                !outputURL
+            ) {
+
+                return;
+
+            }
+
+
+            const link =
+                document.createElement("a");
+
+
+            link.href =
+                outputURL;
+
+
+            link.download =
+                getOutputName(
+                    selectedFile.name
+                );
+
+
+            document.body.appendChild(
+                link
+            );
+
+
+            link.click();
+
+
+            link.remove();
+
+        }
+    );
+
+
+    /* =========================
+       Page range parser
+    ========================= */
+
+    function parsePageRange(
+        value,
+        totalPages
+    ) {
+
+        if (!value.trim()) {
+
+            throw new Error(
+                "Please enter page numbers."
+            );
+
+        }
+
+
+        const pages =
+            new Set();
+
+
+        const parts =
+            value
+                .split(",")
+                .map(
+                    item => item.trim()
+                )
+                .filter(Boolean);
+
+
+        for (const part of parts) {
+
+            if (part.includes("-")) {
+
+                const range =
+                    part
+                        .split("-")
+                        .map(
+                            item =>
+                                item.trim()
+                        );
+
+
+                if (range.length !== 2) {
+
+                    throw new Error(
+                        "Invalid range: " +
+                        part
+                    );
+
+                }
+
+
+                const start =
+                    Number(range[0]);
+
+                const end =
+                    Number(range[1]);
+
+
+                if (
+                    !Number.isInteger(start) ||
+                    !Number.isInteger(end) ||
+                    start < 1 ||
+                    end < 1 ||
+                    start > totalPages ||
+                    end > totalPages ||
+                    start > end
+                ) {
+
+                    throw new Error(
+                        "Invalid range: " +
+                        part
+                    );
+
+                }
+
+
+                for (
+                    let page = start;
+                    page <= end;
+                    page++
+                ) {
+
+                    pages.add(
+                        page - 1
+                    );
+
+                }
+
+            } else {
+
+                const page =
+                    Number(part);
+
+
+                if (
+                    !Number.isInteger(page) ||
+                    page < 1 ||
+                    page > totalPages
+                ) {
+
+                    throw new Error(
+                        "Invalid page: " +
+                        part
+                    );
+
+                }
+
+
+                pages.add(
+                    page - 1
+                );
+
+            }
+
+        }
+
+
+        return Array.from(
+            pages
+        ).sort(
+            (a, b) => a - b
+        );
+
+    }
+
+
+    /* =========================
+       Clear
+    ========================= */
+
+    clearBtn.addEventListener(
+        "click",
+        clearAll
+    );
+
+
+    function clearAll() {
+
+        selectedFile = null;
+
+        outputBlob = null;
+
+        totalPageCount = 0;
+
+
+        if (outputURL) {
+
+            URL.revokeObjectURL(
+                outputURL
+            );
+
+            outputURL = null;
+
+        }
+
+
+        pdfInput.value = "";
+
+        fileInfo.style.display =
+            "none";
+
+        extractSettings.style.display =
+            "none";
+
+        result.style.display =
+            "none";
+
+        selectedInfo.style.display =
+            "none";
+
+        progressWrap.style.display =
+            "none";
+
+        progressFill.style.width =
+            "0%";
+
+        status.textContent =
+            "";
+
+        pageRange.value =
+            "";
+
+    }
+
+
+    /* =========================
+       Helpers
+    ========================= */
+
+    function formatBytes(bytes) {
+
+        if (bytes === 0) {
+            return "0 Bytes";
+        }
+
+
+        const units = [
+            "Bytes",
+            "KB",
+            "MB",
+            "GB"
+        ];
+
+
+        const i =
+            Math.floor(
+                Math.log(bytes) /
+                Math.log(1024)
+            );
+
+
+        return (
+            parseFloat(
+                (
+                    bytes /
+                    Math.pow(
+                        1024,
+                        i
+                    )
+                ).toFixed(2)
+            ) +
+            " " +
+            units[i]
+        );
+
+    }
+
+
+    function getOutputName(name) {
+
+        const dot =
+            name.lastIndexOf(".");
+
+
+        const base =
+            dot > 0
+                ? name.substring(
+                    0,
+                    dot
+                )
+                : name;
+
+
+        return (
+            base +
+            "-extracted.pdf"
+        );
+
+    }
+
+</script>
+
+</body>
+</html>

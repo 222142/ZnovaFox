@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Date Calculator - ZnovaFox</title>
+
+<link rel="stylesheet" href="../../css/main.css">
+
+<style>
+.date-calculator-box {
+    max-width: 620px;
+    margin: 30px auto;
+    padding: 22px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    background: var(--card-bg, #fff);
+}
+
+.date-section {
+    padding: 18px;
+    margin-bottom: 16px;
+    border: 1px solid #e5e5e5;
+    border-radius: 16px;
+    background: rgba(255,255,255,.5);
+}
+
+.date-section h2 {
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+.date-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.date-field {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.date-field label {
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.date-field input,
+.date-field select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background: #fff;
+    color: #222;
+    font-size: 15px;
+    outline: none;
+}
+
+.date-field input:focus,
+.date-field select:focus {
+    border-color: #6c4cff;
+}
+
+.date-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.date-btn {
+    flex: 1;
+    padding: 12px 16px;
+    border: none;
+    border-radius: 11px;
+    background: #6c4cff;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.date-btn:hover {
+    opacity: .88;
+}
+
+.date-btn.secondary {
+    background: #eee;
+    color: #222;
+}
+
+.result-box {
+    margin-top: 18px;
+    padding: 18px;
+    border-radius: 15px;
+    background: #f5f3ff;
+    border: 1px solid #ddd5ff;
+    text-align: center;
+}
+
+.result-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #666;
+    margin-bottom: 8px;
+}
+
+.result-main {
+    font-size: 28px;
+    font-weight: 800;
+    color: #6c4cff;
+}
+
+.result-sub {
+    margin-top: 8px;
+    font-size: 14px;
+    color: #555;
+}
+
+.add-result {
+    margin-top: 12px;
+    font-size: 17px;
+    font-weight: 700;
+}
+
+.info-text {
+    margin-top: 12px;
+    font-size: 13px;
+    color: #666;
+    text-align: center;
+    line-height: 1.5;
+}
+
+/* DARK MODE */
+
+body.dark .date-calculator-box {
+    border-color: #333;
+}
+
+body.dark .date-section {
+    background: #191c22;
+    border-color: #30343c;
+}
+
+body.dark .date-field input,
+body.dark .date-field select {
+    background: #111827;
+    color: #fff;
+    border-color: #303846;
+}
+
+body.dark .date-btn.secondary {
+    background: #252a32;
+    color: #fff;
+}
+
+body.dark .result-box {
+    background: #17152a;
+    border-color: #39325f;
+}
+
+body.dark .result-sub,
+body.dark .info-text {
+    color: #aaa;
+}
+
+body.dark .result-title {
+    color: #aaa;
+}
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+
+    .date-calculator-box {
+        margin: 18px auto;
+        padding: 14px;
+        border-radius: 16px;
+    }
+
+    .date-section {
+        padding: 14px;
+        border-radius: 14px;
+    }
+
+    .date-section h2 {
+        font-size: 18px;
+    }
+
+    .date-row {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .date-buttons {
+        flex-direction: column;
+    }
+
+    .result-main {
+        font-size: 24px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header class="site-header">
+
+    <div class="container header-inner">
+
+        <a href="../../index.html" class="logo">
+            🦊 <span>Znova</span>Fox
+        </a>
+
+        <nav class="desktop-nav">
+            <a href="../../index.html">Home</a>
+            <a href="../ai-tools.html">AI Tools</a>
+            <a href="../online-tools.html">Tools</a>
+            <a href="../government.html">Government</a>
+            <a href="../jobs.html">Jobs</a>
+            <a href="../education.html">Education</a>
+        </nav>
+
+        <div class="header-actions">
+            <button class="theme-btn" id="themeBtn">🌙</button>
+            <button class="menu-btn" id="menuBtn">☰</button>
+        </div>
+
+    </div>
+
+    <nav class="mobile-nav" id="mobileNav">
+        <a href="../../index.html">🏠 Home</a>
+        <a href="../ai-tools.html">🤖 AI Tools</a>
+        <a href="../online-tools.html">🛠️ Online Tools</a>
+        <a href="../government.html">🇮🇳 Government</a>
+        <a href="../jobs.html">💼 Jobs</a>
+        <a href="../education.html">📚 Education</a>
+    </nav>
+
+</header>
+
+
+<main>
+
+<section class="hero">
+
+    <div class="container">
+
+        <p class="live-status">
+            <span></span> LIVE
+        </p>
+
+        <h1>Date Calculator</h1>
+
+        <p class="hero-text">
+            Calculate date differences and add or subtract days easily.
+        </p>
+
+    </div>
+
+</section>
+
+
+<section class="service-section">
+
+<div class="container">
+
+<div class="date-calculator-box">
+
+
+<!-- DATE DIFFERENCE -->
+
+<div class="date-section">
+
+    <h2>📅 Date Difference</h2>
+
+    <div class="date-row">
+
+        <div class="date-field">
+
+            <label for="startDate">
+                Start Date
+            </label>
+
+            <input
+                type="date"
+                id="startDate"
+            >
+
+        </div>
+
+
+        <div class="date-field">
+
+            <label for="endDate">
+                End Date
+            </label>
+
+            <input
+                type="date"
+                id="endDate"
+            >
+
+        </div>
+
+    </div>
+
+
+    <div class="date-buttons">
+
+        <button
+            class="date-btn"
+            onclick="calculateDifference()"
+        >
+            Calculate Difference
+        </button>
+
+        <button
+            class="date-btn secondary"
+            onclick="resetDifference()"
+        >
+            Reset
+        </button>
+
+    </div>
+
+
+    <div
+        class="result-box"
+        id="differenceResult"
+        style="display:none;"
+    >
+
+        <div class="result-title">
+            DATE DIFFERENCE
+        </div>
+
+        <div
+            class="result-main"
+            id="differenceMain"
+        >
+            0 Days
+        </div>
+
+        <div
+            class="result-sub"
+            id="differenceSub"
+        >
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- ADD / SUBTRACT DATE -->
+
+<div class="date-section">
+
+    <h2>➕➖ Add or Subtract Days</h2>
+
+    <div class="date-field">
+
+        <label for="baseDate">
+            Select Date
+        </label>
+
+        <input
+            type="date"
+            id="baseDate"
+        >
+
+    </div>
+
+
+    <div
+        class="date-row"
+        style="margin-top:12px;"
+    >
+
+        <div class="date-field">
+
+            <label for="daysValue">
+                Number of Days
+            </label>
+
+            <input
+                type="number"
+                id="daysValue"
+                value="7"
+                min="0"
+                placeholder="Enter days"
+            >
+
+        </div>
+
+
+        <div class="date-field">
+
+            <label for="operation">
+                Operation
+            </label>
+
+            <select id="operation">
+
+                <option value="add">
+                    Add Days
+                </option>
+
+                <option value="subtract">
+                    Subtract Days
+                </option>
+
+            </select>
+
+        </div>
+
+    </div>
+
+
+    <div class="date-buttons">
+
+        <button
+            class="date-btn"
+            onclick="calculateDate()"
+        >
+            Calculate Date
+        </button>
+
+        <button
+            class="date-btn secondary"
+            onclick="resetDateCalculator()"
+        >
+            Reset
+        </button>
+
+    </div>
+
+
+    <div
+        class="result-box"
+        id="dateResult"
+        style="display:none;"
+    >
+
+        <div class="result-title">
+            RESULT DATE
+        </div>
+
+        <div
+            class="result-main"
+            id="resultDate"
+        >
+            --
+        </div>
+
+        <div
+            class="result-sub"
+            id="resultDay"
+        >
+        </div>
+
+    </div>
+
+</div>
+
+
+<p class="info-text">
+    Your dates are processed directly in your browser.
+    No date information is sent to a server.
+</p>
+
+
+</div>
+
+</div>
+
+</section>
+
+</main>
+
+
+<footer>
+
+<div class="container">
+
+    <p>
+        © 2026 ZnovaFox. All rights reserved.
+    </p>
+
+</div>
+
+</footer>
+
+
+<script src="../../js/main.js"></script>
+
+
+<script>
+
+/* =========================
+   TODAY DATE
+========================= */
+
+function getTodayString() {
+
+    const today = new Date();
+
+    const year = today.getFullYear();
+
+    const month = String(
+        today.getMonth() + 1
+    ).padStart(2, "0");
+
+    const day = String(
+        today.getDate()
+    ).padStart(2, "0");
+
+    return `${year}-${month}-${day}`;
+}
+
+
+/* =========================
+   FORMAT DATE
+========================= */
+
+function formatDate(date) {
+
+    return date.toLocaleDateString(
+        "en-IN",
+        {
+            day: "2-digit",
+            month: "long",
+            year: "numeric"
+        }
+    );
+
+}
+
+
+/* =========================
+   DATE DIFFERENCE
+========================= */
+
+function calculateDifference() {
+
+    const startValue =
+        document.getElementById("startDate").value;
+
+    const endValue =
+        document.getElementById("endDate").value;
+
+
+    if (!startValue || !endValue) {
+
+        alert("Please select both dates.");
+
+        return;
+
+    }
+
+
+    const start =
+        new Date(startValue + "T00:00:00");
+
+    const end =
+        new Date(endValue + "T00:00:00");
+
+
+    let difference =
+        Math.abs(end - start);
+
+
+    const totalDays =
+        Math.floor(
+            difference /
+            (1000 * 60 * 60 * 24)
+        );
+
+
+    const years =
+        Math.floor(totalDays / 365);
+
+    const remainingDays =
+        totalDays - (years * 365);
+
+
+    const months =
+        Math.floor(remainingDays / 30);
+
+    const days =
+        remainingDays - (months * 30);
+
+
+    document.getElementById(
+        "differenceMain"
+    ).textContent =
+        totalDays + " Days";
+
+
+    document.getElementById(
+        "differenceSub"
+    ).textContent =
+        `${years} Years, ${months} Months, ${days} Days`;
+
+
+    document.getElementById(
+        "differenceResult"
+    ).style.display = "block";
+
+}
+
+
+/* =========================
+   RESET DIFFERENCE
+========================= */
+
+function resetDifference() {
+
+    document.getElementById(
+        "startDate"
+    ).value = "";
+
+    document.getElementById(
+        "endDate"
+    ).value = "";
+
+    document.getElementById(
+        "differenceResult"
+    ).style.display = "none";
+
+}
+
+
+/* =========================
+   ADD / SUBTRACT DATE
+========================= */
+
+function calculateDate() {
+
+    const baseValue =
+        document.getElementById("baseDate").value;
+
+    const daysValue =
+        document.getElementById("daysValue").value;
+
+    const operation =
+        document.getElementById("operation").value;
+
+
+    if (!baseValue) {
+
+        alert("Please select a date.");
+
+        return;
+
+    }
+
+
+    if (
+        daysValue === "" ||
+        Number(daysValue) < 0
+    ) {
+
+        alert("Please enter a valid number of days.");
+
+        return;
+
+    }
+
+
+    const date =
+        new Date(baseValue + "T00:00:00");
+
+
+    const days =
+        Number(daysValue);
+
+
+    if (operation === "add") {
+
+        date.setDate(
+            date.getDate() + days
+        );
+
+    } else {
+
+        date.setDate(
+            date.getDate() - days
+        );
+
+    }
+
+
+    document.getElementById(
+        "resultDate"
+    ).textContent =
+        formatDate(date);
+
+
+    document.getElementById(
+        "resultDay"
+    ).textContent =
+        "Day: " +
+        date.toLocaleDateString(
+            "en-IN",
+            {
+                weekday: "long"
+            }
+        );
+
+
+    document.getElementById(
+        "dateResult"
+    ).style.display = "block";
+
+}
+
+
+/* =========================
+   RESET DATE CALCULATOR
+========================= */
+
+function resetDateCalculator() {
+
+    document.getElementById(
+        "baseDate"
+    ).value = "";
+
+    document.getElementById(
+        "daysValue"
+    ).value = "7";
+
+    document.getElementById(
+        "operation"
+    ).value = "add";
+
+    document.getElementById(
+        "dateResult"
+    ).style.display = "none";
+
+}
+
+
+/* =========================
+   DEFAULT DATES
+========================= */
+
+window.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        const today = getTodayString();
+
+        document.getElementById(
+            "startDate"
+        ).value = today;
+
+        document.getElementById(
+            "baseDate"
+        ).value = today;
+
+    }
+);
+
+</script>
+
+</body>
+</html>

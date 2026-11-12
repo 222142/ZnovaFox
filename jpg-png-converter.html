@@ -1,0 +1,1488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>JPG PNG Converter - ZnovaFox</title>
+<meta name="description" content="Convert JPG to PNG and PNG to JPG online with ZnovaFox. Fast browser-based image converter.">
+
+<link rel="stylesheet" href="../../css/main.css">
+
+<style>
+.converter-section {
+    padding: 24px 0 40px;
+}
+
+.converter-box {
+    max-width: 720px;
+    margin: auto;
+    background: #fff;
+    border: 1px solid #e3e3e3;
+    border-radius: 20px;
+    padding: 22px;
+    box-shadow: 0 8px 30px rgba(0,0,0,.05);
+}
+
+.tool-heading {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.tool-heading h2 {
+    font-size: 28px;
+    margin-bottom: 7px;
+}
+
+.tool-heading p {
+    color: #666;
+    font-size: 14px;
+}
+
+.mode-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 18px;
+}
+
+.mode-btn {
+    border: 1px solid #ddd;
+    background: #fff;
+    color: #222;
+    padding: 13px 10px;
+    border-radius: 11px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 14px;
+    transition: .2s;
+}
+
+.mode-btn:hover,
+.mode-btn.active {
+    background: #6c4cff;
+    color: #fff;
+    border-color: #6c4cff;
+}
+
+.upload-box {
+    display: block;
+    border: 2px dashed #ccc;
+    border-radius: 16px;
+    padding: 30px 15px;
+    text-align: center;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.upload-box:hover,
+.upload-box.dragover {
+    border-color: #6c4cff;
+    background: #faf9ff;
+}
+
+.upload-box input {
+    display: none;
+}
+
+.upload-icon {
+    font-size: 42px;
+    margin-bottom: 8px;
+}
+
+.upload-box strong {
+    display: block;
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+.upload-box span {
+    color: #777;
+    font-size: 13px;
+}
+
+.file-area {
+    display: none;
+    margin-top: 18px;
+}
+
+.file-card {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 13px;
+    border: 1px solid #e1e1e1;
+    border-radius: 12px;
+}
+
+.file-preview {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 9px;
+    background: #f3f3f3;
+}
+
+.file-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.file-name {
+    font-weight: 700;
+    font-size: 14px;
+    word-break: break-word;
+}
+
+.file-meta {
+    color: #777;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+.settings-box {
+    margin-top: 18px;
+    padding: 17px;
+    border: 1px solid #e4e4e4;
+    border-radius: 14px;
+}
+
+.settings-title {
+    font-weight: 700;
+    margin-bottom: 14px;
+}
+
+.setting-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.setting-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 7px;
+}
+
+.setting-group select,
+.setting-group input[type="number"] {
+    width: 100%;
+    padding: 11px;
+    border: 1px solid #ddd;
+    border-radius: 9px;
+    outline: none;
+    background: #fff;
+    color: #222;
+}
+
+.setting-group select:focus,
+.setting-group input:focus {
+    border-color: #6c4cff;
+}
+
+.quality-row {
+    margin-top: 15px;
+}
+
+.quality-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 7px;
+}
+
+.quality-value {
+    color: #6c4cff;
+}
+
+.quality-range {
+    width: 100%;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 18px;
+}
+
+.tool-btn {
+    flex: 1;
+    border: 0;
+    border-radius: 11px;
+    padding: 12px 15px;
+    cursor: pointer;
+    font-weight: 700;
+    background: #6c4cff;
+    color: #fff;
+}
+
+.tool-btn:hover {
+    opacity: .9;
+}
+
+.tool-btn.secondary {
+    background: #eee;
+    color: #222;
+}
+
+.status-message {
+    display: none;
+    margin-top: 15px;
+    padding: 11px;
+    border-radius: 9px;
+    text-align: center;
+    font-size: 13px;
+}
+
+.status-message.info {
+    display: block;
+    background: #f0edff;
+    color: #4d35b8;
+}
+
+.status-message.success {
+    display: block;
+    background: #ecfff1;
+    color: #16803c;
+}
+
+.status-message.error {
+    display: block;
+    background: #fff0f0;
+    color: #c62828;
+}
+
+.result-box {
+    display: none;
+    margin-top: 20px;
+    padding: 18px;
+    border-radius: 14px;
+    background: #f7f5ff;
+    border: 1px solid #ddd6ff;
+}
+
+.result-box h3 {
+    margin-bottom: 13px;
+}
+
+.result-preview {
+    display: block;
+    max-width: 100%;
+    max-height: 360px;
+    margin: 0 auto 15px;
+    border-radius: 10px;
+    background:
+        linear-gradient(45deg,#eee 25%,transparent 25%),
+        linear-gradient(-45deg,#eee 25%,transparent 25%),
+        linear-gradient(45deg,transparent 75%,#eee 75%),
+        linear-gradient(-45deg,transparent 75%,#eee 75%);
+    background-size: 20px 20px;
+    background-position: 0 0,0 10px,10px -10px,-10px 0;
+}
+
+.result-details {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 9px;
+    margin-bottom: 15px;
+}
+
+.result-item {
+    background: #fff;
+    border: 1px solid #e5e5e5;
+    border-radius: 10px;
+    padding: 10px;
+    text-align: center;
+}
+
+.result-item strong {
+    display: block;
+    font-size: 15px;
+}
+
+.result-item span {
+    display: block;
+    color: #777;
+    font-size: 11px;
+    margin-top: 4px;
+}
+
+.download-btn {
+    display: block;
+    width: 100%;
+    text-align: center;
+    text-decoration: none;
+    padding: 12px;
+    border-radius: 10px;
+    background: #6c4cff;
+    color: #fff;
+    font-weight: 700;
+}
+
+.info-box {
+    margin-top: 18px;
+    padding: 14px;
+    border-radius: 12px;
+    background: #fafafa;
+    border: 1px solid #e6e6e6;
+    color: #666;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+/* Dark Mode */
+
+body.dark .converter-box {
+    background: #151515;
+    border-color: #2b2b2b;
+}
+
+body.dark .tool-heading p,
+body.dark .upload-box span,
+body.dark .file-meta {
+    color: #aaa;
+}
+
+body.dark .mode-btn {
+    background: #1b1b1b;
+    color: #fff;
+    border-color: #363636;
+}
+
+body.dark .mode-btn:hover,
+body.dark .mode-btn.active {
+    background: #6c4cff;
+    border-color: #6c4cff;
+}
+
+body.dark .upload-box {
+    border-color: #3a3a3a;
+}
+
+body.dark .upload-box:hover,
+body.dark .upload-box.dragover {
+    background: #1c1930;
+}
+
+body.dark .file-card,
+body.dark .settings-box,
+body.dark .info-box {
+    border-color: #303030;
+}
+
+body.dark .setting-group select,
+body.dark .setting-group input {
+    background: #1b1b1b;
+    color: #fff;
+    border-color: #363636;
+}
+
+body.dark .tool-btn.secondary {
+    background: #333;
+    color: #fff;
+}
+
+body.dark .result-box {
+    background: #1c1930;
+    border-color: #393060;
+}
+
+body.dark .result-item {
+    background: #1b1b1b;
+    border-color: #333;
+}
+
+body.dark .result-item span {
+    color: #aaa;
+}
+
+body.dark .info-box {
+    background: #1a1a1a;
+    color: #aaa;
+}
+
+/* Mobile */
+
+@media (max-width: 600px) {
+
+    .converter-section {
+        padding: 15px 0 30px;
+    }
+
+    .converter-box {
+        padding: 15px;
+        border-radius: 16px;
+    }
+
+    .tool-heading h2 {
+        font-size: 24px;
+    }
+
+    .mode-buttons {
+        grid-template-columns: 1fr;
+    }
+
+    .setting-row {
+        grid-template-columns: 1fr;
+    }
+
+    .result-details {
+        grid-template-columns: 1fr;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+    }
+
+    .upload-box {
+        padding: 25px 12px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header class="site-header">
+
+    <div class="container header-inner">
+
+        <a href="../../index.html" class="logo">
+            Znova<span>Fox</span>
+        </a>
+
+        <nav class="desktop-nav">
+            <a href="../../index.html">Home</a>
+            <a href="../ai-tools.html">AI Tools</a>
+            <a href="../online-tools.html">Tools</a>
+            <a href="../government.html">Government</a>
+            <a href="../jobs.html">Jobs</a>
+            <a href="../education.html">Education</a>
+        </nav>
+
+        <div class="header-actions">
+
+            <button
+                class="theme-btn"
+                id="themeBtn"
+                title="Toggle theme"
+            >🌙</button>
+
+            <button
+                class="menu-btn"
+                id="menuBtn"
+                title="Menu"
+            >☰</button>
+
+        </div>
+
+    </div>
+
+    <nav class="mobile-nav" id="mobileNav">
+        <a href="../../index.html">Home</a>
+        <a href="../ai-tools.html">AI Tools</a>
+        <a href="../online-tools.html">Tools</a>
+        <a href="../government.html">Government</a>
+        <a href="../jobs.html">Jobs</a>
+        <a href="../education.html">Education</a>
+    </nav>
+
+</header>
+
+
+<section class="hero">
+
+    <div class="container">
+
+        <div class="live-status">
+            <span></span> LIVE
+        </div>
+
+        <div class="hero-text">
+
+            <h1>JPG PNG Converter</h1>
+
+            <p>
+                Convert JPG to PNG or PNG to JPG quickly in your browser.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="converter-section">
+
+<div class="container">
+
+<div class="converter-box">
+
+    <div class="tool-heading">
+
+        <h2>🔄 Image Converter</h2>
+
+        <p>
+            Choose a conversion type and upload your image.
+        </p>
+
+    </div>
+
+
+    <!-- Conversion Mode -->
+
+    <div class="mode-buttons">
+
+        <button
+            class="mode-btn active"
+            data-mode="jpg-to-png"
+        >
+            🖼️ JPG → PNG
+        </button>
+
+        <button
+            class="mode-btn"
+            data-mode="png-to-jpg"
+        >
+            🖼️ PNG → JPG
+        </button>
+
+    </div>
+
+
+    <!-- Upload -->
+
+    <label
+        class="upload-box"
+        id="uploadBox"
+        for="imageInput"
+    >
+
+        <div class="upload-icon">📤</div>
+
+        <strong id="uploadTitle">
+            Upload JPG Image
+        </strong>
+
+        <span id="uploadText">
+            Click or drag & drop JPG file here
+        </span>
+
+        <input
+            type="file"
+            id="imageInput"
+            accept="image/jpeg"
+        >
+
+    </label>
+
+
+    <!-- Selected File -->
+
+    <div class="file-area" id="fileArea">
+
+        <div class="file-card">
+
+            <img
+                id="filePreview"
+                class="file-preview"
+                alt="Selected image"
+            >
+
+            <div class="file-info">
+
+                <div
+                    class="file-name"
+                    id="fileName"
+                >
+                    -
+                </div>
+
+                <div
+                    class="file-meta"
+                    id="fileMeta"
+                >
+                    -
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Settings -->
+
+    <div
+        class="settings-box"
+        id="settingsBox"
+        style="display:none;"
+    >
+
+        <div class="settings-title">
+            Conversion Settings
+        </div>
+
+        <div class="setting-row">
+
+            <div class="setting-group">
+
+                <label>
+                    Output Format
+                </label>
+
+                <select id="outputFormat">
+
+                    <option value="image/png">
+                        PNG
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div
+                class="setting-group"
+                id="qualityGroup"
+            >
+
+                <label>
+                    JPG Quality
+                </label>
+
+                <input
+                    type="number"
+                    id="qualityNumber"
+                    min="10"
+                    max="100"
+                    value="90"
+                >
+
+            </div>
+
+        </div>
+
+
+        <div
+            class="quality-row"
+            id="qualitySliderBox"
+        >
+
+            <div class="quality-label">
+
+                <span>
+                    Quality
+                </span>
+
+                <span
+                    class="quality-value"
+                    id="qualityValue"
+                >
+                    90%
+                </span>
+
+            </div>
+
+            <input
+                type="range"
+                class="quality-range"
+                id="qualityRange"
+                min="10"
+                max="100"
+                value="90"
+            >
+
+        </div>
+
+
+        <div class="action-buttons">
+
+            <button
+                class="tool-btn"
+                id="convertBtn"
+            >
+                🔄 Convert Image
+            </button>
+
+            <button
+                class="tool-btn secondary"
+                id="clearBtn"
+            >
+                ↻ Clear
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- Status -->
+
+    <div
+        class="status-message"
+        id="statusMessage"
+    ></div>
+
+
+    <!-- Result -->
+
+    <div
+        class="result-box"
+        id="resultBox"
+    >
+
+        <h3>✅ Conversion Complete</h3>
+
+        <img
+            id="resultPreview"
+            class="result-preview"
+            alt="Converted image"
+        >
+
+        <div class="result-details">
+
+            <div class="result-item">
+
+                <strong id="resultFormat">
+                    PNG
+                </strong>
+
+                <span>
+                    Format
+                </span>
+
+            </div>
+
+            <div class="result-item">
+
+                <strong id="resultDimensions">
+                    -
+                </strong>
+
+                <span>
+                    Dimensions
+                </span>
+
+            </div>
+
+            <div class="result-item">
+
+                <strong id="resultSize">
+                    -
+                </strong>
+
+                <span>
+                    File Size
+                </span>
+
+            </div>
+
+        </div>
+
+        <a
+            href="#"
+            id="downloadBtn"
+            class="download-btn"
+        >
+            ⬇️ Download Converted Image
+        </a>
+
+    </div>
+
+
+    <!-- Info -->
+
+    <div class="info-box">
+
+        🔒 <strong>Privacy:</strong>
+        Your image is processed directly inside your browser.
+        It is not uploaded to a server.
+
+        <br><br>
+
+        💡 <strong>Note:</strong>
+        PNG supports transparency. When converting PNG to JPG,
+        transparent areas are automatically converted to a white background.
+
+    </div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<footer class="site-footer">
+
+    <div class="container">
+
+        <p>
+            © 2026 ZnovaFox. All rights reserved.
+        </p>
+
+    </div>
+
+</footer>
+
+
+<script src="../../js/main.js"></script>
+
+<script>
+
+const imageInput =
+    document.getElementById("imageInput");
+
+const uploadBox =
+    document.getElementById("uploadBox");
+
+const uploadTitle =
+    document.getElementById("uploadTitle");
+
+const uploadText =
+    document.getElementById("uploadText");
+
+const fileArea =
+    document.getElementById("fileArea");
+
+const filePreview =
+    document.getElementById("filePreview");
+
+const fileName =
+    document.getElementById("fileName");
+
+const fileMeta =
+    document.getElementById("fileMeta");
+
+const settingsBox =
+    document.getElementById("settingsBox");
+
+const outputFormat =
+    document.getElementById("outputFormat");
+
+const qualityGroup =
+    document.getElementById("qualityGroup");
+
+const qualitySliderBox =
+    document.getElementById("qualitySliderBox");
+
+const qualityNumber =
+    document.getElementById("qualityNumber");
+
+const qualityRange =
+    document.getElementById("qualityRange");
+
+const qualityValue =
+    document.getElementById("qualityValue");
+
+const convertBtn =
+    document.getElementById("convertBtn");
+
+const clearBtn =
+    document.getElementById("clearBtn");
+
+const statusMessage =
+    document.getElementById("statusMessage");
+
+const resultBox =
+    document.getElementById("resultBox");
+
+const resultPreview =
+    document.getElementById("resultPreview");
+
+const resultFormat =
+    document.getElementById("resultFormat");
+
+const resultDimensions =
+    document.getElementById("resultDimensions");
+
+const resultSize =
+    document.getElementById("resultSize");
+
+const downloadBtn =
+    document.getElementById("downloadBtn");
+
+const modeButtons =
+    document.querySelectorAll(".mode-btn");
+
+
+let currentMode = "jpg-to-png";
+
+let selectedFile = null;
+
+let imageObject = null;
+
+let outputURL = null;
+
+
+/* ==========================
+   Mode Switching
+========================== */
+
+modeButtons.forEach(button => {
+
+    button.addEventListener("click", function () {
+
+        modeButtons.forEach(btn => {
+            btn.classList.remove("active");
+        });
+
+        this.classList.add("active");
+
+        currentMode =
+            this.dataset.mode;
+
+        updateMode();
+
+        resetTool();
+
+    });
+
+});
+
+
+function updateMode() {
+
+    if (currentMode === "jpg-to-png") {
+
+        uploadTitle.textContent =
+            "Upload JPG Image";
+
+        uploadText.textContent =
+            "Click or drag & drop JPG file here";
+
+        imageInput.accept =
+            "image/jpeg";
+
+        outputFormat.innerHTML =
+            `<option value="image/png">PNG</option>`;
+
+        qualityGroup.style.display =
+            "block";
+
+        qualitySliderBox.style.display =
+            "block";
+
+    } else {
+
+        uploadTitle.textContent =
+            "Upload PNG Image";
+
+        uploadText.textContent =
+            "Click or drag & drop PNG file here";
+
+        imageInput.accept =
+            "image/png";
+
+        outputFormat.innerHTML =
+            `<option value="image/jpeg">JPG</option>`;
+
+        qualityGroup.style.display =
+            "block";
+
+        qualitySliderBox.style.display =
+            "block";
+
+    }
+
+}
+
+
+/* ==========================
+   File Selection
+========================== */
+
+imageInput.addEventListener(
+    "change",
+    function () {
+
+        if (this.files.length) {
+
+            handleFile(this.files[0]);
+
+        }
+
+    }
+);
+
+
+/* ==========================
+   Drag & Drop
+========================== */
+
+uploadBox.addEventListener(
+    "dragover",
+    function (e) {
+
+        e.preventDefault();
+
+        uploadBox.classList.add("dragover");
+
+    }
+);
+
+
+uploadBox.addEventListener(
+    "dragleave",
+    function () {
+
+        uploadBox.classList.remove("dragover");
+
+    }
+);
+
+
+uploadBox.addEventListener(
+    "drop",
+    function (e) {
+
+        e.preventDefault();
+
+        uploadBox.classList.remove("dragover");
+
+        const file =
+            e.dataTransfer.files[0];
+
+        if (file) {
+
+            handleFile(file);
+
+        }
+
+    }
+);
+
+
+/* ==========================
+   Handle File
+========================== */
+
+function handleFile(file) {
+
+    const expectedType =
+        currentMode === "jpg-to-png"
+            ? "image/jpeg"
+            : "image/png";
+
+
+    if (file.type !== expectedType) {
+
+        showStatus(
+            currentMode === "jpg-to-png"
+                ? "Please select a JPG image."
+                : "Please select a PNG image.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    if (file.size > 30 * 1024 * 1024) {
+
+        showStatus(
+            "File is larger than 30 MB. Please choose a smaller image.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    selectedFile = file;
+
+
+    const reader =
+        new FileReader();
+
+
+    reader.onload = function (e) {
+
+        filePreview.src =
+            e.target.result;
+
+        imageObject =
+            new Image();
+
+        imageObject.onload =
+            function () {
+
+                fileName.textContent =
+                    file.name;
+
+                fileMeta.textContent =
+                    formatBytes(file.size) +
+                    " • " +
+                    imageObject.width +
+                    " × " +
+                    imageObject.height +
+                    " px";
+
+                fileArea.style.display =
+                    "block";
+
+                settingsBox.style.display =
+                    "block";
+
+                resultBox.style.display =
+                    "none";
+
+                showStatus(
+                    "Image ready for conversion.",
+                    "info"
+                );
+
+            };
+
+        imageObject.src =
+            e.target.result;
+
+    };
+
+
+    reader.readAsDataURL(file);
+
+}
+
+
+/* ==========================
+   Quality Number
+========================== */
+
+qualityNumber.addEventListener(
+    "input",
+    function () {
+
+        let value =
+            parseInt(this.value);
+
+        if (isNaN(value)) return;
+
+        value =
+            Math.max(
+                10,
+                Math.min(100, value)
+            );
+
+        this.value = value;
+
+        qualityRange.value =
+            value;
+
+        qualityValue.textContent =
+            value + "%";
+
+    }
+);
+
+
+/* ==========================
+   Quality Slider
+========================== */
+
+qualityRange.addEventListener(
+    "input",
+    function () {
+
+        qualityNumber.value =
+            this.value;
+
+        qualityValue.textContent =
+            this.value + "%";
+
+    }
+);
+
+
+/* ==========================
+   Convert
+========================== */
+
+convertBtn.addEventListener(
+    "click",
+    function () {
+
+        if (!selectedFile || !imageObject) {
+
+            showStatus(
+                "Please upload an image first.",
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        showStatus(
+            "Converting image...",
+            "info"
+        );
+
+
+        const canvas =
+            document.createElement("canvas");
+
+
+        canvas.width =
+            imageObject.naturalWidth ||
+            imageObject.width;
+
+        canvas.height =
+            imageObject.naturalHeight ||
+            imageObject.height;
+
+
+        const ctx =
+            canvas.getContext("2d");
+
+
+        /*
+         PNG → JPG:
+         Transparent background becomes white.
+        */
+
+        if (currentMode === "png-to-jpg") {
+
+            ctx.fillStyle =
+                "#ffffff";
+
+            ctx.fillRect(
+                0,
+                0,
+                canvas.width,
+                canvas.height
+            );
+
+        }
+
+
+        ctx.drawImage(
+            imageObject,
+            0,
+            0,
+            canvas.width,
+            canvas.height
+        );
+
+
+        const quality =
+            parseInt(
+                qualityRange.value
+            ) / 100;
+
+
+        const mime =
+            currentMode === "jpg-to-png"
+                ? "image/png"
+                : "image/jpeg";
+
+
+        canvas.toBlob(
+            function (blob) {
+
+                if (!blob) {
+
+                    showStatus(
+                        "Conversion failed. Please try again.",
+                        "error"
+                    );
+
+                    return;
+
+                }
+
+
+                if (outputURL) {
+
+                    URL.revokeObjectURL(
+                        outputURL
+                    );
+
+                }
+
+
+                outputURL =
+                    URL.createObjectURL(blob);
+
+
+                resultPreview.src =
+                    outputURL;
+
+
+                resultFormat.textContent =
+                    currentMode === "jpg-to-png"
+                        ? "PNG"
+                        : "JPG";
+
+
+                resultDimensions.textContent =
+                    canvas.width +
+                    " × " +
+                    canvas.height;
+
+
+                resultSize.textContent =
+                    formatBytes(blob.size);
+
+
+                const extension =
+                    currentMode === "jpg-to-png"
+                        ? "png"
+                        : "jpg";
+
+
+                const baseName =
+                    selectedFile.name
+                        .replace(
+                            /\.(jpg|jpeg|png)$/i,
+                            ""
+                        );
+
+
+                downloadBtn.href =
+                    outputURL;
+
+                downloadBtn.download =
+                    baseName +
+                    "-converted." +
+                    extension;
+
+
+                resultBox.style.display =
+                    "block";
+
+
+                statusMessage.style.display =
+                    "none";
+
+
+                resultBox.scrollIntoView({
+                    behavior: "smooth",
+                    block: "nearest"
+                });
+
+            },
+            mime,
+            quality
+        );
+
+    }
+);
+
+
+/* ==========================
+   Clear
+========================== */
+
+clearBtn.addEventListener(
+    "click",
+    function () {
+
+        resetTool();
+
+        imageInput.value = "";
+
+    }
+);
+
+
+function resetTool() {
+
+    selectedFile = null;
+
+    imageObject = null;
+
+    fileArea.style.display =
+        "none";
+
+    settingsBox.style.display =
+        "none";
+
+    resultBox.style.display =
+        "none";
+
+    statusMessage.style.display =
+        "none";
+
+    filePreview.src = "";
+
+    fileName.textContent =
+        "-";
+
+    fileMeta.textContent =
+        "-";
+
+    if (outputURL) {
+
+        URL.revokeObjectURL(
+            outputURL
+        );
+
+        outputURL = null;
+
+    }
+
+}
+
+
+/* ==========================
+   Status
+========================== */
+
+function showStatus(
+    message,
+    type
+) {
+
+    statusMessage.textContent =
+        message;
+
+    statusMessage.className =
+        "status-message " + type;
+
+    statusMessage.style.display =
+        "block";
+
+}
+
+
+/* ==========================
+   File Size
+========================== */
+
+function formatBytes(bytes) {
+
+    if (bytes < 1024) {
+
+        return bytes + " B";
+
+    }
+
+    if (bytes < 1024 * 1024) {
+
+        return (
+            (bytes / 1024).toFixed(1) +
+            " KB"
+        );
+
+    }
+
+    return (
+        (bytes / (1024 * 1024)).toFixed(2) +
+        " MB"
+    );
+
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,676 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Unit Converter - ZnovaFox</title>
+
+    <meta
+        name="description"
+        content="Convert length, weight, temperature and digital storage units with ZnovaFox."
+    >
+
+    <link
+        rel="stylesheet"
+        href="../../css/main.css"
+    >
+
+    <style>
+
+        .converter-box {
+            max-width: 650px;
+            margin: 40px auto;
+            padding: 25px;
+
+            border: 1px solid #ddd;
+            border-radius: 20px;
+
+            background: var(--card-bg, #fff);
+        }
+
+        .converter-grid {
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 15px;
+        }
+
+        .converter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .converter-group label {
+            font-weight: 600;
+        }
+
+        .converter-group select,
+        .converter-group input {
+            width: 100%;
+            box-sizing: border-box;
+
+            padding: 13px;
+
+            border: 1px solid #ddd;
+            border-radius: 10px;
+
+            font: inherit;
+        }
+
+        .converter-result {
+            margin-top: 20px;
+            padding: 20px;
+
+            border-radius: 14px;
+
+            background: #f4f4f4;
+
+            text-align: center;
+        }
+
+        .converter-result strong {
+            display: block;
+
+            margin-top: 8px;
+
+            font-size: 28px;
+        }
+
+        body.dark .converter-box {
+            border-color: #333;
+        }
+
+        body.dark .converter-result {
+            background: #252a32;
+        }
+
+        @media (max-width: 600px) {
+
+            .converter-grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header class="site-header">
+
+    <div class="container header-inner">
+
+
+        <a
+            href="../../index.html"
+            class="logo"
+        >
+            🦊 <span>Znova</span>Fox
+        </a>
+
+
+        <nav class="desktop-nav">
+
+            <a href="../../index.html">
+                Home
+            </a>
+
+            <a href="../ai-tools.html">
+                AI Tools
+            </a>
+
+            <a href="../online-tools.html">
+                Tools
+            </a>
+
+            <a href="../government.html">
+                Government
+            </a>
+
+            <a href="../jobs.html">
+                Jobs
+            </a>
+
+            <a href="../education.html">
+                Education
+            </a>
+
+        </nav>
+
+
+        <div class="header-actions">
+
+            <button
+                class="theme-btn"
+                id="themeBtn"
+                aria-label="Change theme"
+            >
+                🌙
+            </button>
+
+
+            <button
+                class="menu-btn"
+                id="menuBtn"
+                aria-label="Open menu"
+            >
+                ☰
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <nav
+        class="mobile-nav"
+        id="mobileNav"
+    >
+
+        <a href="../../index.html">
+            🏠 Home
+        </a>
+
+        <a href="../ai-tools.html">
+            🤖 AI Tools
+        </a>
+
+        <a href="../online-tools.html">
+            🛠️ Online Tools
+        </a>
+
+        <a href="../government.html">
+            🇮🇳 Government
+        </a>
+
+        <a href="../jobs.html">
+            💼 Jobs
+        </a>
+
+        <a href="../education.html">
+            📚 Education
+        </a>
+
+    </nav>
+
+</header>
+
+
+
+<main>
+
+
+<section class="hero">
+
+    <div class="container">
+
+        <p class="live-status">
+            <span></span> LIVE
+        </p>
+
+        <h1>
+            Unit Converter
+        </h1>
+
+        <p class="hero-text">
+            Convert common units quickly and easily.
+        </p>
+
+    </div>
+
+</section>
+
+
+
+<section class="service-section">
+
+    <div class="container">
+
+
+        <div class="converter-box">
+
+
+            <div class="converter-group">
+
+                <label for="unitType">
+                    Conversion Type
+                </label>
+
+                <select id="unitType">
+
+                    <option value="length">
+                        Length
+                    </option>
+
+                    <option value="weight">
+                        Weight
+                    </option>
+
+                    <option value="temperature">
+                        Temperature
+                    </option>
+
+                    <option value="storage">
+                        Digital Storage
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <br>
+
+
+            <div class="converter-grid">
+
+
+                <div class="converter-group">
+
+                    <label for="fromUnit">
+                        From
+                    </label>
+
+                    <select id="fromUnit"></select>
+
+                </div>
+
+
+                <div class="converter-group">
+
+                    <label for="toUnit">
+                        To
+                    </label>
+
+                    <select id="toUnit"></select>
+
+                </div>
+
+
+            </div>
+
+
+            <br>
+
+
+            <div class="converter-group">
+
+                <label for="inputValue">
+                    Enter Value
+                </label>
+
+                <input
+                    type="number"
+                    id="inputValue"
+                    value="1"
+                    placeholder="Enter value"
+                >
+
+            </div>
+
+
+            <div class="converter-result">
+
+                Result
+
+                <strong id="conversionResult">
+                    1
+                </strong>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+</main>
+
+
+
+<footer>
+
+    <div class="container">
+
+        <p>
+            © 2026 ZnovaFox.
+            All rights reserved.
+        </p>
+
+    </div>
+
+</footer>
+
+
+
+<script src="../../js/main.js"></script>
+
+
+<script>
+
+
+const unitType =
+    document.getElementById("unitType");
+
+const fromUnit =
+    document.getElementById("fromUnit");
+
+const toUnit =
+    document.getElementById("toUnit");
+
+const inputValue =
+    document.getElementById("inputValue");
+
+const conversionResult =
+    document.getElementById(
+        "conversionResult"
+    );
+
+
+
+const units = {
+
+    length: {
+
+        meter: 1,
+
+        kilometer: 1000,
+
+        centimeter: 0.01,
+
+        millimeter: 0.001,
+
+        mile: 1609.344,
+
+        yard: 0.9144,
+
+        foot: 0.3048,
+
+        inch: 0.0254
+
+    },
+
+
+    weight: {
+
+        kilogram: 1,
+
+        gram: 0.001,
+
+        milligram: 0.000001,
+
+        pound: 0.45359237,
+
+        ounce: 0.0283495231
+
+    },
+
+
+    storage: {
+
+        byte: 1,
+
+        kilobyte: 1024,
+
+        megabyte: 1024 * 1024,
+
+        gigabyte: 1024 * 1024 * 1024,
+
+        terabyte:
+            1024 * 1024 * 1024 * 1024
+
+    }
+
+};
+
+
+
+function populateUnits() {
+
+    const type =
+        unitType.value;
+
+
+    fromUnit.innerHTML = "";
+
+    toUnit.innerHTML = "";
+
+
+    if (type === "temperature") {
+
+        const temperatureUnits = [
+            ["celsius", "Celsius"],
+            ["fahrenheit", "Fahrenheit"],
+            ["kelvin", "Kelvin"]
+        ];
+
+
+        temperatureUnits.forEach(
+            function (unit) {
+
+                const option1 =
+                    document.createElement(
+                        "option"
+                    );
+
+                option1.value =
+                    unit[0];
+
+                option1.textContent =
+                    unit[1];
+
+
+                const option2 =
+                    option1.cloneNode(true);
+
+
+                fromUnit.appendChild(
+                    option1
+                );
+
+                toUnit.appendChild(
+                    option2
+                );
+
+            }
+        );
+
+
+    } else {
+
+        Object.keys(
+            units[type]
+        ).forEach(
+            function (unit) {
+
+                const option1 =
+                    document.createElement(
+                        "option"
+                    );
+
+                option1.value =
+                    unit;
+
+                option1.textContent =
+                    unit;
+
+
+                const option2 =
+                    option1.cloneNode(true);
+
+
+                fromUnit.appendChild(
+                    option1
+                );
+
+                toUnit.appendChild(
+                    option2
+                );
+
+            }
+        );
+
+    }
+
+
+    convert();
+
+}
+
+
+
+function convertTemperature(
+    value,
+    from,
+    to
+) {
+
+    let celsius;
+
+
+    if (from === "celsius") {
+
+        celsius = value;
+
+    } else if (
+        from === "fahrenheit"
+    ) {
+
+        celsius =
+            (value - 32) * 5 / 9;
+
+    } else {
+
+        celsius =
+            value - 273.15;
+
+    }
+
+
+    if (to === "celsius") {
+
+        return celsius;
+
+    }
+
+
+    if (to === "fahrenheit") {
+
+        return (
+            celsius * 9 / 5
+        ) + 32;
+
+    }
+
+
+    return celsius + 273.15;
+
+}
+
+
+
+function convert() {
+
+    const value =
+        Number(inputValue.value);
+
+
+    if (
+        Number.isNaN(value)
+    ) {
+
+        conversionResult.textContent =
+            "Invalid value";
+
+        return;
+
+    }
+
+
+    const type =
+        unitType.value;
+
+
+    let result;
+
+
+    if (type === "temperature") {
+
+        result =
+            convertTemperature(
+                value,
+                fromUnit.value,
+                toUnit.value
+            );
+
+    } else {
+
+        const baseValue =
+            value *
+            units[type][fromUnit.value];
+
+
+        result =
+            baseValue /
+            units[type][toUnit.value];
+
+    }
+
+
+    conversionResult.textContent =
+        Number(result.toFixed(8));
+
+}
+
+
+
+unitType.addEventListener(
+    "change",
+    populateUnits
+);
+
+
+fromUnit.addEventListener(
+    "change",
+    convert
+);
+
+
+toUnit.addEventListener(
+    "change",
+    convert
+);
+
+
+inputValue.addEventListener(
+    "input",
+    convert
+);
+
+
+populateUnits();
+
+
+</script>
+
+
+</body>
+
+</html>
+```

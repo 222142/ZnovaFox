@@ -1,0 +1,1732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>JPG to PDF - ZnovaFox</title>
+<meta name="description" content="Convert JPG images to PDF online with ZnovaFox. Combine multiple JPG images into one PDF.">
+
+<link rel="stylesheet" href="../../css/main.css">
+
+<!-- jsPDF -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<style>
+.pdf-converter-section {
+    padding: 24px 0 40px;
+}
+
+.pdf-converter-box {
+    max-width: 780px;
+    margin: auto;
+    background: #fff;
+    border: 1px solid #e3e3e3;
+    border-radius: 20px;
+    padding: 22px;
+    box-shadow: 0 8px 30px rgba(0,0,0,.05);
+}
+
+.tool-heading {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.tool-heading h2 {
+    font-size: 28px;
+    margin-bottom: 7px;
+}
+
+.tool-heading p {
+    color: #666;
+    font-size: 14px;
+}
+
+.upload-box {
+    display: block;
+    border: 2px dashed #ccc;
+    border-radius: 16px;
+    padding: 30px 15px;
+    text-align: center;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.upload-box:hover,
+.upload-box.dragover {
+    border-color: #6c4cff;
+    background: #faf9ff;
+}
+
+.upload-box input {
+    display: none;
+}
+
+.upload-icon {
+    font-size: 42px;
+    margin-bottom: 8px;
+}
+
+.upload-box strong {
+    display: block;
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+.upload-box span {
+    color: #777;
+    font-size: 13px;
+}
+
+.image-list {
+    display: none;
+    margin-top: 20px;
+}
+
+.image-list-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.image-list-title strong {
+    font-size: 15px;
+}
+
+.clear-images {
+    border: 0;
+    background: #fff0f0;
+    color: #c62828;
+    padding: 7px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.image-items {
+    display: grid;
+    gap: 10px;
+}
+
+.image-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px;
+    border: 1px solid #e2e2e2;
+    border-radius: 12px;
+    background: #fff;
+}
+
+.image-thumb {
+    width: 65px;
+    height: 65px;
+    object-fit: cover;
+    border-radius: 8px;
+    background: #f2f2f2;
+}
+
+.image-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.image-name {
+    font-size: 13px;
+    font-weight: 700;
+    word-break: break-word;
+}
+
+.image-meta {
+    color: #777;
+    font-size: 11px;
+    margin-top: 4px;
+}
+
+.remove-image {
+    width: 32px;
+    height: 32px;
+    border: 0;
+    border-radius: 8px;
+    background: #fff0f0;
+    color: #d32f2f;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.settings-box {
+    margin-top: 20px;
+    padding: 17px;
+    border: 1px solid #e4e4e4;
+    border-radius: 14px;
+}
+
+.settings-title {
+    font-weight: 700;
+    margin-bottom: 14px;
+}
+
+.setting-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.setting-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 7px;
+}
+
+.setting-group select,
+.setting-group input {
+    width: 100%;
+    padding: 11px;
+    border: 1px solid #ddd;
+    border-radius: 9px;
+    background: #fff;
+    color: #222;
+    outline: none;
+}
+
+.setting-group select:focus,
+.setting-group input:focus {
+    border-color: #6c4cff;
+}
+
+.quality-row {
+    margin-top: 15px;
+}
+
+.quality-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 7px;
+}
+
+.quality-value {
+    color: #6c4cff;
+}
+
+.quality-range {
+    width: 100%;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 18px;
+}
+
+.tool-btn {
+    flex: 1;
+    border: 0;
+    border-radius: 11px;
+    padding: 12px 15px;
+    cursor: pointer;
+    font-weight: 700;
+    background: #6c4cff;
+    color: #fff;
+}
+
+.tool-btn:hover {
+    opacity: .9;
+}
+
+.tool-btn.secondary {
+    background: #eee;
+    color: #222;
+}
+
+.status-message {
+    display: none;
+    margin-top: 15px;
+    padding: 11px;
+    border-radius: 9px;
+    text-align: center;
+    font-size: 13px;
+}
+
+.status-message.info {
+    display: block;
+    background: #f0edff;
+    color: #4d35b8;
+}
+
+.status-message.success {
+    display: block;
+    background: #ecfff1;
+    color: #16803c;
+}
+
+.status-message.error {
+    display: block;
+    background: #fff0f0;
+    color: #c62828;
+}
+
+.result-box {
+    display: none;
+    margin-top: 20px;
+    padding: 18px;
+    border-radius: 14px;
+    background: #f7f5ff;
+    border: 1px solid #ddd6ff;
+}
+
+.result-box h3 {
+    margin-bottom: 12px;
+}
+
+.result-details {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.result-item {
+    background: #fff;
+    border: 1px solid #e5e5e5;
+    border-radius: 10px;
+    padding: 11px;
+    text-align: center;
+}
+
+.result-item strong {
+    display: block;
+    font-size: 16px;
+}
+
+.result-item span {
+    display: block;
+    color: #777;
+    font-size: 11px;
+    margin-top: 4px;
+}
+
+.download-btn {
+    display: block;
+    width: 100%;
+    text-align: center;
+    text-decoration: none;
+    padding: 12px;
+    border-radius: 10px;
+    background: #6c4cff;
+    color: #fff;
+    font-weight: 700;
+}
+
+.info-box {
+    margin-top: 18px;
+    padding: 14px;
+    border-radius: 12px;
+    background: #fafafa;
+    border: 1px solid #e6e6e6;
+    color: #666;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+/* Dark Mode */
+
+body.dark .pdf-converter-box {
+    background: #151515;
+    border-color: #2b2b2b;
+}
+
+body.dark .tool-heading p,
+body.dark .upload-box span,
+body.dark .image-meta {
+    color: #aaa;
+}
+
+body.dark .upload-box {
+    border-color: #3a3a3a;
+}
+
+body.dark .upload-box:hover,
+body.dark .upload-box.dragover {
+    background: #1c1930;
+}
+
+body.dark .image-item,
+body.dark .settings-box {
+    background: #1b1b1b;
+    border-color: #333;
+}
+
+body.dark .setting-group select,
+body.dark .setting-group input {
+    background: #1b1b1b;
+    color: #fff;
+    border-color: #363636;
+}
+
+body.dark .tool-btn.secondary {
+    background: #333;
+    color: #fff;
+}
+
+body.dark .clear-images,
+body.dark .remove-image {
+    background: #321c1c;
+}
+
+body.dark .result-box {
+    background: #1c1930;
+    border-color: #393060;
+}
+
+body.dark .result-item {
+    background: #1b1b1b;
+    border-color: #333;
+}
+
+body.dark .result-item span {
+    color: #aaa;
+}
+
+body.dark .info-box {
+    background: #1a1a1a;
+    color: #aaa;
+    border-color: #303030;
+}
+
+/* Mobile */
+
+@media (max-width: 600px) {
+
+    .pdf-converter-section {
+        padding: 15px 0 30px;
+    }
+
+    .pdf-converter-box {
+        padding: 15px;
+        border-radius: 16px;
+    }
+
+    .tool-heading h2 {
+        font-size: 24px;
+    }
+
+    .setting-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .result-details {
+        grid-template-columns: 1fr;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+    }
+
+    .image-thumb {
+        width: 55px;
+        height: 55px;
+    }
+
+    .upload-box {
+        padding: 25px 12px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header class="site-header">
+
+    <div class="container header-inner">
+
+        <a href="../../index.html" class="logo">
+            Znova<span>Fox</span>
+        </a>
+
+        <nav class="desktop-nav">
+            <a href="../../index.html">Home</a>
+            <a href="../ai-tools.html">AI Tools</a>
+            <a href="../online-tools.html">Tools</a>
+            <a href="../government.html">Government</a>
+            <a href="../jobs.html">Jobs</a>
+            <a href="../education.html">Education</a>
+        </nav>
+
+        <div class="header-actions">
+
+            <button
+                class="theme-btn"
+                id="themeBtn"
+                title="Toggle theme"
+            >🌙</button>
+
+            <button
+                class="menu-btn"
+                id="menuBtn"
+                title="Menu"
+            >☰</button>
+
+        </div>
+
+    </div>
+
+    <nav class="mobile-nav" id="mobileNav">
+        <a href="../../index.html">Home</a>
+        <a href="../ai-tools.html">AI Tools</a>
+        <a href="../online-tools.html">Tools</a>
+        <a href="../government.html">Government</a>
+        <a href="../jobs.html">Jobs</a>
+        <a href="../education.html">Education</a>
+    </nav>
+
+</header>
+
+
+<section class="hero">
+
+    <div class="container">
+
+        <div class="live-status">
+            <span></span> LIVE
+        </div>
+
+        <div class="hero-text">
+
+            <h1>JPG to PDF</h1>
+
+            <p>
+                Convert one or multiple JPG images into a single PDF.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="pdf-converter-section">
+
+<div class="container">
+
+<div class="pdf-converter-box">
+
+    <div class="tool-heading">
+
+        <h2>🖼️ JPG → 📄 PDF</h2>
+
+        <p>
+            Upload JPG images and create a PDF instantly.
+        </p>
+
+    </div>
+
+
+    <!-- Upload -->
+
+    <label
+        class="upload-box"
+        id="uploadBox"
+        for="imageInput"
+    >
+
+        <div class="upload-icon">📤</div>
+
+        <strong>
+            Upload JPG Images
+        </strong>
+
+        <span>
+            Click or drag & drop • Multiple images supported
+        </span>
+
+        <input
+            type="file"
+            id="imageInput"
+            accept="image/jpeg"
+            multiple
+        >
+
+    </label>
+
+
+    <!-- Image List -->
+
+    <div
+        class="image-list"
+        id="imageList"
+    >
+
+        <div class="image-list-title">
+
+            <strong>
+                Selected Images
+                (<span id="imageCount">0</span>)
+            </strong>
+
+            <button
+                class="clear-images"
+                id="clearImages"
+            >
+                Clear All
+            </button>
+
+        </div>
+
+        <div
+            class="image-items"
+            id="imageItems"
+        ></div>
+
+    </div>
+
+
+    <!-- Settings -->
+
+    <div
+        class="settings-box"
+        id="settingsBox"
+        style="display:none;"
+    >
+
+        <div class="settings-title">
+            PDF Settings
+        </div>
+
+
+        <div class="setting-grid">
+
+            <div class="setting-group">
+
+                <label for="pageSize">
+                    Page Size
+                </label>
+
+                <select id="pageSize">
+
+                    <option value="a4">
+                        A4
+                    </option>
+
+                    <option value="letter">
+                        Letter
+                    </option>
+
+                    <option value="original">
+                        Original Image Size
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="setting-group">
+
+                <label for="orientation">
+                    Orientation
+                </label>
+
+                <select id="orientation">
+
+                    <option value="auto">
+                        Auto
+                    </option>
+
+                    <option value="portrait">
+                        Portrait
+                    </option>
+
+                    <option value="landscape">
+                        Landscape
+                    </option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+
+        <div class="quality-row">
+
+            <div class="quality-label">
+
+                <span>
+                    Image Quality
+                </span>
+
+                <span
+                    class="quality-value"
+                    id="qualityValue"
+                >
+                    90%
+                </span>
+
+            </div>
+
+            <input
+                type="range"
+                id="qualityRange"
+                class="quality-range"
+                min="30"
+                max="100"
+                value="90"
+            >
+
+        </div>
+
+
+        <div class="action-buttons">
+
+            <button
+                class="tool-btn"
+                id="convertBtn"
+            >
+                📄 Create PDF
+            </button>
+
+            <button
+                class="tool-btn secondary"
+                id="resetBtn"
+            >
+                ↻ Reset
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- Status -->
+
+    <div
+        class="status-message"
+        id="statusMessage"
+    ></div>
+
+
+    <!-- Result -->
+
+    <div
+        class="result-box"
+        id="resultBox"
+    >
+
+        <h3>
+            ✅ PDF Ready
+        </h3>
+
+        <div class="result-details">
+
+            <div class="result-item">
+
+                <strong id="resultPages">
+                    0
+                </strong>
+
+                <span>
+                    PDF Pages
+                </span>
+
+            </div>
+
+            <div class="result-item">
+
+                <strong id="resultImages">
+                    0
+                </strong>
+
+                <span>
+                    Images
+                </span>
+
+            </div>
+
+            <div class="result-item">
+
+                <strong id="resultSize">
+                    -
+                </strong>
+
+                <span>
+                    PDF Size
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <a
+            href="#"
+            id="downloadBtn"
+            class="download-btn"
+        >
+            ⬇️ Download PDF
+        </a>
+
+    </div>
+
+
+    <div class="info-box">
+
+        🔒 <strong>Privacy:</strong>
+        Images are processed in your browser.
+        They are not uploaded to a server.
+
+        <br><br>
+
+        💡 <strong>Multiple Images:</strong>
+        You can select multiple JPG files and each image
+        will become a separate PDF page.
+
+    </div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<footer class="site-footer">
+
+    <div class="container">
+
+        <p>
+            © 2026 ZnovaFox. All rights reserved.
+        </p>
+
+    </div>
+
+</footer>
+
+
+<script src="../../js/main.js"></script>
+
+<script>
+
+const {
+    jsPDF
+} = window.jspdf;
+
+
+/* Elements */
+
+const imageInput =
+    document.getElementById("imageInput");
+
+const uploadBox =
+    document.getElementById("uploadBox");
+
+const imageList =
+    document.getElementById("imageList");
+
+const imageItems =
+    document.getElementById("imageItems");
+
+const imageCount =
+    document.getElementById("imageCount");
+
+const clearImages =
+    document.getElementById("clearImages");
+
+const settingsBox =
+    document.getElementById("settingsBox");
+
+const pageSize =
+    document.getElementById("pageSize");
+
+const orientation =
+    document.getElementById("orientation");
+
+const qualityRange =
+    document.getElementById("qualityRange");
+
+const qualityValue =
+    document.getElementById("qualityValue");
+
+const convertBtn =
+    document.getElementById("convertBtn");
+
+const resetBtn =
+    document.getElementById("resetBtn");
+
+const statusMessage =
+    document.getElementById("statusMessage");
+
+const resultBox =
+    document.getElementById("resultBox");
+
+const resultPages =
+    document.getElementById("resultPages");
+
+const resultImages =
+    document.getElementById("resultImages");
+
+const resultSize =
+    document.getElementById("resultSize");
+
+const downloadBtn =
+    document.getElementById("downloadBtn");
+
+
+let selectedImages = [];
+
+let pdfURL = null;
+
+
+/* ==========================
+   Upload
+========================== */
+
+imageInput.addEventListener(
+    "change",
+    function () {
+
+        const files =
+            Array.from(this.files);
+
+        addFiles(files);
+
+        this.value = "";
+
+    }
+);
+
+
+/* ==========================
+   Drag & Drop
+========================== */
+
+uploadBox.addEventListener(
+    "dragover",
+    function (e) {
+
+        e.preventDefault();
+
+        uploadBox.classList.add("dragover");
+
+    }
+);
+
+
+uploadBox.addEventListener(
+    "dragleave",
+    function () {
+
+        uploadBox.classList.remove(
+            "dragover"
+        );
+
+    }
+);
+
+
+uploadBox.addEventListener(
+    "drop",
+    function (e) {
+
+        e.preventDefault();
+
+        uploadBox.classList.remove(
+            "dragover"
+        );
+
+        const files =
+            Array.from(
+                e.dataTransfer.files
+            );
+
+        addFiles(files);
+
+    }
+);
+
+
+/* ==========================
+   Add Files
+========================== */
+
+function addFiles(files) {
+
+    const jpgFiles =
+        files.filter(
+            file =>
+                file.type === "image/jpeg"
+        );
+
+
+    if (!jpgFiles.length) {
+
+        showStatus(
+            "Please select JPG/JPEG images.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    jpgFiles.forEach(file => {
+
+        if (
+            file.size >
+            20 * 1024 * 1024
+        ) {
+
+            return;
+
+        }
+
+
+        selectedImages.push(file);
+
+    });
+
+
+    renderImages();
+
+    showStatus(
+        selectedImages.length +
+        " image(s) ready.",
+        "success"
+    );
+
+}
+
+
+/* ==========================
+   Render Images
+========================== */
+
+function renderImages() {
+
+    imageItems.innerHTML = "";
+
+    imageCount.textContent =
+        selectedImages.length;
+
+
+    if (!selectedImages.length) {
+
+        imageList.style.display =
+            "none";
+
+        settingsBox.style.display =
+            "none";
+
+        return;
+
+    }
+
+
+    imageList.style.display =
+        "block";
+
+    settingsBox.style.display =
+        "block";
+
+
+    selectedImages.forEach(
+        (file, index) => {
+
+            const item =
+                document.createElement(
+                    "div"
+                );
+
+            item.className =
+                "image-item";
+
+
+            const img =
+                document.createElement(
+                    "img"
+                );
+
+            img.className =
+                "image-thumb";
+
+
+            const reader =
+                new FileReader();
+
+
+            reader.onload =
+                function (e) {
+
+                    img.src =
+                        e.target.result;
+
+                };
+
+
+            reader.readAsDataURL(file);
+
+
+            const info =
+                document.createElement(
+                    "div"
+                );
+
+            info.className =
+                "image-info";
+
+
+            const name =
+                document.createElement(
+                    "div"
+                );
+
+            name.className =
+                "image-name";
+
+            name.textContent =
+                (index + 1) +
+                ". " +
+                file.name;
+
+
+            const meta =
+                document.createElement(
+                    "div"
+                );
+
+            meta.className =
+                "image-meta";
+
+            meta.textContent =
+                formatBytes(file.size);
+
+
+            info.appendChild(name);
+
+            info.appendChild(meta);
+
+
+            const remove =
+                document.createElement(
+                    "button"
+                );
+
+            remove.className =
+                "remove-image";
+
+            remove.textContent =
+                "×";
+
+            remove.title =
+                "Remove image";
+
+
+            remove.addEventListener(
+                "click",
+                function () {
+
+                    selectedImages.splice(
+                        index,
+                        1
+                    );
+
+                    renderImages();
+
+                }
+            );
+
+
+            item.appendChild(img);
+
+            item.appendChild(info);
+
+            item.appendChild(remove);
+
+
+            imageItems.appendChild(item);
+
+        }
+    );
+
+}
+
+
+/* ==========================
+   Clear Images
+========================== */
+
+clearImages.addEventListener(
+    "click",
+    function () {
+
+        selectedImages = [];
+
+        renderImages();
+
+        resultBox.style.display =
+            "none";
+
+        statusMessage.style.display =
+            "none";
+
+    }
+);
+
+
+/* ==========================
+   Quality
+========================== */
+
+qualityRange.addEventListener(
+    "input",
+    function () {
+
+        qualityValue.textContent =
+            this.value + "%";
+
+    }
+);
+
+
+/* ==========================
+   Create PDF
+========================== */
+
+convertBtn.addEventListener(
+    "click",
+    async function () {
+
+        if (!selectedImages.length) {
+
+            showStatus(
+                "Please upload at least one JPG image.",
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        if (
+            typeof jsPDF ===
+            "undefined"
+        ) {
+
+            showStatus(
+                "PDF library could not load. Please check your internet connection and try again.",
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        convertBtn.disabled = true;
+
+        showStatus(
+            "Creating PDF...",
+            "info"
+        );
+
+
+        try {
+
+            const quality =
+                parseInt(
+                    qualityRange.value
+                ) / 100;
+
+
+            let pdf = null;
+
+
+            for (
+                let i = 0;
+                i < selectedImages.length;
+                i++
+            ) {
+
+                const file =
+                    selectedImages[i];
+
+
+                showStatus(
+                    "Processing image " +
+                    (i + 1) +
+                    " of " +
+                    selectedImages.length +
+                    "...",
+                    "info"
+                );
+
+
+                const image =
+                    await loadImage(file);
+
+
+                const compressed =
+                    await compressImage(
+                        image,
+                        quality
+                    );
+
+
+                let pageOrientation =
+                    orientation.value;
+
+
+                if (
+                    pageOrientation ===
+                    "auto"
+                ) {
+
+                    pageOrientation =
+                        image.width >=
+                        image.height
+                            ? "landscape"
+                            : "portrait";
+
+                }
+
+
+                let format =
+                    pageSize.value;
+
+
+                if (format === "original") {
+
+                    const pxToMm =
+                        0.264583;
+
+                    const width =
+                        image.width *
+                        pxToMm;
+
+                    const height =
+                        image.height *
+                        pxToMm;
+
+
+                    pdf =
+                        createPDF(
+                            pageOrientation,
+                            width,
+                            height,
+                            pdf
+                        );
+
+                } else {
+
+                    pdf =
+                        createPDF(
+                            pageOrientation,
+                            format,
+                            null,
+                            pdf
+                        );
+
+                }
+
+
+                const pageWidth =
+                    pdf.internal.pageSize.getWidth();
+
+                const pageHeight =
+                    pdf.internal.pageSize.getHeight();
+
+
+                const margin = 8;
+
+
+                const availableWidth =
+                    pageWidth -
+                    margin * 2;
+
+                const availableHeight =
+                    pageHeight -
+                    margin * 2;
+
+
+                let drawWidth =
+                    image.width;
+
+                let drawHeight =
+                    image.height;
+
+
+                const scale =
+                    Math.min(
+                        availableWidth /
+                            drawWidth,
+                        availableHeight /
+                            drawHeight
+                    );
+
+
+                drawWidth *= scale;
+
+                drawHeight *= scale;
+
+
+                const x =
+                    (pageWidth -
+                        drawWidth) /
+                    2;
+
+                const y =
+                    (pageHeight -
+                        drawHeight) /
+                    2;
+
+
+                pdf.addImage(
+                    compressed,
+                    "JPEG",
+                    x,
+                    y,
+                    drawWidth,
+                    drawHeight,
+                    undefined,
+                    "FAST"
+                );
+
+            }
+
+
+            const blob =
+                pdf.output("blob");
+
+
+            if (pdfURL) {
+
+                URL.revokeObjectURL(
+                    pdfURL
+                );
+
+            }
+
+
+            pdfURL =
+                URL.createObjectURL(
+                    blob
+                );
+
+
+            resultPages.textContent =
+                selectedImages.length;
+
+            resultImages.textContent =
+                selectedImages.length;
+
+            resultSize.textContent =
+                formatBytes(
+                    blob.size
+                );
+
+
+            downloadBtn.href =
+                pdfURL;
+
+            downloadBtn.download =
+                "znovafox-images.pdf";
+
+
+            resultBox.style.display =
+                "block";
+
+            statusMessage.style.display =
+                "none";
+
+
+            resultBox.scrollIntoView({
+                behavior: "smooth",
+                block: "nearest"
+            });
+
+
+        } catch (error) {
+
+            console.error(error);
+
+            showStatus(
+                "Could not create PDF. Please try again.",
+                "error"
+            );
+
+        }
+
+
+        convertBtn.disabled = false;
+
+    }
+);
+
+
+/* ==========================
+   Create PDF Object
+========================== */
+
+function createPDF(
+    orientation,
+    size,
+    originalWidth,
+    existingPDF
+) {
+
+    if (existingPDF) {
+
+        existingPDF.addPage();
+
+        return existingPDF;
+
+    }
+
+
+    if (size === "original") {
+
+        return new jsPDF({
+            orientation:
+                orientation,
+            unit: "mm",
+            format: [
+                originalWidth,
+                originalWidth
+            ]
+        });
+
+    }
+
+
+    return new jsPDF({
+        orientation:
+            orientation,
+        unit: "mm",
+        format:
+            size
+    });
+
+}
+
+
+/* ==========================
+   Load Image
+========================== */
+
+function loadImage(file) {
+
+    return new Promise(
+        (resolve, reject) => {
+
+            const reader =
+                new FileReader();
+
+
+            reader.onload =
+                function (e) {
+
+                    const img =
+                        new Image();
+
+
+                    img.onload =
+                        function () {
+
+                            resolve(img);
+
+                        };
+
+
+                    img.onerror =
+                        reject;
+
+
+                    img.src =
+                        e.target.result;
+
+                };
+
+
+            reader.onerror =
+                reject;
+
+
+            reader.readAsDataURL(
+                file
+            );
+
+        }
+    );
+
+}
+
+
+/* ==========================
+   Compress Image
+========================== */
+
+function compressImage(
+    image,
+    quality
+) {
+
+    return new Promise(
+        resolve => {
+
+            const canvas =
+                document.createElement(
+                    "canvas"
+                );
+
+
+            canvas.width =
+                image.naturalWidth ||
+                image.width;
+
+            canvas.height =
+                image.naturalHeight ||
+                image.height;
+
+
+            const ctx =
+                canvas.getContext(
+                    "2d"
+                );
+
+
+            ctx.fillStyle =
+                "#ffffff";
+
+            ctx.fillRect(
+                0,
+                0,
+                canvas.width,
+                canvas.height
+            );
+
+
+            ctx.drawImage(
+                image,
+                0,
+                0,
+                canvas.width,
+                canvas.height
+            );
+
+
+            resolve(
+                canvas.toDataURL(
+                    "image/jpeg",
+                    quality
+                )
+            );
+
+        }
+    );
+
+}
+
+
+/* ==========================
+   Reset
+========================== */
+
+resetBtn.addEventListener(
+    "click",
+    function () {
+
+        selectedImages = [];
+
+        imageInput.value = "";
+
+        renderImages();
+
+        resultBox.style.display =
+            "none";
+
+        statusMessage.style.display =
+            "none";
+
+
+        if (pdfURL) {
+
+            URL.revokeObjectURL(
+                pdfURL
+            );
+
+            pdfURL = null;
+
+        }
+
+    }
+);
+
+
+/* ==========================
+   Status
+========================== */
+
+function showStatus(
+    message,
+    type
+) {
+
+    statusMessage.textContent =
+        message;
+
+    statusMessage.className =
+        "status-message " +
+        type;
+
+    statusMessage.style.display =
+        "block";
+
+}
+
+
+/* ==========================
+   File Size
+========================== */
+
+function formatBytes(bytes) {
+
+    if (bytes < 1024) {
+
+        return bytes + " B";
+
+    }
+
+    if (
+        bytes <
+        1024 * 1024
+    ) {
+
+        return (
+            (bytes / 1024)
+                .toFixed(1) +
+            " KB"
+        );
+
+    }
+
+    return (
+        (bytes /
+            (1024 * 1024))
+            .toFixed(2) +
+        " MB"
+    );
+
+}
+
+</script>
+
+</body>
+</html>

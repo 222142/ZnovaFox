@@ -1,0 +1,1383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>WebP Converter - ZnovaFox</title>
+
+    <link rel="stylesheet" href="../../css/main.css">
+
+    <style>
+        /* =========================
+           WEBP CONVERTER
+        ========================= */
+
+        .converter-section {
+            padding: 28px 0 40px;
+        }
+
+        .converter-box {
+            max-width: 650px;
+            margin: 0 auto;
+            background: #fff;
+            border: 1px solid #e4e4e4;
+            border-radius: 20px;
+            padding: 24px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+        }
+
+        .upload-area {
+            border: 2px dashed #cfcfcf;
+            border-radius: 16px;
+            padding: 35px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.2s ease;
+        }
+
+        .upload-area:hover,
+        .upload-area.dragover {
+            border-color: #6c4cff;
+            background: #f7f4ff;
+        }
+
+        .upload-icon {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+
+        .upload-area h3 {
+            margin-bottom: 8px;
+            font-size: 20px;
+        }
+
+        .upload-area p {
+            color: #777;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .upload-btn {
+            display: inline-block;
+            background: #6c4cff;
+            color: #fff;
+            padding: 11px 18px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        #fileInput {
+            display: none;
+        }
+
+        .file-info {
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
+            background: #f7f7fa;
+            border-radius: 14px;
+        }
+
+        .file-info-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            padding: 5px 0;
+            font-size: 14px;
+        }
+
+        .file-info-row span:first-child {
+            color: #777;
+        }
+
+        .preview-box {
+            display: none;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .preview-box h3 {
+            margin-bottom: 12px;
+        }
+
+        .preview-box img {
+            max-width: 100%;
+            max-height: 320px;
+            border-radius: 12px;
+            border: 1px solid #ddd;
+            object-fit: contain;
+        }
+
+        .settings-box {
+            display: none;
+            margin-top: 20px;
+            padding: 18px;
+            border: 1px solid #e5e5e5;
+            border-radius: 15px;
+        }
+
+        .settings-box h3 {
+            margin-bottom: 15px;
+        }
+
+        .setting-row {
+            margin-bottom: 18px;
+        }
+
+        .setting-row label {
+            display: block;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .quality-control {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .quality-control input[type="range"] {
+            flex: 1;
+            accent-color: #6c4cff;
+        }
+
+        .quality-value {
+            min-width: 50px;
+            text-align: center;
+            font-weight: 700;
+        }
+
+        .convert-btn {
+            width: 100%;
+            border: none;
+            background: #6c4cff;
+            color: #fff;
+            padding: 14px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s ease;
+        }
+
+        .convert-btn:hover {
+            background: #5738e8;
+        }
+
+        .convert-btn:disabled {
+            opacity: 0.55;
+            cursor: not-allowed;
+        }
+
+        .progress-area {
+            display: none;
+            margin-top: 18px;
+        }
+
+        .progress-text {
+            text-align: center;
+            font-size: 13px;
+            margin-bottom: 8px;
+            color: #666;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e8e8e8;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            width: 0%;
+            height: 100%;
+            background: #6c4cff;
+            transition: width 0.2s ease;
+        }
+
+        .result-box {
+            display: none;
+            margin-top: 22px;
+            padding: 20px;
+            background: #f7f5ff;
+            border: 1px solid #ded7ff;
+            border-radius: 16px;
+        }
+
+        .result-box h3 {
+            margin-bottom: 15px;
+        }
+
+        .result-preview {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .result-preview img {
+            max-width: 100%;
+            max-height: 300px;
+            border-radius: 12px;
+            border: 1px solid #ddd;
+        }
+
+        .result-info {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+
+        .result-item {
+            background: #fff;
+            padding: 12px 8px;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid #e4e4e4;
+        }
+
+        .result-item small {
+            display: block;
+            color: #777;
+            margin-bottom: 5px;
+        }
+
+        .result-item strong {
+            font-size: 14px;
+        }
+
+        .download-btn {
+            display: block;
+            width: 100%;
+            text-align: center;
+            text-decoration: none;
+            background: #111;
+            color: #fff;
+            padding: 13px;
+            border-radius: 11px;
+            font-weight: 700;
+        }
+
+        .clear-btn {
+            width: 100%;
+            margin-top: 10px;
+            border: 1px solid #ddd;
+            background: #fff;
+            color: #222;
+            padding: 12px;
+            border-radius: 11px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .info-box {
+            max-width: 650px;
+            margin: 18px auto 0;
+            padding: 15px 18px;
+            background: #fff;
+            border: 1px solid #e4e4e4;
+            border-radius: 14px;
+            font-size: 13px;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* =========================
+           DARK MODE
+        ========================= */
+
+        body.dark .converter-box,
+        body.dark .info-box {
+            background: #171717;
+            border-color: #333;
+        }
+
+        body.dark .upload-area {
+            border-color: #444;
+        }
+
+        body.dark .upload-area:hover,
+        body.dark .upload-area.dragover {
+            background: #211d35;
+            border-color: #8068ff;
+        }
+
+        body.dark .upload-area p,
+        body.dark .file-info-row span:first-child,
+        body.dark .progress-text {
+            color: #aaa;
+        }
+
+        body.dark .file-info,
+        body.dark .settings-box {
+            background: #202020;
+            border-color: #333;
+        }
+
+        body.dark .preview-box img,
+        body.dark .result-preview img {
+            border-color: #444;
+        }
+
+        body.dark .result-box {
+            background: #211d35;
+            border-color: #40366b;
+        }
+
+        body.dark .result-item {
+            background: #202020;
+            border-color: #333;
+        }
+
+        body.dark .clear-btn {
+            background: #202020;
+            color: #fff;
+            border-color: #444;
+        }
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 600px) {
+
+            .converter-section {
+                padding: 18px 0 30px;
+            }
+
+            .converter-box {
+                width: 100%;
+                padding: 16px;
+                border-radius: 16px;
+            }
+
+            .upload-area {
+                padding: 28px 15px;
+            }
+
+            .upload-icon {
+                font-size: 40px;
+            }
+
+            .upload-area h3 {
+                font-size: 18px;
+            }
+
+            .result-info {
+                grid-template-columns: 1fr;
+            }
+
+            .preview-box img,
+            .result-preview img {
+                max-height: 240px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- =========================
+         HEADER
+    ========================= -->
+
+    <header class="site-header">
+
+        <div class="container header-inner">
+
+            <a href="../../index.html" class="logo">
+                Znova<span>Fox</span>
+            </a>
+
+            <nav class="desktop-nav">
+
+                <a href="../../index.html">Home</a>
+
+                <a href="../ai-tools.html">AI Tools</a>
+
+                <a href="../online-tools.html">Online Tools</a>
+
+                <a href="../government.html">Government</a>
+
+                <a href="../jobs.html">Jobs</a>
+
+            </nav>
+
+            <div class="header-actions">
+
+                <button
+                    id="themeBtn"
+                    class="theme-btn"
+                    type="button"
+                    aria-label="Toggle theme"
+                >
+                    🌙
+                </button>
+
+                <button
+                    id="menuBtn"
+                    class="menu-btn"
+                    type="button"
+                    aria-label="Open menu"
+                >
+                    ☰
+                </button>
+
+            </div>
+
+        </div>
+
+        <nav id="mobileNav" class="mobile-nav">
+
+            <a href="../../index.html">Home</a>
+            <a href="../ai-tools.html">AI Tools</a>
+            <a href="../online-tools.html">Online Tools</a>
+            <a href="../government.html">Government</a>
+            <a href="../jobs.html">Jobs</a>
+
+        </nav>
+
+    </header>
+
+
+    <!-- =========================
+         HERO
+    ========================= -->
+
+    <section class="hero">
+
+        <div class="container">
+
+            <div class="live-status">
+                <span></span>
+                LIVE
+            </div>
+
+            <h1>
+                WebP Converter
+            </h1>
+
+            <p class="hero-text">
+                Convert JPG, PNG and other supported images
+                into modern WebP format quickly and easily.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         CONVERTER
+    ========================= -->
+
+    <main>
+
+        <section class="converter-section">
+
+            <div class="container">
+
+                <div class="converter-box">
+
+                    <!-- Upload -->
+
+                    <div
+                        id="uploadArea"
+                        class="upload-area"
+                    >
+
+                        <div class="upload-icon">
+                            🌐
+                        </div>
+
+                        <h3>
+                            Upload Image
+                        </h3>
+
+                        <p>
+                            JPG, JPEG, PNG or WebP
+                        </p>
+
+                        <span class="upload-btn">
+                            Choose Image
+                        </span>
+
+                        <input
+                            type="file"
+                            id="fileInput"
+                            accept="image/jpeg,image/png,image/webp"
+                        >
+
+                    </div>
+
+
+                    <!-- File Information -->
+
+                    <div
+                        id="fileInfo"
+                        class="file-info"
+                    >
+
+                        <div class="file-info-row">
+                            <span>File Name</span>
+                            <strong id="fileName">-</strong>
+                        </div>
+
+                        <div class="file-info-row">
+                            <span>File Size</span>
+                            <strong id="fileSize">-</strong>
+                        </div>
+
+                        <div class="file-info-row">
+                            <span>Format</span>
+                            <strong id="fileFormat">-</strong>
+                        </div>
+
+                        <div class="file-info-row">
+                            <span>Dimensions</span>
+                            <strong id="fileDimensions">-</strong>
+                        </div>
+
+                    </div>
+
+
+                    <!-- Preview -->
+
+                    <div
+                        id="previewBox"
+                        class="preview-box"
+                    >
+
+                        <h3>
+                            Original Preview
+                        </h3>
+
+                        <img
+                            id="previewImage"
+                            src=""
+                            alt="Original image preview"
+                        >
+
+                    </div>
+
+
+                    <!-- Settings -->
+
+                    <div
+                        id="settingsBox"
+                        class="settings-box"
+                    >
+
+                        <h3>
+                            WebP Settings
+                        </h3>
+
+                        <div class="setting-row">
+
+                            <label for="quality">
+                                Image Quality
+                            </label>
+
+                            <div class="quality-control">
+
+                                <input
+                                    type="range"
+                                    id="quality"
+                                    min="10"
+                                    max="100"
+                                    value="85"
+                                >
+
+                                <span
+                                    id="qualityValue"
+                                    class="quality-value"
+                                >
+                                    85%
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                        <button
+                            id="convertBtn"
+                            class="convert-btn"
+                            type="button"
+                        >
+                            Convert to WebP
+                        </button>
+
+                    </div>
+
+
+                    <!-- Progress -->
+
+                    <div
+                        id="progressArea"
+                        class="progress-area"
+                    >
+
+                        <div
+                            id="progressText"
+                            class="progress-text"
+                        >
+                            Converting...
+                        </div>
+
+                        <div class="progress-bar">
+
+                            <div
+                                id="progressFill"
+                                class="progress-fill"
+                            ></div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Result -->
+
+                    <div
+                        id="resultBox"
+                        class="result-box"
+                    >
+
+                        <h3>
+                            Conversion Complete
+                        </h3>
+
+                        <div class="result-preview">
+
+                            <img
+                                id="resultImage"
+                                src=""
+                                alt="Converted WebP preview"
+                            >
+
+                        </div>
+
+                        <div class="result-info">
+
+                            <div class="result-item">
+
+                                <small>
+                                    Original
+                                </small>
+
+                                <strong id="originalSize">
+                                    -
+                                </strong>
+
+                            </div>
+
+                            <div class="result-item">
+
+                                <small>
+                                    WebP Size
+                                </small>
+
+                                <strong id="convertedSize">
+                                    -
+                                </strong>
+
+                            </div>
+
+                            <div class="result-item">
+
+                                <small>
+                                    Reduction
+                                </small>
+
+                                <strong id="reduction">
+                                    -
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+                        <a
+                            id="downloadBtn"
+                            class="download-btn"
+                            href="#"
+                            download="znovafox-image.webp"
+                        >
+                            Download WebP
+                        </a>
+
+                        <button
+                            id="clearBtn"
+                            class="clear-btn"
+                            type="button"
+                        >
+                            Clear
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Info -->
+
+                <div class="info-box">
+
+                    <strong>Privacy:</strong>
+                    Your image is processed directly in your browser.
+                    The image is not uploaded to a ZnovaFox server.
+
+                    <br><br>
+
+                    <strong>Note:</strong>
+                    WebP quality affects the final file size and image
+                    quality. A higher quality usually creates a larger file.
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================
+         FOOTER
+    ========================= -->
+
+    <footer class="site-footer">
+
+        <div class="container">
+
+            <p>
+                © 2026 ZnovaFox. All rights reserved.
+            </p>
+
+        </div>
+
+    </footer>
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================= -->
+
+    <script src="../../js/main.js"></script>
+
+    <script>
+
+        const fileInput =
+            document.getElementById("fileInput");
+
+        const uploadArea =
+            document.getElementById("uploadArea");
+
+        const fileInfo =
+            document.getElementById("fileInfo");
+
+        const previewBox =
+            document.getElementById("previewBox");
+
+        const previewImage =
+            document.getElementById("previewImage");
+
+        const settingsBox =
+            document.getElementById("settingsBox");
+
+        const convertBtn =
+            document.getElementById("convertBtn");
+
+        const quality =
+            document.getElementById("quality");
+
+        const qualityValue =
+            document.getElementById("qualityValue");
+
+        const progressArea =
+            document.getElementById("progressArea");
+
+        const progressFill =
+            document.getElementById("progressFill");
+
+        const progressText =
+            document.getElementById("progressText");
+
+        const resultBox =
+            document.getElementById("resultBox");
+
+        const resultImage =
+            document.getElementById("resultImage");
+
+        const downloadBtn =
+            document.getElementById("downloadBtn");
+
+        const clearBtn =
+            document.getElementById("clearBtn");
+
+
+        const fileName =
+            document.getElementById("fileName");
+
+        const fileSize =
+            document.getElementById("fileSize");
+
+        const fileFormat =
+            document.getElementById("fileFormat");
+
+        const fileDimensions =
+            document.getElementById("fileDimensions");
+
+        const originalSize =
+            document.getElementById("originalSize");
+
+        const convertedSize =
+            document.getElementById("convertedSize");
+
+        const reduction =
+            document.getElementById("reduction");
+
+
+        let selectedFile = null;
+
+        let originalImageURL = null;
+
+        let convertedImageURL = null;
+
+
+        /* =========================
+           FORMAT FILE SIZE
+        ========================= */
+
+        function formatFileSize(bytes) {
+
+            if (bytes < 1024) {
+                return bytes + " B";
+            }
+
+            if (bytes < 1024 * 1024) {
+                return (bytes / 1024).toFixed(1) + " KB";
+            }
+
+            return (bytes / (1024 * 1024)).toFixed(2) + " MB";
+        }
+
+
+        /* =========================
+           FILE SELECT
+        ========================= */
+
+        uploadArea.addEventListener(
+            "click",
+            function () {
+                fileInput.click();
+            }
+        );
+
+
+        fileInput.addEventListener(
+            "change",
+            function () {
+
+                if (fileInput.files.length > 0) {
+
+                    handleFile(
+                        fileInput.files[0]
+                    );
+
+                }
+
+            }
+        );
+
+
+        /* =========================
+           DRAG DROP
+        ========================= */
+
+        uploadArea.addEventListener(
+            "dragover",
+            function (event) {
+
+                event.preventDefault();
+
+                uploadArea.classList.add(
+                    "dragover"
+                );
+
+            }
+        );
+
+
+        uploadArea.addEventListener(
+            "dragleave",
+            function () {
+
+                uploadArea.classList.remove(
+                    "dragover"
+                );
+
+            }
+        );
+
+
+        uploadArea.addEventListener(
+            "drop",
+            function (event) {
+
+                event.preventDefault();
+
+                uploadArea.classList.remove(
+                    "dragover"
+                );
+
+                const files =
+                    event.dataTransfer.files;
+
+                if (files.length > 0) {
+
+                    handleFile(files[0]);
+
+                }
+
+            }
+        );
+
+
+        /* =========================
+           HANDLE FILE
+        ========================= */
+
+        function handleFile(file) {
+
+            if (!file.type.startsWith("image/")) {
+
+                alert(
+                    "Please select a valid image file."
+                );
+
+                return;
+
+            }
+
+
+            if (
+                file.type !== "image/jpeg" &&
+                file.type !== "image/png" &&
+                file.type !== "image/webp"
+            ) {
+
+                alert(
+                    "Please select JPG, PNG or WebP image."
+                );
+
+                return;
+
+            }
+
+
+            selectedFile = file;
+
+
+            fileName.textContent =
+                file.name;
+
+            fileSize.textContent =
+                formatFileSize(file.size);
+
+            fileFormat.textContent =
+                file.type.split("/")[1].toUpperCase();
+
+
+            if (originalImageURL) {
+
+                URL.revokeObjectURL(
+                    originalImageURL
+                );
+
+            }
+
+
+            originalImageURL =
+                URL.createObjectURL(file);
+
+
+            const image =
+                new Image();
+
+
+            image.onload = function () {
+
+                fileDimensions.textContent =
+                    image.naturalWidth +
+                    " × " +
+                    image.naturalHeight;
+
+                previewImage.src =
+                    originalImageURL;
+
+                previewBox.style.display =
+                    "block";
+
+                fileInfo.style.display =
+                    "block";
+
+                settingsBox.style.display =
+                    "block";
+
+                resultBox.style.display =
+                    "none";
+
+            };
+
+
+            image.src =
+                originalImageURL;
+
+        }
+
+
+        /* =========================
+           QUALITY
+        ========================= */
+
+        quality.addEventListener(
+            "input",
+            function () {
+
+                qualityValue.textContent =
+                    quality.value + "%";
+
+            }
+        );
+
+
+        /* =========================
+           CONVERT
+        ========================= */
+
+        convertBtn.addEventListener(
+            "click",
+            function () {
+
+                if (!selectedFile) {
+
+                    alert(
+                        "Please select an image first."
+                    );
+
+                    return;
+
+                }
+
+
+                convertImage();
+
+            }
+        );
+
+
+        function convertImage() {
+
+            convertBtn.disabled =
+                true;
+
+            progressArea.style.display =
+                "block";
+
+            progressFill.style.width =
+                "20%";
+
+            progressText.textContent =
+                "Loading image...";
+
+
+            const image =
+                new Image();
+
+
+            image.onload = function () {
+
+                progressFill.style.width =
+                    "50%";
+
+                progressText.textContent =
+                    "Converting to WebP...";
+
+
+                const canvas =
+                    document.createElement(
+                        "canvas"
+                    );
+
+
+                canvas.width =
+                    image.naturalWidth;
+
+                canvas.height =
+                    image.naturalHeight;
+
+
+                const ctx =
+                    canvas.getContext("2d");
+
+
+                /*
+                    JPG/PNG → WebP
+                    WebP → WebP
+
+                    Drawing on canvas keeps
+                    the original dimensions.
+                */
+
+                ctx.drawImage(
+                    image,
+                    0,
+                    0
+                );
+
+
+                const qualityValueNumber =
+                    Number(quality.value) / 100;
+
+
+                canvas.toBlob(
+                    function (blob) {
+
+                        if (!blob) {
+
+                            alert(
+                                "WebP conversion is not supported by this browser."
+                            );
+
+                            convertBtn.disabled =
+                                false;
+
+                            progressArea.style.display =
+                                "none";
+
+                            return;
+
+                        }
+
+
+                        progressFill.style.width =
+                            "100%";
+
+                        progressText.textContent =
+                            "Conversion complete";
+
+
+                        if (convertedImageURL) {
+
+                            URL.revokeObjectURL(
+                                convertedImageURL
+                            );
+
+                        }
+
+
+                        convertedImageURL =
+                            URL.createObjectURL(
+                                blob
+                            );
+
+
+                        resultImage.src =
+                            convertedImageURL;
+
+
+                        originalSize.textContent =
+                            formatFileSize(
+                                selectedFile.size
+                            );
+
+
+                        convertedSize.textContent =
+                            formatFileSize(
+                                blob.size
+                            );
+
+
+                        const reductionPercent =
+                            (
+                                (
+                                    selectedFile.size -
+                                    blob.size
+                                ) /
+                                selectedFile.size
+                            ) * 100;
+
+
+                        if (
+                            reductionPercent > 0
+                        ) {
+
+                            reduction.textContent =
+                                reductionPercent.toFixed(1) +
+                                "% smaller";
+
+                        } else {
+
+                            reduction.textContent =
+                                Math.abs(
+                                    reductionPercent
+                                ).toFixed(1) +
+                                "% larger";
+
+                        }
+
+
+                        downloadBtn.href =
+                            convertedImageURL;
+
+
+                        const baseName =
+                            selectedFile.name
+                                .replace(
+                                    /\.[^/.]+$/,
+                                    ""
+                                );
+
+
+                        downloadBtn.download =
+                            baseName +
+                            ".webp";
+
+
+                        resultBox.style.display =
+                            "block";
+
+
+                        setTimeout(
+                            function () {
+
+                                progressArea.style.display =
+                                    "none";
+
+                                progressFill.style.width =
+                                    "0%";
+
+                                convertBtn.disabled =
+                                    false;
+
+                                resultBox.scrollIntoView({
+                                    behavior: "smooth",
+                                    block: "center"
+                                });
+
+                            },
+                            500
+                        );
+
+                    },
+                    "image/webp",
+                    qualityValueNumber
+                );
+
+            };
+
+
+            image.onerror =
+                function () {
+
+                    alert(
+                        "Unable to load the selected image."
+                    );
+
+                    convertBtn.disabled =
+                        false;
+
+                    progressArea.style.display =
+                        "none";
+
+                    progressFill.style.width =
+                        "0%";
+
+                };
+
+
+            image.src =
+                originalImageURL;
+
+        }
+
+
+        /* =========================
+           CLEAR
+        ========================= */
+
+        clearBtn.addEventListener(
+            "click",
+            clearConverter
+        );
+
+
+        function clearConverter() {
+
+            selectedFile = null;
+
+
+            if (originalImageURL) {
+
+                URL.revokeObjectURL(
+                    originalImageURL
+                );
+
+                originalImageURL =
+                    null;
+
+            }
+
+
+            if (convertedImageURL) {
+
+                URL.revokeObjectURL(
+                    convertedImageURL
+                );
+
+                convertedImageURL =
+                    null;
+
+            }
+
+
+            fileInput.value =
+                "";
+
+            previewImage.src =
+                "";
+
+            resultImage.src =
+                "";
+
+            fileInfo.style.display =
+                "none";
+
+            previewBox.style.display =
+                "none";
+
+            settingsBox.style.display =
+                "none";
+
+            progressArea.style.display =
+                "none";
+
+            resultBox.style.display =
+                "none";
+
+            progressFill.style.width =
+                "0%";
+
+            convertBtn.disabled =
+                false;
+
+        }
+
+    </script>
+
+</body>
+</html>

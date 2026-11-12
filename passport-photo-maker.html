@@ -1,0 +1,1272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Passport Photo Maker - ZnovaFox</title>
+    <meta name="description" content="Create passport size photos online with ZnovaFox Passport Photo Maker.">
+
+    <link rel="stylesheet" href="../../css/main.css">
+
+    <style>
+        .tool-page {
+            padding: 24px 0 40px;
+        }
+
+        .passport-tool {
+            max-width: 850px;
+            margin: auto;
+            background: #fff;
+            border: 1px solid #e5e5e5;
+            border-radius: 20px;
+            padding: 22px;
+            box-shadow: 0 8px 25px rgba(0,0,0,.05);
+        }
+
+        .upload-box {
+            border: 2px dashed #cfcfcf;
+            border-radius: 16px;
+            padding: 30px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: .2s;
+            margin-bottom: 20px;
+        }
+
+        .upload-box:hover {
+            border-color: #6c4cff;
+            background: #faf9ff;
+        }
+
+        .upload-icon {
+            font-size: 42px;
+            margin-bottom: 8px;
+        }
+
+        .upload-box h3 {
+            margin-bottom: 6px;
+        }
+
+        .upload-box p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        #fileInput {
+            display: none;
+        }
+
+        .editor {
+            display: none;
+            grid-template-columns: 1fr 300px;
+            gap: 22px;
+            align-items: start;
+        }
+
+        .preview-area {
+            background: #f4f4f7;
+            border-radius: 16px;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .preview-area h3 {
+            margin-bottom: 12px;
+        }
+
+        .canvas-wrap {
+            width: 100%;
+            min-height: 360px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        #photoCanvas {
+            max-width: 100%;
+            max-height: 500px;
+            border-radius: 8px;
+            background: #fff;
+            box-shadow: 0 4px 15px rgba(0,0,0,.12);
+        }
+
+        .controls {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .control-group {
+            border: 1px solid #e4e4e4;
+            border-radius: 14px;
+            padding: 14px;
+            background: #fff;
+        }
+
+        .control-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        select,
+        input[type="number"] {
+            width: 100%;
+            padding: 10px 11px;
+            border: 1px solid #d8d8d8;
+            border-radius: 10px;
+            background: #fff;
+            color: #222;
+            outline: none;
+        }
+
+        select:focus,
+        input[type="number"]:focus {
+            border-color: #6c4cff;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            accent-color: #6c4cff;
+        }
+
+        .range-value {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #666;
+            margin-top: 4px;
+        }
+
+        .color-options {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .color-btn {
+            width: 34px;
+            height: 34px;
+            border-radius: 9px;
+            border: 2px solid #ddd;
+            cursor: pointer;
+        }
+
+        .color-btn.active {
+            border: 3px solid #6c4cff;
+        }
+
+        .white {
+            background: #fff;
+        }
+
+        .blue {
+            background: #dff0ff;
+        }
+
+        .light-gray {
+            background: #eee;
+        }
+
+        .remove-bg-note {
+            margin-top: 8px;
+            font-size: 11px;
+            color: #777;
+            line-height: 1.4;
+        }
+
+        .button-row {
+            display: flex;
+            gap: 9px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            border: none;
+            border-radius: 10px;
+            padding: 11px 15px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 13px;
+            transition: .2s;
+        }
+
+        .btn-primary {
+            background: #6c4cff;
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background: #5939e8;
+        }
+
+        .btn-secondary {
+            background: #eee;
+            color: #222;
+        }
+
+        .btn-secondary:hover {
+            background: #ddd;
+        }
+
+        .result {
+            display: none;
+            margin-top: 22px;
+            border: 1px solid #e2e2e2;
+            border-radius: 15px;
+            padding: 16px;
+            background: #fafafa;
+        }
+
+        .result-preview {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        #resultCanvas {
+            max-width: 100%;
+            width: 300px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,.12);
+        }
+
+        .result-info {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .info-box {
+            background: #fff;
+            border: 1px solid #e5e5e5;
+            border-radius: 10px;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .info-box strong {
+            display: block;
+            font-size: 14px;
+        }
+
+        .info-box span {
+            color: #666;
+            font-size: 11px;
+        }
+
+        .status {
+            margin-top: 12px;
+            padding: 10px;
+            border-radius: 10px;
+            font-size: 13px;
+            display: none;
+        }
+
+        .status.success {
+            display: block;
+            background: #eaf8ef;
+            color: #18743a;
+        }
+
+        .status.error {
+            display: block;
+            background: #fff0f0;
+            color: #b42323;
+        }
+
+        .tips {
+            margin-top: 18px;
+            background: #f7f5ff;
+            border: 1px solid #e4defe;
+            border-radius: 14px;
+            padding: 14px;
+        }
+
+        .tips h4 {
+            margin-bottom: 8px;
+        }
+
+        .tips ul {
+            padding-left: 18px;
+        }
+
+        .tips li {
+            margin-bottom: 5px;
+            font-size: 13px;
+            color: #555;
+        }
+
+        /* DARK MODE */
+
+        body.dark .passport-tool {
+            background: #171717;
+            border-color: #303030;
+            box-shadow: none;
+        }
+
+        body.dark .upload-box {
+            border-color: #444;
+            background: #191919;
+        }
+
+        body.dark .upload-box:hover {
+            border-color: #8066ff;
+            background: #1d192c;
+        }
+
+        body.dark .upload-box p,
+        body.dark .range-value,
+        body.dark .remove-bg-note,
+        body.dark .tips li {
+            color: #aaa;
+        }
+
+        body.dark .preview-area {
+            background: #111;
+        }
+
+        body.dark .control-group,
+        body.dark select,
+        body.dark input[type="number"],
+        body.dark .info-box {
+            background: #1c1c1c;
+            color: #fff;
+            border-color: #3a3a3a;
+        }
+
+        body.dark select,
+        body.dark input[type="number"] {
+            color: #fff;
+        }
+
+        body.dark .btn-secondary {
+            background: #303030;
+            color: #fff;
+        }
+
+        body.dark .result {
+            background: #1b1b1b;
+            border-color: #333;
+        }
+
+        body.dark .tips {
+            background: #211d31;
+            border-color: #40366c;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 700px) {
+            .tool-page {
+                padding: 15px 0 30px;
+            }
+
+            .passport-tool {
+                padding: 14px;
+                border-radius: 16px;
+            }
+
+            .editor {
+                grid-template-columns: 1fr;
+            }
+
+            .canvas-wrap {
+                min-height: 280px;
+            }
+
+            #photoCanvas {
+                max-height: 400px;
+            }
+
+            .result-info {
+                grid-template-columns: 1fr;
+            }
+
+            .button-row .btn {
+                flex: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="site-header">
+    <div class="container header-inner">
+
+        <a href="../../index.html" class="logo">
+            Znova<span>Fox</span>
+        </a>
+
+        <nav class="desktop-nav">
+            <a href="../../index.html">Home</a>
+            <a href="../ai-tools.html">AI Tools</a>
+            <a href="../online-tools.html">Online Tools</a>
+            <a href="../jobs.html">Jobs</a>
+            <a href="../education.html">Education</a>
+        </nav>
+
+        <div class="header-actions">
+            <button class="theme-btn" id="themeBtn" aria-label="Toggle theme">
+                🌙
+            </button>
+
+            <button class="menu-btn" id="menuBtn" aria-label="Open menu">
+                ☰
+            </button>
+        </div>
+    </div>
+
+    <nav class="mobile-nav" id="mobileNav">
+        <a href="../../index.html">Home</a>
+        <a href="../ai-tools.html">AI Tools</a>
+        <a href="../online-tools.html">Online Tools</a>
+        <a href="../jobs.html">Jobs</a>
+        <a href="../education.html">Education</a>
+    </nav>
+</header>
+
+
+<section class="hero">
+    <div class="container">
+
+        <div class="live-status">
+            <span></span> LIVE
+        </div>
+
+        <h1>Passport Photo Maker</h1>
+
+        <p class="hero-text">
+            Create a clean passport-size photo directly in your browser.
+        </p>
+
+    </div>
+</section>
+
+
+<main class="tool-page">
+
+    <div class="container">
+
+        <div class="passport-tool">
+
+            <!-- UPLOAD -->
+
+            <label class="upload-box" id="uploadBox">
+
+                <input
+                    type="file"
+                    id="fileInput"
+                    accept="image/jpeg,image/png,image/webp"
+                >
+
+                <div class="upload-icon">📸</div>
+
+                <h3>Upload Your Photo</h3>
+
+                <p>
+                    Click here or drag & drop a JPG, PNG or WebP image
+                </p>
+
+            </label>
+
+
+            <!-- EDITOR -->
+
+            <div class="editor" id="editor">
+
+                <div class="preview-area">
+
+                    <h3>Photo Preview</h3>
+
+                    <div class="canvas-wrap">
+                        <canvas id="photoCanvas"></canvas>
+                    </div>
+
+                    <p style="font-size:12px;color:#777;margin-top:8px;">
+                        Use the controls to adjust zoom and position.
+                    </p>
+
+                </div>
+
+
+                <div class="controls">
+
+                    <!-- SIZE -->
+
+                    <div class="control-group">
+
+                        <label for="sizeSelect">
+                            Passport Photo Size
+                        </label>
+
+                        <select id="sizeSelect">
+
+                            <option value="35x45">
+                                35 × 45 mm — Common Passport
+                            </option>
+
+                            <option value="2x2">
+                                2 × 2 inch — US Passport
+                            </option>
+
+                            <option value="25x35">
+                                25 × 35 mm
+                            </option>
+
+                            <option value="30x40">
+                                30 × 40 mm
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- ZOOM -->
+
+                    <div class="control-group">
+
+                        <label for="zoom">
+                            Zoom
+                        </label>
+
+                        <input
+                            type="range"
+                            id="zoom"
+                            min="50"
+                            max="200"
+                            value="100"
+                        >
+
+                        <div class="range-value">
+                            <span>50%</span>
+                            <strong id="zoomValue">100%</strong>
+                            <span>200%</span>
+                        </div>
+
+                    </div>
+
+
+                    <!-- HORIZONTAL -->
+
+                    <div class="control-group">
+
+                        <label for="positionX">
+                            Horizontal Position
+                        </label>
+
+                        <input
+                            type="range"
+                            id="positionX"
+                            min="-100"
+                            max="100"
+                            value="0"
+                        >
+
+                    </div>
+
+
+                    <!-- VERTICAL -->
+
+                    <div class="control-group">
+
+                        <label for="positionY">
+                            Vertical Position
+                        </label>
+
+                        <input
+                            type="range"
+                            id="positionY"
+                            min="-100"
+                            max="100"
+                            value="0"
+                        >
+
+                    </div>
+
+
+                    <!-- BACKGROUND -->
+
+                    <div class="control-group">
+
+                        <label>
+                            Background
+                        </label>
+
+                        <div class="color-options">
+
+                            <button
+                                class="color-btn white active"
+                                data-color="#ffffff"
+                                title="White">
+                            </button>
+
+                            <button
+                                class="color-btn blue"
+                                data-color="#dff0ff"
+                                title="Light Blue">
+                            </button>
+
+                            <button
+                                class="color-btn light-gray"
+                                data-color="#eeeeee"
+                                title="Light Gray">
+                            </button>
+
+                        </div>
+
+                        <div class="remove-bg-note">
+                            Background color is applied behind the photo.
+                            It does not automatically remove the original background.
+                        </div>
+
+                    </div>
+
+
+                    <!-- QUALITY -->
+
+                    <div class="control-group">
+
+                        <label for="quality">
+                            JPG Quality
+                        </label>
+
+                        <input
+                            type="range"
+                            id="quality"
+                            min="60"
+                            max="100"
+                            value="92"
+                        >
+
+                        <div class="range-value">
+                            <span>60%</span>
+                            <strong id="qualityValue">92%</strong>
+                            <span>100%</span>
+                        </div>
+
+                    </div>
+
+
+                    <!-- BUTTONS -->
+
+                    <div class="button-row">
+
+                        <button
+                            class="btn btn-primary"
+                            id="generateBtn">
+                            Generate Photo
+                        </button>
+
+                        <button
+                            class="btn btn-secondary"
+                            id="resetBtn">
+                            Reset
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- STATUS -->
+
+            <div class="status" id="status"></div>
+
+
+            <!-- RESULT -->
+
+            <div class="result" id="result">
+
+                <h3 style="margin-bottom:14px;">
+                    Generated Passport Photo
+                </h3>
+
+                <div class="result-preview">
+
+                    <canvas id="resultCanvas"></canvas>
+
+                </div>
+
+                <div class="result-info">
+
+                    <div class="info-box">
+                        <strong id="resultSize">—</strong>
+                        <span>Dimensions</span>
+                    </div>
+
+                    <div class="info-box">
+                        <strong id="resultFileSize">—</strong>
+                        <span>File Size</span>
+                    </div>
+
+                    <div class="info-box">
+                        <strong id="resultFormat">JPG</strong>
+                        <span>Format</span>
+                    </div>
+
+                </div>
+
+                <div class="button-row">
+
+                    <button
+                        class="btn btn-primary"
+                        id="downloadBtn">
+                        ⬇ Download JPG
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- TIPS -->
+
+            <div class="tips">
+
+                <h4>📌 Tips</h4>
+
+                <ul>
+                    <li>Use a clear, front-facing photo with good lighting.</li>
+                    <li>Keep the face centered in the frame.</li>
+                    <li>Choose the required passport photo size before downloading.</li>
+                    <li>Check the requirements of the organization where you will submit the photo.</li>
+                    <li>This tool processes the image inside your browser.</li>
+                </ul>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<footer style="padding:25px 0;text-align:center;">
+    <div class="container">
+        <p style="font-size:13px;color:#777;">
+            © 2026 ZnovaFox. All rights reserved.
+        </p>
+    </div>
+</footer>
+
+
+<script src="../../js/main.js"></script>
+
+<script>
+
+const fileInput = document.getElementById("fileInput");
+const uploadBox = document.getElementById("uploadBox");
+
+const editor = document.getElementById("editor");
+
+const photoCanvas = document.getElementById("photoCanvas");
+const photoCtx = photoCanvas.getContext("2d");
+
+const resultCanvas = document.getElementById("resultCanvas");
+const resultCtx = resultCanvas.getContext("2d");
+
+const sizeSelect = document.getElementById("sizeSelect");
+
+const zoom = document.getElementById("zoom");
+const zoomValue = document.getElementById("zoomValue");
+
+const positionX = document.getElementById("positionX");
+const positionY = document.getElementById("positionY");
+
+const quality = document.getElementById("quality");
+const qualityValue = document.getElementById("qualityValue");
+
+const generateBtn = document.getElementById("generateBtn");
+const resetBtn = document.getElementById("resetBtn");
+
+const result = document.getElementById("result");
+
+const downloadBtn = document.getElementById("downloadBtn");
+
+const statusBox = document.getElementById("status");
+
+let image = new Image();
+let imageLoaded = false;
+
+let backgroundColor = "#ffffff";
+
+let generatedBlob = null;
+
+
+/* SIZE SETTINGS */
+
+const sizes = {
+
+    "35x45": {
+        width: 413,
+        height: 531
+    },
+
+    "2x2": {
+        width: 600,
+        height: 600
+    },
+
+    "25x35": {
+        width: 295,
+        height: 413
+    },
+
+    "30x40": {
+        width: 354,
+        height: 472
+    }
+
+};
+
+
+/* SHOW STATUS */
+
+function showStatus(message, type) {
+
+    statusBox.textContent = message;
+
+    statusBox.className = "status " + type;
+
+}
+
+
+/* FORMAT BYTES */
+
+function formatBytes(bytes) {
+
+    if (bytes < 1024) {
+        return bytes + " B";
+    }
+
+    if (bytes < 1024 * 1024) {
+        return (bytes / 1024).toFixed(1) + " KB";
+    }
+
+    return (bytes / (1024 * 1024)).toFixed(2) + " MB";
+
+}
+
+
+/* UPLOAD */
+
+fileInput.addEventListener("change", function() {
+
+    if (!this.files.length) return;
+
+    loadImage(this.files[0]);
+
+});
+
+
+/* DRAG DROP */
+
+uploadBox.addEventListener("dragover", function(e) {
+
+    e.preventDefault();
+
+    uploadBox.style.borderColor = "#6c4cff";
+
+});
+
+
+uploadBox.addEventListener("dragleave", function() {
+
+    uploadBox.style.borderColor = "";
+
+});
+
+
+uploadBox.addEventListener("drop", function(e) {
+
+    e.preventDefault();
+
+    uploadBox.style.borderColor = "";
+
+    const file = e.dataTransfer.files[0];
+
+    if (!file) return;
+
+    if (!file.type.startsWith("image/")) {
+
+        showStatus(
+            "Please select a valid image file.",
+            "error"
+        );
+
+        return;
+
+    }
+
+    loadImage(file);
+
+});
+
+
+/* LOAD IMAGE */
+
+function loadImage(file) {
+
+    if (!file.type.match(/^image\/(jpeg|png|webp)$/)) {
+
+        showStatus(
+            "Only JPG, PNG and WebP images are supported.",
+            "error"
+        );
+
+        return;
+
+    }
+
+    const reader = new FileReader();
+
+    reader.onload = function(e) {
+
+        image = new Image();
+
+        image.onload = function() {
+
+            imageLoaded = true;
+
+            editor.style.display = "grid";
+
+            result.style.display = "none";
+
+            statusBox.style.display = "none";
+
+            resetControls();
+
+            drawPreview();
+
+        };
+
+        image.src = e.target.result;
+
+    };
+
+    reader.readAsDataURL(file);
+
+}
+
+
+/* RESET CONTROLS */
+
+function resetControls() {
+
+    zoom.value = 100;
+
+    positionX.value = 0;
+
+    positionY.value = 0;
+
+    zoomValue.textContent = "100%";
+
+}
+
+
+/* GET SIZE */
+
+function getSize() {
+
+    return sizes[sizeSelect.value];
+
+}
+
+
+/* DRAW PREVIEW */
+
+function drawPreview() {
+
+    if (!imageLoaded) return;
+
+    const size = getSize();
+
+    const previewWidth = Math.min(420, size.width);
+
+    const ratio = size.height / size.width;
+
+    const previewHeight = previewWidth * ratio;
+
+    photoCanvas.width = previewWidth;
+    photoCanvas.height = previewHeight;
+
+    drawImageOnCanvas(
+        photoCanvas,
+        photoCtx,
+        previewWidth,
+        previewHeight
+    );
+
+}
+
+
+/* DRAW IMAGE */
+
+function drawImageOnCanvas(canvas, ctx, width, height) {
+
+    ctx.clearRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
+
+    /* Background */
+
+    ctx.fillStyle = backgroundColor;
+
+    ctx.fillRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
+
+
+    /*
+        COVER IMAGE
+    */
+
+    const scale = Math.max(
+        canvas.width / image.width,
+        canvas.height / image.height
+    );
+
+    const userZoom = Number(zoom.value) / 100;
+
+    const drawWidth =
+        image.width * scale * userZoom;
+
+    const drawHeight =
+        image.height * scale * userZoom;
+
+
+    const extraX =
+        (canvas.width - drawWidth) / 2;
+
+    const extraY =
+        (canvas.height - drawHeight) / 2;
+
+
+    const moveX =
+        Number(positionX.value) *
+        canvas.width / 200;
+
+    const moveY =
+        Number(positionY.value) *
+        canvas.height / 200;
+
+
+    ctx.drawImage(
+        image,
+        extraX + moveX,
+        extraY + moveY,
+        drawWidth,
+        drawHeight
+    );
+
+}
+
+
+/* LIVE PREVIEW */
+
+zoom.addEventListener("input", function() {
+
+    zoomValue.textContent =
+        this.value + "%";
+
+    drawPreview();
+
+});
+
+
+positionX.addEventListener("input", drawPreview);
+
+positionY.addEventListener("input", drawPreview);
+
+
+sizeSelect.addEventListener("change", function() {
+
+    drawPreview();
+
+});
+
+
+quality.addEventListener("input", function() {
+
+    qualityValue.textContent =
+        this.value + "%";
+
+});
+
+
+/* BACKGROUND BUTTONS */
+
+document.querySelectorAll(".color-btn").forEach(btn => {
+
+    btn.addEventListener("click", function() {
+
+        document
+            .querySelectorAll(".color-btn")
+            .forEach(b => b.classList.remove("active"));
+
+        this.classList.add("active");
+
+        backgroundColor =
+            this.dataset.color;
+
+        drawPreview();
+
+    });
+
+});
+
+
+/* GENERATE */
+
+generateBtn.addEventListener("click", function() {
+
+    if (!imageLoaded) {
+
+        showStatus(
+            "Please upload a photo first.",
+            "error"
+        );
+
+        return;
+
+    }
+
+    const size = getSize();
+
+    resultCanvas.width = size.width;
+    resultCanvas.height = size.height;
+
+    drawImageOnCanvas(
+        resultCanvas,
+        resultCtx,
+        size.width,
+        size.height
+    );
+
+
+    resultCanvas.toBlob(
+        function(blob) {
+
+            generatedBlob = blob;
+
+            result.style.display = "block";
+
+            document.getElementById("resultSize")
+                .textContent =
+                size.width + " × " + size.height + " px";
+
+            document.getElementById("resultFileSize")
+                .textContent =
+                formatBytes(blob.size);
+
+            showStatus(
+                "Passport photo generated successfully.",
+                "success"
+            );
+
+            result.scrollIntoView({
+                behavior: "smooth",
+                block: "nearest"
+            });
+
+        },
+        "image/jpeg",
+        Number(quality.value) / 100
+    );
+
+});
+
+
+/* DOWNLOAD */
+
+downloadBtn.addEventListener("click", function() {
+
+    if (!generatedBlob) return;
+
+    const url =
+        URL.createObjectURL(generatedBlob);
+
+    const link =
+        document.createElement("a");
+
+    link.href = url;
+
+    link.download =
+        "znovafox-passport-photo.jpg";
+
+    document.body.appendChild(link);
+
+    link.click();
+
+    link.remove();
+
+    URL.revokeObjectURL(url);
+
+});
+
+
+/* RESET */
+
+resetBtn.addEventListener("click", function() {
+
+    fileInput.value = "";
+
+    image = new Image();
+
+    imageLoaded = false;
+
+    editor.style.display = "none";
+
+    result.style.display = "none";
+
+    statusBox.style.display = "none";
+
+    generatedBlob = null;
+
+    backgroundColor = "#ffffff";
+
+    document
+        .querySelectorAll(".color-btn")
+        .forEach(btn => btn.classList.remove("active"));
+
+    document
+        .querySelector('.color-btn[data-color="#ffffff"]')
+        .classList.add("active");
+
+    sizeSelect.value = "35x45";
+
+    zoom.value = 100;
+    positionX.value = 0;
+    positionY.value = 0;
+    quality.value = 92;
+
+    zoomValue.textContent = "100%";
+    qualityValue.textContent = "92%";
+
+});
+
+
+/* INITIAL VALUES */
+
+qualityValue.textContent =
+    quality.value + "%";
+
+</script>
+
+</body>
+</html>

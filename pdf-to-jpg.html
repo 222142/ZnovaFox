@@ -1,0 +1,1856 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>PDF to JPG Converter - ZnovaFox</title>
+
+    <meta
+        name="description"
+        content="Convert PDF pages to JPG images online with ZnovaFox PDF to JPG Converter."
+    >
+
+    <link
+        rel="stylesheet"
+        href="../../css/main.css"
+    >
+
+    <!-- PDF.JS -->
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js">
+    </script>
+
+    <style>
+
+        .tool-page {
+            padding: 24px 0 40px;
+        }
+
+        .pdf-tool {
+            max-width: 950px;
+            margin: auto;
+            background: #fff;
+            border: 1px solid #e5e5e5;
+            border-radius: 20px;
+            padding: 22px;
+            box-shadow: 0 8px 25px rgba(0,0,0,.05);
+        }
+
+        .upload-box {
+            border: 2px dashed #cfcfcf;
+            border-radius: 16px;
+            padding: 34px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: .2s;
+        }
+
+        .upload-box:hover,
+        .upload-box.dragging {
+            border-color: #6c4cff;
+            background: #faf9ff;
+        }
+
+        .upload-icon {
+            font-size: 44px;
+            margin-bottom: 8px;
+        }
+
+        .upload-box h3 {
+            margin-bottom: 7px;
+        }
+
+        .upload-box p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        #fileInput {
+            display: none;
+        }
+
+        .workspace {
+            display: none;
+            margin-top: 22px;
+        }
+
+        .file-info {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 14px;
+            background: #f7f7fa;
+            border: 1px solid #e5e5e5;
+            border-radius: 13px;
+            margin-bottom: 18px;
+        }
+
+        .file-name {
+            font-weight: 700;
+            word-break: break-word;
+        }
+
+        .file-meta {
+            color: #777;
+            font-size: 12px;
+            margin-top: 4px;
+        }
+
+        .settings {
+            border: 1px solid #e4e4e4;
+            border-radius: 15px;
+            padding: 16px;
+            margin-bottom: 20px;
+        }
+
+        .settings-title {
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 14px;
+        }
+
+        .settings-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+
+        .setting-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 7px;
+        }
+
+        .setting-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #d8d8d8;
+            border-radius: 10px;
+            background: #fff;
+            color: #222;
+            outline: none;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            accent-color: #6c4cff;
+        }
+
+        .range-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #666;
+            margin-top: 4px;
+        }
+
+        .button-row {
+            display: flex;
+            gap: 9px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+
+        .btn {
+            border: none;
+            border-radius: 10px;
+            padding: 11px 16px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 13px;
+            transition: .2s;
+        }
+
+        .btn-primary {
+            background: #6c4cff;
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background: #5939e8;
+        }
+
+        .btn-secondary {
+            background: #eee;
+            color: #222;
+        }
+
+        .btn-secondary:hover {
+            background: #ddd;
+        }
+
+        .btn:disabled {
+            opacity: .55;
+            cursor: not-allowed;
+        }
+
+        .progress-wrap {
+            display: none;
+            margin-top: 18px;
+        }
+
+        .progress-bar {
+            height: 9px;
+            background: #e9e9ed;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            width: 0%;
+            height: 100%;
+            background: #6c4cff;
+            transition: width .2s;
+        }
+
+        .progress-text {
+            font-size: 12px;
+            color: #666;
+            margin-top: 6px;
+        }
+
+        .results {
+            display: none;
+            margin-top: 22px;
+        }
+
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 14px;
+        }
+
+        .results-header h3 {
+            font-size: 18px;
+        }
+
+        .result-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+        }
+
+        .result-card {
+            border: 1px solid #e3e3e3;
+            border-radius: 14px;
+            overflow: hidden;
+            background: #fff;
+        }
+
+        .result-image {
+            min-height: 220px;
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #f2f2f2;
+        }
+
+        .result-image img {
+            display: block;
+            max-width: 100%;
+            max-height: 280px;
+            object-fit: contain;
+        }
+
+        .result-details {
+            padding: 12px;
+        }
+
+        .page-number {
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .image-size {
+            color: #777;
+            font-size: 11px;
+            margin-top: 4px;
+        }
+
+        .download-page-btn {
+            width: 100%;
+            margin-top: 9px;
+            padding: 9px;
+            border: none;
+            border-radius: 9px;
+            background: #6c4cff;
+            color: #fff;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 12px;
+        }
+
+        .download-page-btn:hover {
+            background: #5939e8;
+        }
+
+        .status {
+            display: none;
+            margin-top: 15px;
+            padding: 11px;
+            border-radius: 10px;
+            font-size: 13px;
+        }
+
+        .status.success {
+            display: block;
+            background: #eaf8ef;
+            color: #18743a;
+        }
+
+        .status.error {
+            display: block;
+            background: #fff0f0;
+            color: #b42323;
+        }
+
+        .status.processing {
+            display: block;
+            background: #f2efff;
+            color: #5136b8;
+        }
+
+        .info-box {
+            margin-top: 20px;
+            padding: 14px;
+            border-radius: 13px;
+            background: #f7f5ff;
+            border: 1px solid #e4defe;
+        }
+
+        .info-box strong {
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .info-box p {
+            color: #666;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        /* DARK MODE */
+
+        body.dark .pdf-tool {
+            background: #171717;
+            border-color: #303030;
+            box-shadow: none;
+        }
+
+        body.dark .upload-box {
+            border-color: #444;
+            background: #191919;
+        }
+
+        body.dark .upload-box:hover,
+        body.dark .upload-box.dragging {
+            border-color: #8066ff;
+            background: #1d192c;
+        }
+
+        body.dark .upload-box p,
+        body.dark .file-meta,
+        body.dark .range-info,
+        body.dark .progress-text,
+        body.dark .image-size,
+        body.dark .info-box p {
+            color: #aaa;
+        }
+
+        body.dark .file-info,
+        body.dark .settings,
+        body.dark .result-card {
+            border-color: #383838;
+        }
+
+        body.dark .file-info {
+            background: #1d1d1d;
+        }
+
+        body.dark .settings {
+            background: #191919;
+        }
+
+        body.dark .setting-group select {
+            background: #1d1d1d;
+            color: #fff;
+            border-color: #3d3d3d;
+        }
+
+        body.dark .result-card {
+            background: #1c1c1c;
+        }
+
+        body.dark .result-image {
+            background: #111;
+        }
+
+        body.dark .btn-secondary {
+            background: #303030;
+            color: #fff;
+        }
+
+        body.dark .info-box {
+            background: #211d31;
+            border-color: #40366c;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 800px) {
+
+            .result-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+        }
+
+        @media (max-width: 600px) {
+
+            .tool-page {
+                padding: 15px 0 30px;
+            }
+
+            .pdf-tool {
+                padding: 14px;
+                border-radius: 16px;
+            }
+
+            .settings-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .result-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+            }
+
+            .result-image {
+                min-height: 180px;
+            }
+
+            .results-header {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .results-header .btn {
+                width: 100%;
+            }
+
+            .file-info {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .button-row .btn {
+                flex: 1;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header class="site-header">
+
+    <div class="container header-inner">
+
+        <a
+            href="../../index.html"
+            class="logo"
+        >
+            Znova<span>Fox</span>
+        </a>
+
+
+        <nav class="desktop-nav">
+
+            <a href="../../index.html">
+                Home
+            </a>
+
+            <a href="../ai-tools.html">
+                AI Tools
+            </a>
+
+            <a href="../online-tools.html">
+                Online Tools
+            </a>
+
+            <a href="../jobs.html">
+                Jobs
+            </a>
+
+            <a href="../education.html">
+                Education
+            </a>
+
+        </nav>
+
+
+        <div class="header-actions">
+
+            <button
+                class="theme-btn"
+                id="themeBtn"
+                aria-label="Toggle theme"
+            >
+                🌙
+            </button>
+
+
+            <button
+                class="menu-btn"
+                id="menuBtn"
+                aria-label="Open menu"
+            >
+                ☰
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <nav
+        class="mobile-nav"
+        id="mobileNav"
+    >
+
+        <a href="../../index.html">
+            Home
+        </a>
+
+        <a href="../ai-tools.html">
+            AI Tools
+        </a>
+
+        <a href="../online-tools.html">
+            Online Tools
+        </a>
+
+        <a href="../jobs.html">
+            Jobs
+        </a>
+
+        <a href="../education.html">
+            Education
+        </a>
+
+    </nav>
+
+</header>
+
+
+
+<section class="hero">
+
+    <div class="container">
+
+        <div class="live-status">
+            <span></span> LIVE
+        </div>
+
+        <h1>
+            PDF to JPG
+        </h1>
+
+        <p class="hero-text">
+            Convert PDF pages into high-quality JPG images.
+        </p>
+
+    </div>
+
+</section>
+
+
+
+<main class="tool-page">
+
+    <div class="container">
+
+        <div class="pdf-tool">
+
+
+            <!-- UPLOAD -->
+
+            <label
+                class="upload-box"
+                id="uploadBox"
+            >
+
+                <input
+                    type="file"
+                    id="fileInput"
+                    accept="application/pdf"
+                >
+
+                <div class="upload-icon">
+                    📄
+                </div>
+
+                <h3>
+                    Upload PDF
+                </h3>
+
+                <p>
+                    Click here or drag & drop your PDF file
+                </p>
+
+            </label>
+
+
+
+            <!-- WORKSPACE -->
+
+            <div
+                class="workspace"
+                id="workspace"
+            >
+
+
+                <!-- FILE INFO -->
+
+                <div class="file-info">
+
+                    <div>
+
+                        <div
+                            class="file-name"
+                            id="fileName"
+                        >
+                            —
+                        </div>
+
+                        <div
+                            class="file-meta"
+                            id="fileMeta"
+                        >
+                            —
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- SETTINGS -->
+
+                <div class="settings">
+
+                    <div class="settings-title">
+                        Conversion Settings
+                    </div>
+
+
+                    <div class="settings-grid">
+
+
+                        <div class="setting-group">
+
+                            <label for="scaleSelect">
+                                Image Resolution
+                            </label>
+
+                            <select id="scaleSelect">
+
+                                <option value="1.5">
+                                    Standard
+                                </option>
+
+                                <option value="2">
+                                    High
+                                </option>
+
+                                <option value="2.5">
+                                    Very High
+                                </option>
+
+                                <option value="3">
+                                    Maximum
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="setting-group">
+
+                            <label for="quality">
+                                JPG Quality
+                            </label>
+
+                            <input
+                                type="range"
+                                id="quality"
+                                min="50"
+                                max="100"
+                                value="90"
+                            >
+
+                            <div class="range-info">
+
+                                <span>
+                                    50%
+                                </span>
+
+                                <strong id="qualityValue">
+                                    90%
+                                </strong>
+
+                                <span>
+                                    100%
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="button-row">
+
+                        <button
+                            class="btn btn-primary"
+                            id="convertBtn"
+                        >
+                            🖼️ Convert to JPG
+                        </button>
+
+
+                        <button
+                            class="btn btn-secondary"
+                            id="resetBtn"
+                        >
+                            Reset
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- PROGRESS -->
+
+                <div
+                    class="progress-wrap"
+                    id="progressWrap"
+                >
+
+                    <div class="progress-bar">
+
+                        <div
+                            class="progress-fill"
+                            id="progressFill"
+                        >
+                        </div>
+
+                    </div>
+
+                    <div
+                        class="progress-text"
+                        id="progressText"
+                    >
+                        Preparing...
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- STATUS -->
+
+            <div
+                class="status"
+                id="status"
+            >
+            </div>
+
+
+
+            <!-- RESULTS -->
+
+            <div
+                class="results"
+                id="results"
+            >
+
+                <div class="results-header">
+
+                    <h3>
+                        Converted Pages
+                    </h3>
+
+                    <button
+                        class="btn btn-primary"
+                        id="downloadAllBtn"
+                    >
+                        ⬇ Download All JPGs
+                    </button>
+
+                </div>
+
+
+                <div
+                    class="result-grid"
+                    id="resultGrid"
+                >
+                </div>
+
+            </div>
+
+
+
+            <!-- INFO -->
+
+            <div class="info-box">
+
+                <strong>
+                    🔒 Browser Processing
+                </strong>
+
+                <p>
+                    Your PDF is processed inside your browser.
+                    The tool converts each PDF page into a JPG image.
+                    Large PDFs may take more time depending on your device.
+                </p>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</main>
+
+
+
+<footer
+    style="padding:25px 0;text-align:center;"
+>
+
+    <div class="container">
+
+        <p
+            style="font-size:13px;color:#777;"
+        >
+            © 2026 ZnovaFox. All rights reserved.
+        </p>
+
+    </div>
+
+</footer>
+
+
+
+<script src="../../js/main.js"></script>
+
+
+<script>
+
+    /*
+     * PDF.JS WORKER
+     */
+
+    pdfjsLib.GlobalWorkerOptions.workerSrc =
+        "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+
+
+    /*
+     * ELEMENTS
+     */
+
+    const fileInput =
+        document.getElementById("fileInput");
+
+    const uploadBox =
+        document.getElementById("uploadBox");
+
+    const workspace =
+        document.getElementById("workspace");
+
+    const fileName =
+        document.getElementById("fileName");
+
+    const fileMeta =
+        document.getElementById("fileMeta");
+
+    const scaleSelect =
+        document.getElementById("scaleSelect");
+
+    const quality =
+        document.getElementById("quality");
+
+    const qualityValue =
+        document.getElementById("qualityValue");
+
+    const convertBtn =
+        document.getElementById("convertBtn");
+
+    const resetBtn =
+        document.getElementById("resetBtn");
+
+    const progressWrap =
+        document.getElementById("progressWrap");
+
+    const progressFill =
+        document.getElementById("progressFill");
+
+    const progressText =
+        document.getElementById("progressText");
+
+    const statusBox =
+        document.getElementById("status");
+
+    const results =
+        document.getElementById("results");
+
+    const resultGrid =
+        document.getElementById("resultGrid");
+
+    const downloadAllBtn =
+        document.getElementById("downloadAllBtn");
+
+
+    /*
+     * VARIABLES
+     */
+
+    let selectedFile = null;
+
+    let pdfDocument = null;
+
+    let convertedImages = [];
+
+
+
+    /*
+     * FORMAT BYTES
+     */
+
+    function formatBytes(bytes) {
+
+        if (bytes < 1024) {
+
+            return bytes + " B";
+
+        }
+
+        if (bytes < 1024 * 1024) {
+
+            return (
+                bytes / 1024
+            ).toFixed(1) + " KB";
+
+        }
+
+        return (
+            bytes / (1024 * 1024)
+        ).toFixed(2) + " MB";
+
+    }
+
+
+
+    /*
+     * STATUS
+     */
+
+    function showStatus(message, type) {
+
+        statusBox.textContent =
+            message;
+
+        statusBox.className =
+            "status " + type;
+
+    }
+
+
+
+    /*
+     * FILE LOAD
+     */
+
+    function loadPDF(file) {
+
+        if (!file) return;
+
+
+        if (
+            file.type !== "application/pdf" &&
+            !file.name.toLowerCase().endsWith(".pdf")
+        ) {
+
+            showStatus(
+                "Please select a valid PDF file.",
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        selectedFile =
+            file;
+
+
+        fileName.textContent =
+            file.name;
+
+
+        fileMeta.textContent =
+            formatBytes(file.size);
+
+
+        workspace.style.display =
+            "block";
+
+
+        results.style.display =
+            "none";
+
+
+        resultGrid.innerHTML =
+            "";
+
+
+        convertedImages =
+            [];
+
+
+        statusBox.style.display =
+            "none";
+
+
+        /*
+         * Read PDF
+         */
+
+        const reader =
+            new FileReader();
+
+
+        reader.onload =
+            async function() {
+
+                try {
+
+                    const typedArray =
+                        new Uint8Array(
+                            this.result
+                        );
+
+
+                    pdfDocument =
+                        await pdfjsLib.getDocument({
+                            data: typedArray
+                        }).promise;
+
+
+                    fileMeta.textContent =
+                        formatBytes(file.size) +
+                        " • " +
+                        pdfDocument.numPages +
+                        (
+                            pdfDocument.numPages === 1
+                                ? " page"
+                                : " pages"
+                        );
+
+
+                }
+
+                catch (error) {
+
+                    console.error(error);
+
+
+                    pdfDocument =
+                        null;
+
+
+                    showStatus(
+                        "Unable to read this PDF. Please try another file.",
+                        "error"
+                    );
+
+                }
+
+            };
+
+
+        reader.readAsArrayBuffer(file);
+
+    }
+
+
+
+    /*
+     * FILE INPUT
+     */
+
+    fileInput.addEventListener(
+        "change",
+        function() {
+
+            if (!this.files.length)
+                return;
+
+
+            loadPDF(
+                this.files[0]
+            );
+
+        }
+    );
+
+
+
+    /*
+     * DRAG OVER
+     */
+
+    uploadBox.addEventListener(
+        "dragover",
+        function(e) {
+
+            e.preventDefault();
+
+            uploadBox.classList.add(
+                "dragging"
+            );
+
+        }
+    );
+
+
+
+    /*
+     * DRAG LEAVE
+     */
+
+    uploadBox.addEventListener(
+        "dragleave",
+        function() {
+
+            uploadBox.classList.remove(
+                "dragging"
+            );
+
+        }
+    );
+
+
+
+    /*
+     * DROP
+     */
+
+    uploadBox.addEventListener(
+        "drop",
+        function(e) {
+
+            e.preventDefault();
+
+
+            uploadBox.classList.remove(
+                "dragging"
+            );
+
+
+            const file =
+                e.dataTransfer.files[0];
+
+
+            if (!file)
+                return;
+
+
+            loadPDF(file);
+
+        }
+    );
+
+
+
+    /*
+     * QUALITY
+     */
+
+    quality.addEventListener(
+        "input",
+        function() {
+
+            qualityValue.textContent =
+                this.value + "%";
+
+        }
+    );
+
+
+
+    /*
+     * CONVERT
+     */
+
+    convertBtn.addEventListener(
+        "click",
+        async function() {
+
+            if (!selectedFile) {
+
+                showStatus(
+                    "Please upload a PDF first.",
+                    "error"
+                );
+
+                return;
+
+            }
+
+
+            if (!pdfDocument) {
+
+                showStatus(
+                    "PDF is still loading. Please wait a moment.",
+                    "processing"
+                );
+
+                return;
+
+            }
+
+
+            await convertPDF();
+
+        }
+    );
+
+
+
+    /*
+     * CONVERT PDF
+     */
+
+    async function convertPDF() {
+
+        convertedImages =
+            [];
+
+
+        resultGrid.innerHTML =
+            "";
+
+
+        results.style.display =
+            "none";
+
+
+        progressWrap.style.display =
+            "block";
+
+
+        convertBtn.disabled =
+            true;
+
+
+        resetBtn.disabled =
+            true;
+
+
+        const totalPages =
+            pdfDocument.numPages;
+
+
+        const scale =
+            Number(
+                scaleSelect.value
+            );
+
+
+        const jpgQuality =
+            Number(
+                quality.value
+            ) / 100;
+
+
+        try {
+
+            for (
+                let pageNumber = 1;
+                pageNumber <= totalPages;
+                pageNumber++
+            ) {
+
+
+                progressText.textContent =
+                    "Converting page " +
+                    pageNumber +
+                    " of " +
+                    totalPages +
+                    "...";
+
+
+                const progress =
+                    (
+                        (pageNumber - 1) /
+                        totalPages
+                    ) * 100;
+
+
+                progressFill.style.width =
+                    progress + "%";
+
+
+                /*
+                 * Get page
+                 */
+
+                const page =
+                    await pdfDocument.getPage(
+                        pageNumber
+                    );
+
+
+                /*
+                 * Viewport
+                 */
+
+                const viewport =
+                    page.getViewport({
+                        scale: scale
+                    });
+
+
+                /*
+                 * Canvas
+                 */
+
+                const canvas =
+                    document.createElement(
+                        "canvas"
+                    );
+
+
+                const context =
+                    canvas.getContext(
+                        "2d"
+                    );
+
+
+                canvas.width =
+                    Math.ceil(
+                        viewport.width
+                    );
+
+
+                canvas.height =
+                    Math.ceil(
+                        viewport.height
+                    );
+
+
+                /*
+                 * White background
+                 */
+
+                context.save();
+
+                context.fillStyle =
+                    "#ffffff";
+
+                context.fillRect(
+                    0,
+                    0,
+                    canvas.width,
+                    canvas.height
+                );
+
+                context.restore();
+
+
+                /*
+                 * Render PDF page
+                 */
+
+                await page.render({
+
+                    canvasContext:
+                        context,
+
+                    viewport:
+                        viewport,
+
+                    background:
+                        "white"
+
+                }).promise;
+
+
+                /*
+                 * JPG blob
+                 */
+
+                const blob =
+                    await new Promise(
+                        function(resolve) {
+
+                            canvas.toBlob(
+                                resolve,
+                                "image/jpeg",
+                                jpgQuality
+                            );
+
+                        }
+                    );
+
+
+                if (!blob) {
+
+                    throw new Error(
+                        "JPG conversion failed."
+                    );
+
+                }
+
+
+                const imageURL =
+                    URL.createObjectURL(
+                        blob
+                    );
+
+
+                convertedImages.push({
+
+                    page:
+                        pageNumber,
+
+                    blob:
+                        blob,
+
+                    url:
+                        imageURL,
+
+                    width:
+                        canvas.width,
+
+                    height:
+                        canvas.height
+
+                });
+
+
+                /*
+                 * Add card
+                 */
+
+                addResultCard(
+                    convertedImages[
+                        convertedImages.length - 1
+                    ]
+                );
+
+
+                /*
+                 * Update progress
+                 */
+
+                const completed =
+                    (
+                        pageNumber /
+                        totalPages
+                    ) * 100;
+
+
+                progressFill.style.width =
+                    completed + "%";
+
+
+                /*
+                 * Give browser
+                 * a small break
+                 */
+
+                await new Promise(
+                    function(resolve) {
+
+                        setTimeout(
+                            resolve,
+                            10
+                        );
+
+                    }
+                );
+
+            }
+
+
+            progressFill.style.width =
+                "100%";
+
+
+            progressText.textContent =
+                "Conversion completed.";
+
+
+            results.style.display =
+                "block";
+
+
+            showStatus(
+                totalPages +
+                (
+                    totalPages === 1
+                        ? " page"
+                        : " pages"
+                ) +
+                " converted successfully.",
+                "success"
+            );
+
+
+            results.scrollIntoView({
+                behavior: "smooth",
+                block: "nearest"
+            });
+
+
+        }
+
+        catch (error) {
+
+            console.error(error);
+
+
+            showStatus(
+                "Conversion failed. This PDF may be protected, damaged, or too large.",
+                "error"
+            );
+
+        }
+
+
+        finally {
+
+            convertBtn.disabled =
+                false;
+
+
+            resetBtn.disabled =
+                false;
+
+        }
+
+    }
+
+
+
+    /*
+     * RESULT CARD
+     */
+
+    function addResultCard(item) {
+
+        const card =
+            document.createElement(
+                "div"
+            );
+
+
+        card.className =
+            "result-card";
+
+
+        card.innerHTML = `
+
+            <div class="result-image">
+
+                <img
+                    src="${item.url}"
+                    alt="PDF page ${item.page}"
+                >
+
+            </div>
+
+            <div class="result-details">
+
+                <div class="page-number">
+                    Page ${item.page}
+                </div>
+
+                <div class="image-size">
+                    ${item.width} × ${item.height}px
+                    •
+                    ${formatBytes(item.blob.size)}
+                </div>
+
+                <button
+                    class="download-page-btn"
+                >
+                    ⬇ Download JPG
+                </button>
+
+            </div>
+
+        `;
+
+
+        const button =
+            card.querySelector(
+                ".download-page-btn"
+            );
+
+
+        button.addEventListener(
+            "click",
+            function() {
+
+                downloadBlob(
+                    item.blob,
+                    "znovafox-page-" +
+                    item.page +
+                    ".jpg"
+                );
+
+            }
+        );
+
+
+        resultGrid.appendChild(
+            card
+        );
+
+    }
+
+
+
+    /*
+     * DOWNLOAD BLOB
+     */
+
+    function downloadBlob(
+        blob,
+        filename
+    ) {
+
+        const url =
+            URL.createObjectURL(
+                blob
+            );
+
+
+        const link =
+            document.createElement(
+                "a"
+            );
+
+
+        link.href =
+            url;
+
+
+        link.download =
+            filename;
+
+
+        document.body.appendChild(
+            link
+        );
+
+
+        link.click();
+
+
+        link.remove();
+
+
+        setTimeout(
+            function() {
+
+                URL.revokeObjectURL(
+                    url
+                );
+
+            },
+            500
+        );
+
+    }
+
+
+
+    /*
+     * DOWNLOAD ALL
+     */
+
+    downloadAllBtn.addEventListener(
+        "click",
+        async function() {
+
+            if (!convertedImages.length)
+                return;
+
+
+            /*
+             * Download files one by one.
+             *
+             * This avoids requiring
+             * another external ZIP library.
+             */
+
+            for (
+                let i = 0;
+                i < convertedImages.length;
+                i++
+            ) {
+
+                const item =
+                    convertedImages[i];
+
+
+                downloadBlob(
+                    item.blob,
+                    "znovafox-page-" +
+                    item.page +
+                    ".jpg"
+                );
+
+
+                await new Promise(
+                    function(resolve) {
+
+                        setTimeout(
+                            resolve,
+                            250
+                        );
+
+                    }
+                );
+
+            }
+
+        }
+    );
+
+
+
+    /*
+     * RESET
+     */
+
+    resetBtn.addEventListener(
+        "click",
+        function() {
+
+            fileInput.value =
+                "";
+
+
+            selectedFile =
+                null;
+
+
+            pdfDocument =
+                null;
+
+
+            convertedImages.forEach(
+                function(item) {
+
+                    URL.revokeObjectURL(
+                        item.url
+                    );
+
+                }
+            );
+
+
+            convertedImages =
+                [];
+
+
+            resultGrid.innerHTML =
+                "";
+
+
+            workspace.style.display =
+                "none";
+
+
+            results.style.display =
+                "none";
+
+
+            progressWrap.style.display =
+                "none";
+
+
+            progressFill.style.width =
+                "0%";
+
+
+            progressText.textContent =
+                "Preparing...";
+
+
+            statusBox.style.display =
+                "none";
+
+
+            scaleSelect.value =
+                "1.5";
+
+
+            quality.value =
+                "90";
+
+
+            qualityValue.textContent =
+                "90%";
+
+        }
+    );
+
+
+
+    /*
+     * INITIAL VALUE
+     */
+
+    qualityValue.textContent =
+        quality.value + "%";
+
+</script>
+
+
+</body>
+</html>

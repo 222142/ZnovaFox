@@ -1,0 +1,1589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Pro Stopwatch - ZnovaFox</title>
+
+<link rel="stylesheet" href="../../css/main.css">
+
+<style>
+.stopwatch-box {
+    max-width: 680px;
+    margin: 30px auto;
+    padding: 22px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    background: var(--card-bg, #fff);
+}
+
+.stopwatch-display {
+    text-align: center;
+    padding: 25px 10px;
+    border: 1px solid #ddd5ff;
+    border-radius: 18px;
+    background: #f5f3ff;
+}
+
+.stopwatch-time {
+    font-size: clamp(42px, 10vw, 72px);
+    font-weight: 800;
+    letter-spacing: 2px;
+    font-variant-numeric: tabular-nums;
+    color: #6c4cff;
+}
+
+.stopwatch-status {
+    margin-top: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #777;
+}
+
+.stopwatch-buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-top: 18px;
+}
+
+.stopwatch-btn {
+    min-height: 52px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 700;
+    transition: .2s ease;
+}
+
+.stopwatch-btn:hover {
+    opacity: .88;
+}
+
+.stopwatch-btn:active {
+    transform: scale(.96);
+}
+
+.start-btn {
+    background: #22c55e;
+    color: #fff;
+}
+
+.pause-btn {
+    background: #f59e0b;
+    color: #fff;
+}
+
+.lap-btn {
+    background: #6c4cff;
+    color: #fff;
+}
+
+.reset-btn {
+    background: #eee;
+    color: #222;
+}
+
+.stopwatch-btn:disabled {
+    opacity: .45;
+    cursor: not-allowed;
+}
+
+/* STATISTICS */
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-top: 18px;
+}
+
+.stat-card {
+    padding: 14px 8px;
+    text-align: center;
+    border: 1px solid #e5e5e5;
+    border-radius: 13px;
+    background: #fafafa;
+}
+
+.stat-card span {
+    display: block;
+    font-size: 11px;
+    color: #777;
+    margin-bottom: 6px;
+}
+
+.stat-card strong {
+    display: block;
+    font-size: 14px;
+    font-variant-numeric: tabular-nums;
+}
+
+/* OPTIONS */
+
+.options-box {
+    margin-top: 18px;
+    padding: 15px;
+    border: 1px solid #e5e5e5;
+    border-radius: 15px;
+}
+
+.options-title {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+.options-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px;
+}
+
+.option-btn {
+    padding: 9px 13px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background: #fff;
+    color: #333;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.option-btn.active {
+    background: #6c4cff;
+    color: #fff;
+    border-color: #6c4cff;
+}
+
+.option-btn:hover {
+    border-color: #6c4cff;
+}
+
+/* LAPS */
+
+.laps-box {
+    margin-top: 18px;
+    border: 1px solid #e5e5e5;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.laps-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 13px 15px;
+    background: #fafafa;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.laps-header strong {
+    font-size: 15px;
+}
+
+.laps-header span {
+    font-size: 13px;
+    color: #777;
+}
+
+.lap-list {
+    max-height: 320px;
+    overflow-y: auto;
+}
+
+.lap-row {
+    display: grid;
+    grid-template-columns: 65px 1fr 1fr;
+    gap: 10px;
+    padding: 12px 15px;
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+}
+
+.lap-row:last-child {
+    border-bottom: none;
+}
+
+.lap-number {
+    font-weight: 700;
+}
+
+.lap-total,
+.lap-split {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+}
+
+.empty-laps {
+    padding: 22px;
+    text-align: center;
+    color: #888;
+    font-size: 14px;
+}
+
+/* ACTIONS */
+
+.extra-actions {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 9px;
+    margin-top: 12px;
+}
+
+.extra-btn {
+    padding: 11px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background: #fff;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.extra-btn:hover {
+    border-color: #6c4cff;
+}
+
+/* INFO */
+
+.stopwatch-info {
+    margin-top: 15px;
+    text-align: center;
+    font-size: 13px;
+    line-height: 1.5;
+    color: #777;
+}
+
+/* LARGE MODE */
+
+body.large-stopwatch .stopwatch-time {
+    font-size: clamp(50px, 13vw, 100px);
+}
+
+/* MINIMAL MODE */
+
+body.minimal-stopwatch .stats-grid,
+body.minimal-stopwatch .options-box,
+body.minimal-stopwatch .laps-box,
+body.minimal-stopwatch .extra-actions,
+body.minimal-stopwatch .stopwatch-info {
+    display: none;
+}
+
+
+/* DARK MODE */
+
+body.dark .stopwatch-box {
+    border-color: #333;
+}
+
+body.dark .stopwatch-display {
+    background: #17152a;
+    border-color: #39325f;
+}
+
+body.dark .stopwatch-status {
+    color: #aaa;
+}
+
+body.dark .reset-btn,
+body.dark .option-btn,
+body.dark .extra-btn {
+    background: #252a32;
+    color: #fff;
+    border-color: #363b45;
+}
+
+body.dark .options-box,
+body.dark .laps-box,
+body.dark .stat-card {
+    border-color: #30343c;
+}
+
+body.dark .stat-card,
+body.dark .laps-header {
+    background: #191c22;
+}
+
+body.dark .stat-card span,
+body.dark .laps-header span,
+body.dark .empty-laps,
+body.dark .stopwatch-info {
+    color: #aaa;
+}
+
+body.dark .lap-row {
+    border-color: #30343c;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+
+    .stopwatch-box {
+        margin: 18px auto;
+        padding: 14px;
+        border-radius: 16px;
+    }
+
+    .stopwatch-display {
+        padding: 22px 5px;
+    }
+
+    .stopwatch-time {
+        font-size: 40px;
+        letter-spacing: 1px;
+    }
+
+    .stopwatch-buttons {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .extra-actions {
+        grid-template-columns: 1fr;
+    }
+
+    .lap-row {
+        grid-template-columns: 55px 1fr 1fr;
+        padding: 11px 10px;
+        font-size: 13px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header class="site-header">
+
+<div class="container header-inner">
+
+<a href="../../index.html" class="logo">
+🦊 <span>Znova</span>Fox
+</a>
+
+<nav class="desktop-nav">
+
+<a href="../../index.html">Home</a>
+
+<a href="../ai-tools.html">AI Tools</a>
+
+<a href="../online-tools.html">Tools</a>
+
+<a href="../government.html">Government</a>
+
+<a href="../jobs.html">Jobs</a>
+
+<a href="../education.html">Education</a>
+
+</nav>
+
+<div class="header-actions">
+
+<button class="theme-btn" id="themeBtn">
+🌙
+</button>
+
+<button class="menu-btn" id="menuBtn">
+☰
+</button>
+
+</div>
+
+</div>
+
+
+<nav class="mobile-nav" id="mobileNav">
+
+<a href="../../index.html">🏠 Home</a>
+
+<a href="../ai-tools.html">🤖 AI Tools</a>
+
+<a href="../online-tools.html">🛠️ Online Tools</a>
+
+<a href="../government.html">🇮🇳 Government</a>
+
+<a href="../jobs.html">💼 Jobs</a>
+
+<a href="../education.html">📚 Education</a>
+
+</nav>
+
+</header>
+
+
+<main>
+
+<section class="hero">
+
+<div class="container">
+
+<p class="live-status">
+<span></span> LIVE
+</p>
+
+<h1>Pro Stopwatch</h1>
+
+<p class="hero-text">
+Accurate stopwatch with lap timing and statistics.
+</p>
+
+</div>
+
+</section>
+
+
+<section class="service-section">
+
+<div class="container">
+
+<div class="stopwatch-box">
+
+
+<!-- DISPLAY -->
+
+<div class="stopwatch-display">
+
+<div
+class="stopwatch-time"
+id="stopwatchDisplay"
+>
+00:00:00.00
+</div>
+
+<div
+class="stopwatch-status"
+id="stopwatchStatus"
+>
+Ready
+</div>
+
+</div>
+
+
+<!-- MAIN BUTTONS -->
+
+<div class="stopwatch-buttons">
+
+<button
+class="stopwatch-btn start-btn"
+id="startBtn"
+>
+▶ Start
+</button>
+
+<button
+class="stopwatch-btn pause-btn"
+id="pauseBtn"
+disabled
+>
+⏸ Pause
+</button>
+
+<button
+class="stopwatch-btn lap-btn"
+id="lapBtn"
+disabled
+>
+🏁 Lap
+</button>
+
+<button
+class="stopwatch-btn reset-btn"
+id="resetBtn"
+>
+🔄 Reset
+</button>
+
+</div>
+
+
+<!-- STATISTICS -->
+
+<div class="stats-grid">
+
+<div class="stat-card">
+
+<span>Total Laps</span>
+
+<strong id="totalLaps">
+0
+</strong>
+
+</div>
+
+
+<div class="stat-card">
+
+<span>Best Lap</span>
+
+<strong id="bestLap">
+--
+</strong>
+
+</div>
+
+
+<div class="stat-card">
+
+<span>Average</span>
+
+<strong id="averageLap">
+--
+</strong>
+
+</div>
+
+
+<div class="stat-card">
+
+<span>Slowest</span>
+
+<strong id="slowestLap">
+--
+</strong>
+
+</div>
+
+</div>
+
+
+<!-- OPTIONS -->
+
+<div class="options-box">
+
+<div class="options-title">
+⚙️ Options
+</div>
+
+<div class="options-row">
+
+<button
+class="option-btn"
+id="soundBtn"
+onclick="toggleSound()"
+>
+🔇 Sound Off
+</button>
+
+<button
+class="option-btn"
+onclick="toggleFullscreen()"
+>
+⛶ Fullscreen
+</button>
+
+<button
+class="option-btn active"
+id="normalModeBtn"
+onclick="setDisplayMode('normal')"
+>
+Normal
+</button>
+
+<button
+class="option-btn"
+onclick="setDisplayMode('large')"
+>
+Large
+</button>
+
+<button
+class="option-btn"
+onclick="setDisplayMode('minimal')"
+>
+Minimal
+</button>
+
+</div>
+
+</div>
+
+
+<!-- LAPS -->
+
+<div class="laps-box">
+
+<div class="laps-header">
+
+<strong>
+🏁 Lap History
+</strong>
+
+<span id="lapCount">
+0 Laps
+</span>
+
+</div>
+
+
+<div
+class="lap-list"
+id="lapList"
+>
+
+<div class="empty-laps">
+No lap times yet
+</div>
+
+</div>
+
+</div>
+
+
+<!-- EXTRA ACTIONS -->
+
+<div class="extra-actions">
+
+<button
+class="extra-btn"
+onclick="copyResults()"
+>
+📋 Copy Results
+</button>
+
+<button
+class="extra-btn"
+onclick="clearLaps()"
+>
+🗑️ Clear Laps
+</button>
+
+<button
+class="extra-btn"
+onclick="saveLaps()"
+>
+💾 Save Laps
+</button>
+
+</div>
+
+
+<p class="stopwatch-info">
+
+<strong>Space</strong> Start/Pause ·
+<strong>L</strong> Lap ·
+<strong>R</strong> Reset
+
+</p>
+
+
+</div>
+
+</div>
+
+</section>
+
+</main>
+
+
+<footer>
+
+<div class="container">
+
+<p>
+© 2026 ZnovaFox. All rights reserved.
+</p>
+
+</div>
+
+</footer>
+
+
+<script src="../../js/main.js"></script>
+
+
+<script>
+
+/* =========================
+   VARIABLES
+========================= */
+
+let startTime = 0;
+
+let elapsedTime = 0;
+
+let timerInterval = null;
+
+let isRunning = false;
+
+let lapNumber = 0;
+
+let lastLapTime = 0;
+
+let laps = [];
+
+let soundEnabled = false;
+
+
+/* =========================
+   ELEMENTS
+========================= */
+
+const display =
+document.getElementById(
+"stopwatchDisplay"
+);
+
+const statusText =
+document.getElementById(
+"stopwatchStatus"
+);
+
+const startBtn =
+document.getElementById(
+"startBtn"
+);
+
+const pauseBtn =
+document.getElementById(
+"pauseBtn"
+);
+
+const lapBtn =
+document.getElementById(
+"lapBtn"
+);
+
+const resetBtn =
+document.getElementById(
+"resetBtn"
+);
+
+const lapList =
+document.getElementById(
+"lapList"
+);
+
+const lapCount =
+document.getElementById(
+"lapCount"
+);
+
+
+/* =========================
+   FORMAT TIME
+========================= */
+
+function formatTime(milliseconds) {
+
+const totalCentiseconds =
+Math.floor(milliseconds / 10);
+
+const centiseconds =
+totalCentiseconds % 100;
+
+const totalSeconds =
+Math.floor(totalCentiseconds / 100);
+
+const seconds =
+totalSeconds % 60;
+
+const totalMinutes =
+Math.floor(totalSeconds / 60);
+
+const minutes =
+totalMinutes % 60;
+
+const hours =
+Math.floor(totalMinutes / 60);
+
+return (
+String(hours).padStart(2,"0") +
+":" +
+String(minutes).padStart(2,"0") +
+":" +
+String(seconds).padStart(2,"0") +
+"." +
+String(centiseconds).padStart(2,"0")
+);
+
+}
+
+
+/* =========================
+   UPDATE DISPLAY
+========================= */
+
+function updateDisplay() {
+
+if (!isRunning) return;
+
+elapsedTime =
+performance.now() - startTime;
+
+display.textContent =
+formatTime(elapsedTime);
+
+}
+
+
+/* =========================
+   START
+========================= */
+
+function startStopwatch() {
+
+if (isRunning) return;
+
+startTime =
+performance.now() - elapsedTime;
+
+isRunning = true;
+
+timerInterval =
+setInterval(
+updateDisplay,
+10
+);
+
+startBtn.disabled = true;
+
+pauseBtn.disabled = false;
+
+lapBtn.disabled = false;
+
+statusText.textContent =
+"Running";
+
+playBeep();
+
+}
+
+
+/* =========================
+   PAUSE
+========================= */
+
+function pauseStopwatch() {
+
+if (!isRunning) return;
+
+elapsedTime =
+performance.now() - startTime;
+
+isRunning = false;
+
+clearInterval(
+timerInterval
+);
+
+timerInterval = null;
+
+display.textContent =
+formatTime(elapsedTime);
+
+startBtn.disabled = false;
+
+pauseBtn.disabled = true;
+
+lapBtn.disabled = true;
+
+statusText.textContent =
+"Paused";
+
+playBeep();
+
+}
+
+
+/* =========================
+   RESET
+========================= */
+
+function resetStopwatch() {
+
+clearInterval(
+timerInterval
+);
+
+timerInterval = null;
+
+startTime = 0;
+
+elapsedTime = 0;
+
+isRunning = false;
+
+lapNumber = 0;
+
+lastLapTime = 0;
+
+laps = [];
+
+display.textContent =
+"00:00:00.00";
+
+statusText.textContent =
+"Ready";
+
+startBtn.disabled = false;
+
+pauseBtn.disabled = true;
+
+lapBtn.disabled = true;
+
+renderLaps();
+
+updateStats();
+
+}
+
+
+/* =========================
+   RECORD LAP
+========================= */
+
+function recordLap() {
+
+if (!isRunning) return;
+
+elapsedTime =
+performance.now() - startTime;
+
+const splitTime =
+elapsedTime - lastLapTime;
+
+lastLapTime =
+elapsedTime;
+
+lapNumber++;
+
+laps.push({
+number: lapNumber,
+total: elapsedTime,
+split: splitTime
+});
+
+renderLaps();
+
+updateStats();
+
+playBeep();
+
+}
+
+
+/* =========================
+   RENDER LAPS
+========================= */
+
+function renderLaps() {
+
+if (laps.length === 0) {
+
+lapList.innerHTML =
+'<div class="empty-laps">No lap times yet</div>';
+
+lapCount.textContent =
+"0 Laps";
+
+return;
+
+}
+
+
+lapList.innerHTML = "";
+
+
+[...laps].reverse().forEach(
+function(lap) {
+
+const row =
+document.createElement("div");
+
+row.className =
+"lap-row";
+
+row.innerHTML = `
+
+<div class="lap-number">
+Lap ${lap.number}
+</div>
+
+<div class="lap-total">
+${formatTime(lap.total)}
+</div>
+
+<div class="lap-split">
+${formatTime(lap.split)}
+</div>
+
+`;
+
+lapList.appendChild(row);
+
+});
+
+
+lapCount.textContent =
+laps.length +
+(laps.length === 1
+? " Lap"
+: " Laps");
+
+}
+
+
+/* =========================
+   STATISTICS
+========================= */
+
+function updateStats() {
+
+document.getElementById(
+"totalLaps"
+).textContent =
+laps.length;
+
+
+if (laps.length === 0) {
+
+document.getElementById(
+"bestLap"
+).textContent = "--";
+
+document.getElementById(
+"averageLap"
+).textContent = "--";
+
+document.getElementById(
+"slowestLap"
+).textContent = "--";
+
+return;
+
+}
+
+
+const times =
+laps.map(
+lap => lap.split
+);
+
+
+const best =
+Math.min(...times);
+
+const slowest =
+Math.max(...times);
+
+const average =
+times.reduce(
+(a,b) => a + b,
+0
+) / times.length;
+
+
+document.getElementById(
+"bestLap"
+).textContent =
+formatTime(best);
+
+document.getElementById(
+"averageLap"
+).textContent =
+formatTime(average);
+
+document.getElementById(
+"slowestLap"
+).textContent =
+formatTime(slowest);
+
+}
+
+
+/* =========================
+   SOUND
+========================= */
+
+function toggleSound() {
+
+soundEnabled =
+!soundEnabled;
+
+const button =
+document.getElementById(
+"soundBtn"
+);
+
+if (soundEnabled) {
+
+button.textContent =
+"🔊 Sound On";
+
+button.classList.add(
+"active"
+);
+
+playBeep();
+
+} else {
+
+button.textContent =
+"🔇 Sound Off";
+
+button.classList.remove(
+"active"
+);
+
+}
+
+}
+
+
+function playBeep() {
+
+if (!soundEnabled) return;
+
+try {
+
+const AudioContext =
+window.AudioContext ||
+window.webkitAudioContext;
+
+const audioContext =
+new AudioContext();
+
+const oscillator =
+audioContext.createOscillator();
+
+const gain =
+audioContext.createGain();
+
+oscillator.frequency.value =
+700;
+
+oscillator.type =
+"sine";
+
+gain.gain.value =
+0.06;
+
+oscillator.connect(gain);
+
+gain.connect(
+audioContext.destination
+);
+
+oscillator.start();
+
+oscillator.stop(
+audioContext.currentTime + 0.08
+);
+
+} catch (error) {
+
+console.log(
+"Audio unavailable"
+);
+
+}
+
+}
+
+
+/* =========================
+   FULLSCREEN
+========================= */
+
+function toggleFullscreen() {
+
+if (!document.fullscreenElement) {
+
+document.documentElement.requestFullscreen()
+.catch(() => {});
+
+} else {
+
+document.exitFullscreen();
+
+}
+
+}
+
+
+/* =========================
+   DISPLAY MODES
+========================= */
+
+function setDisplayMode(mode) {
+
+document.body.classList.remove(
+"large-stopwatch",
+"minimal-stopwatch"
+);
+
+document.querySelectorAll(
+".option-btn"
+).forEach(
+button => {
+
+if (
+button.id !== "soundBtn"
+) {
+button.classList.remove(
+"active"
+);
+}
+
+});
+
+
+if (mode === "large") {
+
+document.body.classList.add(
+"large-stopwatch"
+);
+
+}
+
+if (mode === "minimal") {
+
+document.body.classList.add(
+"minimal-stopwatch"
+);
+
+}
+
+
+/* Find clicked button */
+
+const buttons =
+document.querySelectorAll(
+".option-btn"
+);
+
+buttons.forEach(
+button => {
+
+if (
+button.textContent
+.trim()
+.toLowerCase()
+=== mode
+) {
+
+button.classList.add(
+"active"
+);
+
+}
+
+});
+
+}
+
+
+/* =========================
+   COPY RESULTS
+========================= */
+
+function copyResults() {
+
+if (laps.length === 0) {
+
+alert(
+"No lap results to copy."
+);
+
+return;
+
+}
+
+
+let text =
+"ZnovaFox Stopwatch Results\n\n";
+
+text +=
+"Total Time: " +
+formatTime(elapsedTime) +
+"\n";
+
+text +=
+"Total Laps: " +
+laps.length +
+"\n";
+
+text +=
+"Best Lap: " +
+document.getElementById(
+"bestLap"
+).textContent +
+"\n";
+
+text +=
+"Average Lap: " +
+document.getElementById(
+"averageLap"
+).textContent +
+"\n";
+
+text +=
+"Slowest Lap: " +
+document.getElementById(
+"slowestLap"
+).textContent +
+"\n\n";
+
+
+laps.forEach(
+lap => {
+
+text +=
+"Lap " +
+lap.number +
+" - Total: " +
+formatTime(lap.total) +
+" - Split: " +
+formatTime(lap.split) +
+"\n";
+
+});
+
+
+navigator.clipboard.writeText(
+text
+)
+.then(
+function() {
+
+alert(
+"Results copied!"
+);
+
+}
+)
+.catch(
+function() {
+
+alert(
+"Could not copy results."
+);
+
+});
+
+}
+
+
+/* =========================
+   CLEAR LAPS
+========================= */
+
+function clearLaps() {
+
+if (laps.length === 0) {
+
+return;
+
+}
+
+
+const confirmClear =
+confirm(
+"Clear all lap times?"
+);
+
+
+if (!confirmClear) return;
+
+
+laps = [];
+
+lapNumber = 0;
+
+lastLapTime =
+elapsedTime;
+
+renderLaps();
+
+updateStats();
+
+}
+
+
+/* =========================
+   SAVE LAPS
+========================= */
+
+function saveLaps() {
+
+if (laps.length === 0) {
+
+alert(
+"No lap data to save."
+);
+
+return;
+
+}
+
+
+localStorage.setItem(
+"znovafoxStopwatchLaps",
+JSON.stringify(laps)
+);
+
+localStorage.setItem(
+"znovafoxStopwatchElapsed",
+String(elapsedTime)
+);
+
+alert(
+"Lap data saved in this browser."
+);
+
+}
+
+
+/* =========================
+   LOAD SAVED LAPS
+========================= */
+
+function loadSavedLaps() {
+
+try {
+
+const saved =
+localStorage.getItem(
+"znovafoxStopwatchLaps"
+);
+
+if (!saved) return;
+
+const savedLaps =
+JSON.parse(saved);
+
+if (!Array.isArray(savedLaps)) {
+return;
+}
+
+laps = savedLaps;
+
+lapNumber =
+laps.length
+? laps[laps.length - 1].number
+: 0;
+
+renderLaps();
+
+updateStats();
+
+} catch (error) {
+
+console.log(
+"Saved laps unavailable"
+);
+
+}
+
+}
+
+
+/* =========================
+   BUTTON EVENTS
+========================= */
+
+startBtn.addEventListener(
+"click",
+startStopwatch
+);
+
+pauseBtn.addEventListener(
+"click",
+pauseStopwatch
+);
+
+lapBtn.addEventListener(
+"click",
+recordLap
+);
+
+resetBtn.addEventListener(
+"click",
+resetStopwatch
+);
+
+
+/* =========================
+   KEYBOARD SHORTCUTS
+========================= */
+
+document.addEventListener(
+"keydown",
+function(event) {
+
+if (
+event.target.tagName === "INPUT" ||
+event.target.tagName === "TEXTAREA"
+) {
+return;
+}
+
+
+/* SPACE */
+
+if (
+event.code === "Space"
+) {
+
+event.preventDefault();
+
+if (isRunning) {
+
+pauseStopwatch();
+
+} else {
+
+startStopwatch();
+
+}
+
+}
+
+
+/* L */
+
+if (
+event.key.toLowerCase() === "l"
+) {
+
+recordLap();
+
+}
+
+
+/* R */
+
+if (
+event.key.toLowerCase() === "r"
+) {
+
+resetStopwatch();
+
+}
+
+});
+
+
+/* =========================
+   INITIAL LOAD
+========================= */
+
+loadSavedLaps();
+
+updateStats();
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>PDF Tools - ZnovaFox</title>
+
+    <meta
+        name="description"
+        content="Useful PDF tools including JPG to PDF, PDF to JPG, Merge PDF, Split PDF, Compress PDF, PDF Page Extractor and PDF Rotate."
+    >
+
+    <link
+        rel="stylesheet"
+        href="../../css/main.css"
+    >
+
+
+    <style>
+
+        /* =========================
+           PDF TOOLS
+        ========================= */
+
+        .pdf-tool-box {
+
+            max-width: 900px;
+
+            margin: 30px auto;
+
+        }
+
+
+        .pdf-tool-heading {
+
+            margin-bottom: 20px;
+
+        }
+
+
+        .pdf-tool-heading h2 {
+
+            margin-bottom: 6px;
+
+            font-size: 24px;
+
+        }
+
+
+        .pdf-tool-heading p {
+
+            opacity: .7;
+
+            line-height: 1.5;
+
+        }
+
+
+        /* =========================
+           TOOL GRID
+        ========================= */
+
+        .pdf-tool-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 14px;
+
+        }
+
+
+        /* =========================
+           PDF CARD
+        ========================= */
+
+        .pdf-card {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 14px;
+
+            padding: 16px;
+
+            border: 1px solid #ddd;
+
+            border-radius: 16px;
+
+            background:
+                var(--card-bg, #fff);
+
+            text-decoration: none;
+
+            color: inherit;
+
+            transition:
+                transform .2s ease,
+                background .2s ease,
+                border-color .2s ease,
+                box-shadow .2s ease;
+
+        }
+
+
+        .pdf-card:hover {
+
+            transform:
+                translateY(-4px);
+
+            background:
+                #faf9ff;
+
+            border-color:
+                #6c4cff;
+
+            box-shadow:
+                0 10px 28px
+                rgba(108,76,255,.12);
+
+        }
+
+
+        .pdf-card:active {
+
+            transform:
+                scale(.98);
+
+        }
+
+
+        /* =========================
+           ICON
+        ========================= */
+
+        .pdf-icon {
+
+            width: 48px;
+
+            height: 48px;
+
+            flex-shrink: 0;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 13px;
+
+            background:
+                #f0edff;
+
+            font-size: 24px;
+
+        }
+
+
+        /* =========================
+           CONTENT
+        ========================= */
+
+        .pdf-card-content {
+
+            min-width: 0;
+
+            flex: 1;
+
+        }
+
+
+        .pdf-card strong {
+
+            display: block;
+
+            margin-bottom: 4px;
+
+            font-size: 15px;
+
+        }
+
+
+        .pdf-card span {
+
+            display: block;
+
+            font-size: 12px;
+
+            line-height: 1.4;
+
+            opacity: .68;
+
+        }
+
+
+        /* =========================
+           FEATURED BADGE
+        ========================= */
+
+        .featured-badge {
+
+            display: inline-block;
+
+            width: fit-content;
+
+            margin-top: 7px;
+
+            padding: 4px 8px;
+
+            border-radius: 20px;
+
+            background:
+                #f0edff;
+
+            color:
+                #6c4cff;
+
+            font-size: 11px;
+
+            font-weight: 700;
+
+        }
+
+
+        /* =========================
+           DARK MODE
+        ========================= */
+
+        body.dark .pdf-card {
+
+            background:
+                #191c22;
+
+            border-color:
+                #30343c;
+
+        }
+
+
+        body.dark .pdf-card:hover {
+
+            background:
+                #211c38;
+
+            border-color:
+                #8b75ff;
+
+            box-shadow:
+                0 10px 30px
+                rgba(108,76,255,.20);
+
+        }
+
+
+        body.dark .pdf-icon {
+
+            background:
+                #24203f;
+
+        }
+
+
+        body.dark .featured-badge {
+
+            background:
+                #292344;
+
+            color:
+                #a99bff;
+
+        }
+
+
+        /* =========================
+           INFO BOX
+        ========================= */
+
+        .pdf-info {
+
+            margin-top: 22px;
+
+            padding: 14px 16px;
+
+            border: 1px solid #e5e5e5;
+
+            border-radius: 14px;
+
+            font-size: 13px;
+
+            line-height: 1.5;
+
+            opacity: .85;
+
+        }
+
+
+        body.dark .pdf-info {
+
+            border-color:
+                #30343c;
+
+            background:
+                #191c22;
+
+        }
+
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 650px) {
+
+            .pdf-tool-box {
+
+                margin: 18px auto;
+
+            }
+
+
+            .pdf-tool-grid {
+
+                grid-template-columns:
+                    1fr;
+
+                gap: 10px;
+
+            }
+
+
+            .pdf-card {
+
+                padding: 13px;
+
+                gap: 12px;
+
+            }
+
+
+            .pdf-icon {
+
+                width: 42px;
+
+                height: 42px;
+
+                font-size: 21px;
+
+                border-radius: 11px;
+
+            }
+
+
+            .pdf-card strong {
+
+                font-size: 14px;
+
+            }
+
+
+            .pdf-card span {
+
+                font-size: 11px;
+
+            }
+
+
+            .pdf-tool-heading h2 {
+
+                font-size: 21px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     HEADER
+========================= -->
+
+<header class="site-header">
+
+
+    <div class="container header-inner">
+
+
+        <a
+            href="../../index.html"
+            class="logo"
+        >
+
+            🦊
+            <span>Znova</span>Fox
+
+        </a>
+
+
+        <nav class="desktop-nav">
+
+
+            <a href="../../index.html">
+                Home
+            </a>
+
+
+            <a href="../ai-tools.html">
+                AI Tools
+            </a>
+
+
+            <a href="../online-tools.html">
+                Tools
+            </a>
+
+
+            <a href="../government.html">
+                Government
+            </a>
+
+
+            <a href="../jobs.html">
+                Jobs
+            </a>
+
+
+            <a href="../education.html">
+                Education
+            </a>
+
+
+        </nav>
+
+
+        <div class="header-actions">
+
+
+            <button
+                class="theme-btn"
+                id="themeBtn"
+                aria-label="Change theme"
+            >
+
+                🌙
+
+            </button>
+
+
+            <button
+                class="menu-btn"
+                id="menuBtn"
+                aria-label="Open menu"
+            >
+
+                ☰
+
+            </button>
+
+
+        </div>
+
+
+    </div>
+
+
+    <!-- MOBILE NAV -->
+
+    <nav
+        class="mobile-nav"
+        id="mobileNav"
+    >
+
+
+        <a href="../../index.html">
+            🏠 Home
+        </a>
+
+
+        <a href="../ai-tools.html">
+            🤖 AI Tools
+        </a>
+
+
+        <a href="../online-tools.html">
+            🛠️ Online Tools
+        </a>
+
+
+        <a href="../government.html">
+            🇮🇳 Government
+        </a>
+
+
+        <a href="../jobs.html">
+            💼 Jobs
+        </a>
+
+
+        <a href="../education.html">
+            📚 Education
+        </a>
+
+
+    </nav>
+
+
+</header>
+
+
+
+<!-- =========================
+     MAIN
+========================= -->
+
+<main>
+
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+
+        <div class="container">
+
+
+            <p class="live-status">
+
+                <span></span>
+                LIVE
+
+            </p>
+
+
+            <h1>
+                PDF Tools
+            </h1>
+
+
+            <p class="hero-text">
+
+                Useful PDF utilities in one place.
+
+            </p>
+
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- PDF TOOLS -->
+
+    <section class="service-section">
+
+
+        <div class="container pdf-tool-box">
+
+
+            <div class="pdf-tool-heading">
+
+
+                <h2>
+                    ⭐ Featured PDF Tools
+                </h2>
+
+
+                <p>
+                    Fast and useful PDF tools for
+                    everyday document work.
+                </p>
+
+
+            </div>
+
+
+
+            <div class="pdf-tool-grid">
+
+
+
+                <!-- JPG TO PDF -->
+
+                <a
+                    href="jpg-to-pdf.html"
+                    class="pdf-card"
+                >
+
+
+                    <div class="pdf-icon">
+                        🖼️
+                    </div>
+
+
+                    <div class="pdf-card-content">
+
+
+                        <strong>
+                            JPG to PDF
+                        </strong>
+
+
+                        <span>
+                            Convert JPG and image
+                            files into PDF documents.
+                        </span>
+
+
+                        <small class="featured-badge">
+                            Featured
+                        </small>
+
+
+                    </div>
+
+
+                </a>
+
+
+
+                <!-- PDF TO JPG -->
+
+                <a
+                    href="pdf-to-jpg.html"
+                    class="pdf-card"
+                >
+
+
+                    <div class="pdf-icon">
+                        📄
+                    </div>
+
+
+                    <div class="pdf-card-content">
+
+
+                        <strong>
+                            PDF to JPG
+                        </strong>
+
+
+                        <span>
+                            Convert PDF pages into
+                            JPG images.
+                        </span>
+
+
+                        <small class="featured-badge">
+                            Featured
+                        </small>
+
+
+                    </div>
+
+
+                </a>
+
+
+
+                <!-- MERGE PDF -->
+
+                <a
+                    href="merge-pdf.html"
+                    class="pdf-card"
+                >
+
+
+                    <div class="pdf-icon">
+                        🔗
+                    </div>
+
+
+                    <div class="pdf-card-content">
+
+
+                        <strong>
+                            Merge PDF
+                        </strong>
+
+
+                        <span>
+                            Combine multiple PDF
+                            files into one document.
+                        </span>
+
+
+                        <small class="featured-badge">
+                            Featured
+                        </small>
+
+
+                    </div>
+
+
+                </a>
+
+
+
+                <!-- SPLIT PDF -->
+
+                <a
+                    href="split-pdf.html"
+                    class="pdf-card"
+                >
+
+
+                    <div class="pdf-icon">
+                        ✂️
+                    </div>
+
+
+                    <div class="pdf-card-content">
+
+
+                        <strong>
+                            Split PDF
+                        </strong>
+
+
+                        <span>
+                            Split a PDF into separate
+                            pages or files.
+                        </span>
+
+
+                        <small class="featured-badge">
+                            Featured
+                        </small>
+
+
+                    </div>
+
+
+                </a>
+
+
+
+                <!-- COMPRESS PDF -->
+
+                <a
+                    href="compress-pdf.html"
+                    class="pdf-card"
+                >
+
+
+                    <div class="pdf-icon">
+                        🗜️
+                    </div>
+
+
+                    <div class="pdf-card-content">
+
+
+                        <strong>
+                            Compress PDF
+                        </strong>
+
+
+                        <span>
+                            Reduce PDF file size
+                            for easier sharing.
+                        </span>
+
+
+                        <small class="featured-badge">
+                            Featured
+                        </small>
+
+
+                    </div>
+
+
+                </a>
+
+
+
+                <!-- PDF PAGE EXTRACTOR -->
+
+                <a
+                    href="pdf-page-extractor.html"
+                    class="pdf-card"
+                >
+
+
+                    <div class="pdf-icon">
+                        📑
+                    </div>
+
+
+                    <div class="pdf-card-content">
+
+
+                        <strong>
+                            PDF Page Extractor
+                        </strong>
+
+
+                        <span>
+                            Extract selected pages
+                            from a PDF document.
+                        </span>
+
+
+                        <small class="featured-badge">
+                            Featured
+                        </small>
+
+
+                    </div>
+
+
+                </a>
+
+
+
+                <!-- PDF ROTATE -->
+
+                <a
+                    href="pdf-rotate.html"
+                    class="pdf-card"
+                >
+
+
+                    <div class="pdf-icon">
+                        🔄
+                    </div>
+
+
+                    <div class="pdf-card-content">
+
+
+                        <strong>
+                            PDF Rotate
+                        </strong>
+
+
+                        <span>
+                            Rotate PDF pages and
+                            save the updated file.
+                        </span>
+
+
+                        <small class="featured-badge">
+                            Featured
+                        </small>
+
+
+                    </div>
+
+
+                </a>
+
+
+            </div>
+
+
+
+            <!-- INFO -->
+
+            <div class="pdf-info">
+
+                📄
+                <strong>
+                    ZnovaFox PDF Tools
+                </strong>
+                — PDF processing tools are being
+                added gradually. Your files can be
+                processed directly in the browser
+                whenever supported by the individual
+                tool.
+
+            </div>
+
+
+        </div>
+
+
+    </section>
+
+
+</main>
+
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer>
+
+
+    <div class="container">
+
+
+        <p>
+            © 2026 ZnovaFox.
+            All rights reserved.
+        </p>
+
+
+    </div>
+
+
+</footer>
+
+
+
+<!-- =========================
+     MAIN JS
+========================= -->
+
+<script src="../../js/main.js"></script>
+
+
+</body>
+
+</html>

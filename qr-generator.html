@@ -1,0 +1,420 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>QR Generator - ZnovaFox</title>
+
+    <meta
+        name="description"
+        content="Create QR codes easily with ZnovaFox QR Generator."
+    >
+
+    <link
+        rel="stylesheet"
+        href="../../css/main.css"
+    >
+
+    <style>
+
+        .qr-tool {
+            max-width: 520px;
+            margin: 40px auto;
+            padding: 25px;
+
+            border: 1px solid #ddd;
+            border-radius: 20px;
+
+            background: var(--card-bg, #fff);
+        }
+
+        .qr-tool label {
+            display: block;
+            margin-bottom: 8px;
+
+            font-weight: 600;
+        }
+
+        .qr-tool textarea {
+            width: 100%;
+            min-height: 110px;
+
+            box-sizing: border-box;
+
+            padding: 14px;
+
+            border: 1px solid #ddd;
+            border-radius: 12px;
+
+            resize: vertical;
+
+            font: inherit;
+        }
+
+        .qr-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+
+            margin-top: 15px;
+        }
+
+        .qr-actions button {
+            padding: 11px 18px;
+
+            border: none;
+            border-radius: 10px;
+
+            cursor: pointer;
+
+            font-weight: 600;
+        }
+
+        .qr-primary {
+            background: #6c4cff;
+            color: white;
+        }
+
+        .qr-secondary {
+            background: #eee;
+            color: #222;
+        }
+
+        .qr-result {
+            margin-top: 25px;
+
+            min-height: 230px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            flex-direction: column;
+
+            text-align: center;
+        }
+
+        .qr-result img {
+            max-width: 220px;
+            width: 100%;
+
+            border: 10px solid white;
+        }
+
+        .qr-message {
+            margin-top: 12px;
+            font-size: 14px;
+        }
+
+        body.dark .qr-tool {
+            border-color: #333;
+        }
+
+        body.dark .qr-secondary {
+            background: #252a32;
+            color: white;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header class="site-header">
+
+    <div class="container header-inner">
+
+        <a
+            href="../../index.html"
+            class="logo"
+        >
+            🦊 <span>Znova</span>Fox
+        </a>
+
+
+        <nav class="desktop-nav">
+
+            <a href="../../index.html">
+                Home
+            </a>
+
+            <a href="../ai-tools.html">
+                AI Tools
+            </a>
+
+            <a href="../online-tools.html">
+                Tools
+            </a>
+
+            <a href="../government.html">
+                Government
+            </a>
+
+            <a href="../jobs.html">
+                Jobs
+            </a>
+
+            <a href="../education.html">
+                Education
+            </a>
+
+        </nav>
+
+
+        <div class="header-actions">
+
+            <button
+                class="theme-btn"
+                id="themeBtn"
+                aria-label="Change theme"
+            >
+                🌙
+            </button>
+
+
+            <button
+                class="menu-btn"
+                id="menuBtn"
+                aria-label="Open menu"
+            >
+                ☰
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <nav
+        class="mobile-nav"
+        id="mobileNav"
+    >
+
+        <a href="../../index.html">
+            🏠 Home
+        </a>
+
+        <a href="../ai-tools.html">
+            🤖 AI Tools
+        </a>
+
+        <a href="../online-tools.html">
+            🛠️ Online Tools
+        </a>
+
+        <a href="../government.html">
+            🇮🇳 Government
+        </a>
+
+        <a href="../jobs.html">
+            💼 Jobs
+        </a>
+
+        <a href="../education.html">
+            📚 Education
+        </a>
+
+    </nav>
+
+</header>
+
+
+
+<main>
+
+
+<section class="hero">
+
+    <div class="container">
+
+        <p class="live-status">
+            <span></span> LIVE
+        </p>
+
+        <h1>
+            QR Generator
+        </h1>
+
+        <p class="hero-text">
+            Create a QR code from text or a website link.
+        </p>
+
+    </div>
+
+</section>
+
+
+
+<section class="service-section">
+
+    <div class="container">
+
+
+        <div class="qr-tool">
+
+
+            <label for="qrText">
+                Enter text or website URL
+            </label>
+
+
+            <textarea
+                id="qrText"
+                placeholder="Example: https://example.com"
+            ></textarea>
+
+
+            <div class="qr-actions">
+
+                <button
+                    class="qr-primary"
+                    id="generateQR"
+                >
+                    Generate QR
+                </button>
+
+
+                <button
+                    class="qr-secondary"
+                    id="clearQR"
+                >
+                    Clear
+                </button>
+
+            </div>
+
+
+            <div
+                class="qr-result"
+                id="qrResult"
+            >
+
+                <p>
+                    Your QR code will appear here.
+                </p>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+</main>
+
+
+
+<footer>
+
+    <div class="container">
+
+        <p>
+            © 2026 ZnovaFox.
+            All rights reserved.
+        </p>
+
+    </div>
+
+</footer>
+
+
+
+<script src="../../js/main.js"></script>
+
+
+<script>
+
+const qrText =
+    document.getElementById("qrText");
+
+const generateQR =
+    document.getElementById("generateQR");
+
+const clearQR =
+    document.getElementById("clearQR");
+
+const qrResult =
+    document.getElementById("qrResult");
+
+
+generateQR.addEventListener(
+    "click",
+    function () {
+
+        const text =
+            qrText.value.trim();
+
+
+        if (!text) {
+
+            qrResult.innerHTML = `
+                <p class="qr-message">
+                    Please enter some text or a URL.
+                </p>
+            `;
+
+            return;
+
+        }
+
+
+        const encodedText =
+            encodeURIComponent(text);
+
+
+        const qrURL =
+            "https://api.qrserver.com/v1/create-qr-code/?size=250x250&data="
+            + encodedText;
+
+
+        qrResult.innerHTML = `
+
+            <img
+                src="${qrURL}"
+                alt="Generated QR Code"
+            >
+
+            <p class="qr-message">
+                QR code generated successfully.
+            </p>
+
+        `;
+
+    }
+);
+
+
+clearQR.addEventListener(
+    "click",
+    function () {
+
+        qrText.value = "";
+
+        qrResult.innerHTML = `
+            <p>
+                Your QR code will appear here.
+            </p>
+        `;
+
+    }
+);
+
+</script>
+
+
+</body>
+
+</html>
+```

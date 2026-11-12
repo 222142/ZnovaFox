@@ -1,0 +1,1151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Merge Images - ZnovaFox</title>
+
+    <link rel="stylesheet" href="../../css/main.css">
+
+    <style>
+        .merge-section {
+            padding: 30px 0 50px;
+        }
+
+        .merge-box {
+            max-width: 850px;
+            margin: auto;
+            background: #fff;
+            border: 1px solid #e5e5e5;
+            border-radius: 20px;
+            padding: 22px;
+            box-shadow: 0 8px 30px rgba(0,0,0,.05);
+        }
+
+        .upload-area {
+            border: 2px dashed #cfcfcf;
+            border-radius: 16px;
+            padding: 35px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: .2s;
+            background: #fafaff;
+        }
+
+        .upload-area:hover,
+        .upload-area.dragover {
+            border-color: #6c4cff;
+            background: #f4f1ff;
+        }
+
+        .upload-icon {
+            font-size: 42px;
+            margin-bottom: 10px;
+        }
+
+        .upload-area h3 {
+            margin-bottom: 6px;
+        }
+
+        .upload-area p {
+            color: #777;
+            font-size: 14px;
+        }
+
+        #imageInput {
+            display: none;
+        }
+
+        .image-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .image-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px;
+            border: 1px solid #e5e5e5;
+            border-radius: 14px;
+            background: #fff;
+        }
+
+        .image-item img {
+            width: 75px;
+            height: 75px;
+            object-fit: cover;
+            border-radius: 10px;
+            background: #f1f1f1;
+            flex-shrink: 0;
+        }
+
+        .image-info {
+            min-width: 0;
+            flex: 1;
+        }
+
+        .image-info strong {
+            display: block;
+            font-size: 14px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .image-info span {
+            display: block;
+            font-size: 12px;
+            color: #777;
+            margin-top: 4px;
+        }
+
+        .item-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .small-btn {
+            width: 32px;
+            height: 30px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: #fff;
+            cursor: pointer;
+        }
+
+        .small-btn:hover {
+            border-color: #6c4cff;
+            color: #6c4cff;
+        }
+
+        .remove-btn:hover {
+            color: #e53935;
+            border-color: #e53935;
+        }
+
+        .settings {
+            margin-top: 22px;
+            padding: 18px;
+            border-radius: 15px;
+            background: #f8f8fc;
+        }
+
+        .settings h3 {
+            margin-bottom: 15px;
+        }
+
+        .setting-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+        }
+
+        .setting-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 7px;
+        }
+
+        .setting-group select,
+        .setting-group input {
+            width: 100%;
+            height: 42px;
+            padding: 0 10px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            background: #fff;
+            color: #222;
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .main-btn {
+            flex: 1;
+            border: none;
+            border-radius: 11px;
+            padding: 13px 16px;
+            background: #6c4cff;
+            color: #fff;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .main-btn:hover {
+            opacity: .9;
+        }
+
+        .clear-btn {
+            background: #222;
+        }
+
+        .status {
+            margin-top: 15px;
+            text-align: center;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .result {
+            display: none;
+            margin-top: 25px;
+            padding-top: 22px;
+            border-top: 1px solid #e5e5e5;
+        }
+
+        .result h3 {
+            margin-bottom: 15px;
+        }
+
+        .result-preview {
+            max-width: 100%;
+            max-height: 500px;
+            display: block;
+            margin: auto;
+            border-radius: 12px;
+            border: 1px solid #ddd;
+            background: #f5f5f5;
+        }
+
+        .result-info {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin: 15px 0;
+            font-size: 13px;
+            color: #666;
+        }
+
+        .download-btn {
+            display: block;
+            width: 100%;
+            text-align: center;
+            text-decoration: none;
+            padding: 13px;
+            border-radius: 11px;
+            background: #111;
+            color: #fff;
+            font-weight: 700;
+        }
+
+        .note {
+            margin-top: 18px;
+            padding: 12px;
+            border-radius: 10px;
+            background: #f4f1ff;
+            color: #555;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        body.dark .merge-box {
+            background: #151515;
+            border-color: #2d2d2d;
+        }
+
+        body.dark .upload-area {
+            background: #1b1b1b;
+            border-color: #444;
+        }
+
+        body.dark .upload-area:hover,
+        body.dark .upload-area.dragover {
+            background: #211c36;
+            border-color: #8a72ff;
+        }
+
+        body.dark .image-item {
+            background: #1a1a1a;
+            border-color: #333;
+        }
+
+        body.dark .small-btn,
+        body.dark .setting-group select,
+        body.dark .setting-group input {
+            background: #1d1d1d;
+            color: #fff;
+            border-color: #444;
+        }
+
+        body.dark .settings {
+            background: #1b1b1b;
+        }
+
+        body.dark .note {
+            background: #211c36;
+            color: #ddd;
+        }
+
+        body.dark .result-preview {
+            border-color: #444;
+        }
+
+        @media (max-width: 700px) {
+            .merge-section {
+                padding: 20px 0 35px;
+            }
+
+            .merge-box {
+                padding: 15px;
+                border-radius: 16px;
+            }
+
+            .image-list {
+                grid-template-columns: 1fr;
+            }
+
+            .setting-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+
+            .upload-area {
+                padding: 28px 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="site-header">
+    <div class="container header-inner">
+
+        <a href="../../index.html" class="logo">
+            Znova<span>Fox</span>
+        </a>
+
+        <nav class="desktop-nav">
+            <a href="../../index.html">Home</a>
+            <a href="../ai-tools.html">AI Tools</a>
+            <a href="../online-tools.html">Online Tools</a>
+            <a href="../government.html">Government</a>
+            <a href="../jobs.html">Jobs</a>
+        </nav>
+
+        <div class="header-actions">
+            <button class="theme-btn" id="themeBtn" title="Toggle Theme">🌙</button>
+            <button class="menu-btn" id="menuBtn">☰</button>
+        </div>
+
+    </div>
+
+    <nav class="mobile-nav" id="mobileNav">
+        <a href="../../index.html">Home</a>
+        <a href="../ai-tools.html">AI Tools</a>
+        <a href="../online-tools.html">Online Tools</a>
+        <a href="../government.html">Government</a>
+        <a href="../jobs.html">Jobs</a>
+    </nav>
+</header>
+
+
+<section class="hero">
+    <div class="container">
+
+        <div class="live-status">
+            <span></span> LIVE
+        </div>
+
+        <div class="hero-text">
+            <h1>Merge Images</h1>
+            <p>
+                Combine multiple images into one image quickly and easily.
+            </p>
+        </div>
+
+    </div>
+</section>
+
+
+<section class="merge-section">
+    <div class="container">
+
+        <div class="merge-box">
+
+            <div class="upload-area" id="uploadArea">
+
+                <div class="upload-icon">🧩</div>
+
+                <h3>Select Images</h3>
+
+                <p>
+                    Click here or drag & drop multiple JPG, PNG or WebP images
+                </p>
+
+                <input
+                    type="file"
+                    id="imageInput"
+                    accept="image/jpeg,image/png,image/webp"
+                    multiple
+                >
+
+            </div>
+
+
+            <div class="image-list" id="imageList"></div>
+
+
+            <div class="settings">
+
+                <h3>Merge Settings</h3>
+
+                <div class="setting-grid">
+
+                    <div class="setting-group">
+                        <label>Merge Direction</label>
+
+                        <select id="direction">
+                            <option value="vertical">Vertical ↓</option>
+                            <option value="horizontal">Horizontal →</option>
+                        </select>
+                    </div>
+
+
+                    <div class="setting-group">
+                        <label>Output Format</label>
+
+                        <select id="format">
+                            <option value="image/jpeg">JPG</option>
+                            <option value="image/png">PNG</option>
+                            <option value="image/webp">WebP</option>
+                        </select>
+                    </div>
+
+
+                    <div class="setting-group">
+                        <label>Gap (px)</label>
+
+                        <input
+                            type="number"
+                            id="gap"
+                            value="0"
+                            min="0"
+                            max="500"
+                        >
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="actions">
+
+                <button class="main-btn" id="addMoreBtn">
+                    ➕ Add More Images
+                </button>
+
+                <button class="main-btn" id="mergeBtn">
+                    🧩 Merge Images
+                </button>
+
+                <button class="main-btn clear-btn" id="clearBtn">
+                    🗑️ Clear
+                </button>
+
+            </div>
+
+
+            <div class="status" id="status">
+                Select at least 2 images to merge.
+            </div>
+
+
+            <div class="result" id="result">
+
+                <h3>✅ Merged Image</h3>
+
+                <img
+                    id="resultPreview"
+                    class="result-preview"
+                    alt="Merged Image"
+                >
+
+                <div class="result-info">
+
+                    <span id="resultDimensions">
+                        Dimensions: -
+                    </span>
+
+                    <span id="resultSize">
+                        Size: -
+                    </span>
+
+                    <span id="resultFormat">
+                        Format: -
+                    </span>
+
+                </div>
+
+                <a
+                    href="#"
+                    id="downloadBtn"
+                    class="download-btn"
+                >
+                    📥 Download Merged Image
+                </a>
+
+            </div>
+
+
+            <div class="note">
+                🔒 <strong>Privacy:</strong>
+                Images are processed directly in your browser.
+                Your images are not uploaded to ZnovaFox.
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+
+<footer>
+    <div class="container">
+        <p>© 2026 ZnovaFox. All rights reserved.</p>
+    </div>
+</footer>
+
+
+<script src="../../js/main.js"></script>
+
+<script>
+const uploadArea = document.getElementById("uploadArea");
+const imageInput = document.getElementById("imageInput");
+const imageList = document.getElementById("imageList");
+
+const addMoreBtn = document.getElementById("addMoreBtn");
+const mergeBtn = document.getElementById("mergeBtn");
+const clearBtn = document.getElementById("clearBtn");
+
+const direction = document.getElementById("direction");
+const format = document.getElementById("format");
+const gapInput = document.getElementById("gap");
+
+const statusBox = document.getElementById("status");
+
+const result = document.getElementById("result");
+const resultPreview = document.getElementById("resultPreview");
+const downloadBtn = document.getElementById("downloadBtn");
+
+const resultDimensions = document.getElementById("resultDimensions");
+const resultSize = document.getElementById("resultSize");
+const resultFormat = document.getElementById("resultFormat");
+
+let images = [];
+let downloadURL = null;
+
+
+/* ---------------------------
+   Upload
+--------------------------- */
+
+uploadArea.addEventListener("click", () => {
+    imageInput.click();
+});
+
+addMoreBtn.addEventListener("click", () => {
+    imageInput.click();
+});
+
+
+imageInput.addEventListener("change", (event) => {
+
+    const files = Array.from(event.target.files);
+
+    addFiles(files);
+
+    imageInput.value = "";
+});
+
+
+/* ---------------------------
+   Drag & Drop
+--------------------------- */
+
+uploadArea.addEventListener("dragover", (event) => {
+
+    event.preventDefault();
+
+    uploadArea.classList.add("dragover");
+});
+
+
+uploadArea.addEventListener("dragleave", () => {
+
+    uploadArea.classList.remove("dragover");
+});
+
+
+uploadArea.addEventListener("drop", (event) => {
+
+    event.preventDefault();
+
+    uploadArea.classList.remove("dragover");
+
+    const files = Array.from(event.dataTransfer.files);
+
+    addFiles(files);
+});
+
+
+/* ---------------------------
+   Add Files
+--------------------------- */
+
+function addFiles(files) {
+
+    const validFiles = files.filter(file =>
+        ["image/jpeg", "image/png", "image/webp"].includes(file.type)
+    );
+
+    if (!validFiles.length) {
+
+        statusBox.textContent =
+            "Please select JPG, PNG or WebP images.";
+
+        return;
+    }
+
+
+    validFiles.forEach(file => {
+
+        const objectURL = URL.createObjectURL(file);
+
+        images.push({
+            file: file,
+            url: objectURL
+        });
+
+    });
+
+
+    renderImages();
+
+    result.style.display = "none";
+
+    updateStatus();
+}
+
+
+/* ---------------------------
+   Render Image List
+--------------------------- */
+
+function renderImages() {
+
+    imageList.innerHTML = "";
+
+
+    images.forEach((item, index) => {
+
+        const div = document.createElement("div");
+
+        div.className = "image-item";
+
+
+        div.innerHTML = `
+            <img src="${item.url}" alt="Image">
+
+            <div class="image-info">
+                <strong>${escapeHTML(item.file.name)}</strong>
+                <span>${formatBytes(item.file.size)}</span>
+            </div>
+
+            <div class="item-buttons">
+
+                <button
+                    class="small-btn"
+                    title="Move Up"
+                    ${index === 0 ? "disabled" : ""}
+                    onclick="moveImage(${index}, -1)"
+                >
+                    ↑
+                </button>
+
+                <button
+                    class="small-btn"
+                    title="Move Down"
+                    ${index === images.length - 1 ? "disabled" : ""}
+                    onclick="moveImage(${index}, 1)"
+                >
+                    ↓
+                </button>
+
+                <button
+                    class="small-btn remove-btn"
+                    title="Remove"
+                    onclick="removeImage(${index})"
+                >
+                    ✕
+                </button>
+
+            </div>
+        `;
+
+
+        imageList.appendChild(div);
+
+    });
+}
+
+
+/* ---------------------------
+   Move Image
+--------------------------- */
+
+function moveImage(index, directionMove) {
+
+    const newIndex = index + directionMove;
+
+    if (newIndex < 0 || newIndex >= images.length) {
+        return;
+    }
+
+
+    const temp = images[index];
+
+    images[index] = images[newIndex];
+
+    images[newIndex] = temp;
+
+
+    renderImages();
+
+    result.style.display = "none";
+}
+
+
+/* ---------------------------
+   Remove Image
+--------------------------- */
+
+function removeImage(index) {
+
+    URL.revokeObjectURL(images[index].url);
+
+    images.splice(index, 1);
+
+    renderImages();
+
+    result.style.display = "none";
+
+    updateStatus();
+}
+
+
+/* ---------------------------
+   Clear
+--------------------------- */
+
+clearBtn.addEventListener("click", () => {
+
+    images.forEach(item => {
+        URL.revokeObjectURL(item.url);
+    });
+
+    images = [];
+
+
+    if (downloadURL) {
+
+        URL.revokeObjectURL(downloadURL);
+
+        downloadURL = null;
+    }
+
+
+    imageList.innerHTML = "";
+
+    result.style.display = "none";
+
+    resultPreview.removeAttribute("src");
+
+    downloadBtn.removeAttribute("href");
+
+    statusBox.textContent =
+        "Select at least 2 images to merge.";
+});
+
+
+/* ---------------------------
+   Merge
+--------------------------- */
+
+mergeBtn.addEventListener("click", async () => {
+
+    if (images.length < 2) {
+
+        statusBox.textContent =
+            "Please select at least 2 images.";
+
+        return;
+    }
+
+
+    mergeBtn.disabled = true;
+
+    mergeBtn.textContent = "⏳ Merging...";
+
+    statusBox.textContent =
+        "Preparing images...";
+
+
+    try {
+
+        const loadedImages = [];
+
+
+        for (const item of images) {
+
+            const img = await loadImage(item.url);
+
+            loadedImages.push(img);
+
+        }
+
+
+        const gap = Math.max(
+            0,
+            Number(gapInput.value) || 0
+        );
+
+
+        let canvasWidth = 0;
+        let canvasHeight = 0;
+
+
+        if (direction.value === "vertical") {
+
+            canvasWidth = Math.max(
+                ...loadedImages.map(img => img.naturalWidth)
+            );
+
+
+            canvasHeight =
+                loadedImages.reduce(
+                    (total, img) =>
+                        total + img.naturalHeight,
+                    0
+                )
+                +
+                gap * (loadedImages.length - 1);
+
+        } else {
+
+            canvasWidth =
+                loadedImages.reduce(
+                    (total, img) =>
+                        total + img.naturalWidth,
+                    0
+                )
+                +
+                gap * (loadedImages.length - 1);
+
+
+            canvasHeight = Math.max(
+                ...loadedImages.map(img => img.naturalHeight)
+            );
+
+        }
+
+
+        const canvas = document.createElement("canvas");
+
+        canvas.width = canvasWidth;
+        canvas.height = canvasHeight;
+
+
+        const ctx = canvas.getContext("2d");
+
+
+        /*
+         * White background for JPG
+         */
+
+        if (format.value === "image/jpeg") {
+
+            ctx.fillStyle = "#ffffff";
+
+            ctx.fillRect(
+                0,
+                0,
+                canvasWidth,
+                canvasHeight
+            );
+        }
+
+
+        let currentPosition = 0;
+
+
+        loadedImages.forEach(img => {
+
+            if (direction.value === "vertical") {
+
+                const x =
+                    (canvasWidth - img.naturalWidth) / 2;
+
+                ctx.drawImage(
+                    img,
+                    x,
+                    currentPosition
+                );
+
+                currentPosition +=
+                    img.naturalHeight + gap;
+
+            } else {
+
+                const y =
+                    (canvasHeight - img.naturalHeight) / 2;
+
+                ctx.drawImage(
+                    img,
+                    currentPosition,
+                    y
+                );
+
+                currentPosition +=
+                    img.naturalWidth + gap;
+            }
+
+        });
+
+
+        statusBox.textContent =
+            "Creating final image...";
+
+
+        const blob = await canvasToBlob(
+            canvas,
+            format.value
+        );
+
+
+        if (!blob) {
+
+            throw new Error(
+                "Could not create output image."
+            );
+        }
+
+
+        if (downloadURL) {
+
+            URL.revokeObjectURL(downloadURL);
+        }
+
+
+        downloadURL =
+            URL.createObjectURL(blob);
+
+
+        resultPreview.src =
+            downloadURL;
+
+
+        resultDimensions.textContent =
+            `Dimensions: ${canvas.width} × ${canvas.height}px`;
+
+
+        resultSize.textContent =
+            `Size: ${formatBytes(blob.size)}`;
+
+
+        resultFormat.textContent =
+            `Format: ${getFormatName(format.value)}`;
+
+
+        const extension =
+            getExtension(format.value);
+
+
+        downloadBtn.href =
+            downloadURL;
+
+
+        downloadBtn.download =
+            `znovafox-merged-image.${extension}`;
+
+
+        result.style.display =
+            "block";
+
+
+        statusBox.textContent =
+            "✅ Images merged successfully.";
+
+        result.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+
+    } catch (error) {
+
+        console.error(error);
+
+        statusBox.textContent =
+            "❌ Could not merge images. Please try different image files.";
+
+    } finally {
+
+        mergeBtn.disabled = false;
+
+        mergeBtn.textContent =
+            "🧩 Merge Images";
+    }
+
+});
+
+
+/* ---------------------------
+   Helpers
+--------------------------- */
+
+function loadImage(url) {
+
+    return new Promise((resolve, reject) => {
+
+        const img = new Image();
+
+        img.onload = () => resolve(img);
+
+        img.onerror = reject;
+
+        img.src = url;
+
+    });
+}
+
+
+function canvasToBlob(canvas, type) {
+
+    return new Promise(resolve => {
+
+        canvas.toBlob(
+            blob => resolve(blob),
+            type,
+            0.92
+        );
+
+    });
+}
+
+
+function formatBytes(bytes) {
+
+    if (bytes === 0) {
+        return "0 Bytes";
+    }
+
+
+    const units = [
+        "Bytes",
+        "KB",
+        "MB",
+        "GB"
+    ];
+
+
+    const i =
+        Math.floor(
+            Math.log(bytes) /
+            Math.log(1024)
+        );
+
+
+    return (
+        parseFloat(
+            (bytes / Math.pow(1024, i))
+                .toFixed(2)
+        )
+        +
+        " "
+        +
+        units[i]
+    );
+}
+
+
+function getFormatName(type) {
+
+    if (type === "image/png") {
+        return "PNG";
+    }
+
+    if (type === "image/webp") {
+        return "WebP";
+    }
+
+    return "JPG";
+}
+
+
+function getExtension(type) {
+
+    if (type === "image/png") {
+        return "png";
+    }
+
+    if (type === "image/webp") {
+        return "webp";
+    }
+
+    return "jpg";
+}
+
+
+function updateStatus() {
+
+    if (images.length === 0) {
+
+        statusBox.textContent =
+            "Select at least 2 images to merge.";
+
+    } else if (images.length === 1) {
+
+        statusBox.textContent =
+            "1 image selected. Add one more image.";
+
+    } else {
+
+        statusBox.textContent =
+            `${images.length} images ready to merge.`;
+    }
+}
+
+
+function escapeHTML(text) {
+
+    return text
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+}
+
+
+/* Make functions available to buttons */
+
+window.moveImage = moveImage;
+window.removeImage = removeImage;
+
+</script>
+
+</body>
+</html>
