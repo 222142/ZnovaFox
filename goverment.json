@@ -1,0 +1,44 @@
+[
+    {
+        "name": "Aadhaar",
+        "icon": "🪪",
+        "description": "Aadhaar related services",
+        "category": "identity",
+        "url": "https://uidai.gov.in/"
+    },
+    {
+        "name": "DigiLocker",
+        "icon": "📄",
+        "description": "Digital documents and certificates",
+        "category": "documents",
+        "url": "https://www.digilocker.gov.in/"
+    },
+    {
+        "name": "Income Tax",
+        "icon": "💰",
+        "description": "Income Tax e-Filing services",
+        "category": "finance",
+        "url": "https://www.incometax.gov.in/"
+    },
+    {
+        "name": "Passport",
+        "icon": "🛂",
+        "description": "Passport services",
+        "category": "documents",
+        "url": "https://www.passportindia.gov.in/"
+    },
+    {
+        "name": "EPFO",
+        "icon": "🏦",
+        "description": "Provident Fund services",
+        "category": "employment",
+        "url": "https://www.epfindia.gov.in/"
+    },
+    {
+        "name": "GST",
+        "icon": "📊",
+        "description": "GST related services",
+        "category": "finance",
+        "url": "https://www.gst.gov.in/"
+    }
+]
