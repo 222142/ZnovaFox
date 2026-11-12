@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Sitemap - ZnovaFox</title>
+
+    <link
+        rel="stylesheet"
+        href="../css/main.css"
+    >
+
+    <style>
+
+        /* =========================================
+           SITEMAP PAGE
+        ========================================= */
+
+        .sitemap-page {
+            padding: 55px 0 75px;
+        }
+
+        .sitemap-header {
+            max-width: 700px;
+            margin: 0 auto 40px;
+            text-align: center;
+        }
+
+        .sitemap-header h1 {
+            margin: 10px 0;
+            font-size: clamp(32px, 5vw, 48px);
+        }
+
+        .sitemap-header p {
+            color: #666;
+            line-height: 1.7;
+        }
+
+
+        /* =========================================
+           SITEMAP GRID
+        ========================================= */
+
+        .sitemap-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 20px;
+        }
+
+
+        /* =========================================
+           SITEMAP CARD
+        ========================================= */
+
+        .sitemap-card {
+
+            display: flex;
+
+            flex-direction: column;
+
+            padding: 24px;
+
+            background: #ffffff;
+
+            border: 1px solid #e2e8f0;
+
+            border-radius: 18px;
+
+            text-decoration: none;
+
+            color: #151515;
+
+            transition:
+                transform .25s ease,
+                background .25s ease,
+                border-color .25s ease,
+                box-shadow .25s ease;
+        }
+
+
+        /* =========================================
+           LIGHT MODE HOVER
+        ========================================= */
+
+        .sitemap-card:hover {
+
+            transform: translateY(-6px);
+
+            background: #f0fff8;
+
+            border-color: #20b978;
+
+            box-shadow:
+                0 12px 28px
+                rgba(32, 185, 120, .18);
+        }
+
+
+        .sitemap-card:active {
+
+            transform: scale(.97);
+        }
+
+
+        /* =========================================
+           ICON
+        ========================================= */
+
+        .sitemap-icon {
+
+            font-size: 34px;
+
+            margin-bottom: 13px;
+        }
+
+
+        /* =========================================
+           TITLE
+        ========================================= */
+
+        .sitemap-card h3 {
+
+            margin: 0 0 8px;
+
+            font-size: 18px;
+        }
+
+
+        /* =========================================
+           DESCRIPTION
+        ========================================= */
+
+        .sitemap-card p {
+
+            margin: 0;
+
+            color: #777;
+
+            font-size: 14px;
+
+            line-height: 1.6;
+        }
+
+
+        /* =========================================
+           DARK MODE
+        ========================================= */
+
+        body.dark .sitemap-header p {
+
+            color: #aaaaaa;
+        }
+
+
+        body.dark .sitemap-card {
+
+            background: #191c22;
+
+            color: #ffffff;
+
+            border-color: #30343c;
+        }
+
+
+        body.dark .sitemap-card p {
+
+            color: #aaaaaa;
+        }
+
+
+        /* =========================================
+           DARK MODE HOVER
+        ========================================= */
+
+        body.dark .sitemap-card:hover {
+
+            background: #10251b;
+
+            border-color: #22c55e;
+
+            box-shadow:
+
+                0 0 0 1px
+                rgba(34, 197, 94, .25),
+
+                0 12px 35px
+                rgba(34, 197, 94, .20);
+
+            transform: translateY(-6px);
+        }
+
+
+        /* =========================================
+           DARK CLICK
+        ========================================= */
+
+        body.dark .sitemap-card:active {
+
+            background: #123d24;
+
+            border-color: #39ff7a;
+
+            box-shadow:
+
+                0 0 0 2px
+                rgba(34, 197, 94, .30),
+
+                0 0 30px
+                rgba(34, 197, 94, .35);
+
+            transform: scale(.97);
+        }
+
+
+        /* =========================================
+           MOBILE
+        ========================================= */
+
+        @media (max-width: 900px) {
+
+            .sitemap-grid {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+        }
+
+
+        @media (max-width: 600px) {
+
+            .sitemap-page {
+
+                padding: 40px 0 55px;
+            }
+
+            .sitemap-grid {
+
+                grid-template-columns: 1fr;
+
+                gap: 15px;
+            }
+
+            .sitemap-card {
+
+                padding: 20px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================================
+         HEADER
+    ========================================= -->
+
+    <header class="site-header">
+
+        <div class="container header-inner">
+
+
+            <!-- LOGO -->
+
+            <a
+                href="../index.html"
+                class="logo"
+            >
+
+                🦊
+                <span>Znova</span>Fox
+
+            </a>
+
+
+            <!-- DESKTOP NAV -->
+
+            <nav class="desktop-nav">
+
+                <a href="../index.html">
+                    Home
+                </a>
+
+                <a href="ai-tools.html">
+                    AI Tools
+                </a>
+
+                <a href="online-tools.html">
+                    Tools
+                </a>
+
+                <a href="government.html">
+                    Government
+                </a>
+
+                <a href="jobs.html">
+                    Jobs
+                </a>
+
+                <a href="education.html">
+                    Education
+                </a>
+
+                <a href="shopping.html">
+                    Shopping
+                </a>
+
+            </nav>
+
+
+            <!-- HEADER ACTIONS -->
+
+            <div class="header-actions">
+
+                <button
+                    class="theme-btn"
+                    id="themeBtn"
+                    aria-label="Change theme"
+                >
+                    🌙
+                </button>
+
+
+                <button
+                    class="menu-btn"
+                    id="menuBtn"
+                    aria-label="Open menu"
+                >
+                    ☰
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- MOBILE NAV -->
+
+        <nav
+            class="mobile-nav"
+            id="mobileNav"
+        >
+
+            <a href="../index.html">
+                🏠 Home
+            </a>
+
+            <a href="ai-tools.html">
+                🤖 AI Tools
+            </a>
+
+            <a href="online-tools.html">
+                🛠️ Online Tools
+            </a>
+
+            <a href="government.html">
+                🇮🇳 Government
+            </a>
+
+            <a href="jobs.html">
+                💼 Jobs
+            </a>
+
+            <a href="education.html">
+                📚 Education
+            </a>
+
+            <a href="shopping.html">
+                🛒 Shopping
+            </a>
+
+            <a href="businesses.html">
+                🔗 Businesses
+            </a>
+
+            <a href="games.html">
+                🎮 Games
+            </a>
+
+        </nav>
+
+    </header>
+
+
+
+    <!-- =========================================
+         SITEMAP
+    ========================================= -->
+
+    <main>
+
+        <section class="sitemap-page">
+
+            <div class="container">
+
+
+                <!-- HEADER -->
+
+                <div class="sitemap-header">
+
+                    <span class="section-label">
+                        🗺️ Sitemap
+                    </span>
+
+                    <h1>
+                        Explore ZnovaFox
+                    </h1>
+
+                    <p>
+                        Find all important pages and
+                        sections of ZnovaFox in one place.
+                    </p>
+
+                </div>
+
+
+
+                <!-- =================================
+                     SITEMAP GRID
+                ================================= -->
+
+                <div class="sitemap-grid">
+
+
+                    <!-- HOME -->
+
+                    <a
+                        href="../index.html"
+                        class="sitemap-card"
+                    >
+
+                        <div class="sitemap-icon">
+                            🏠
+                        </div>
+
+                        <h3>
+                            Home
+                        </h3>
+
+                        <p>
+                            Visit the ZnovaFox homepage
+                            and explore all major sections.
+                        </p>
+
+                    </a>
+
+
+
+                    <!-- AI TOOLS -->
+
+                    <a
+                        href="ai-tools.html"
+                        class="sitemap-card"
+                    >
+
+                        <div class="sitemap-icon">
+                            🤖
+                        </div>
+
+                        <h3>
+                            AI Tools
+                        </h3>
+
+                        <p>
+                            Explore useful AI tools and
+                            AI-powered services.
+                        </p>
+
+                    </a>
+
+
+
+                    <!-- ONLINE TOOLS -->
+
+                    <a
+                        href="online-tools.html"
+                        class="sitemap-card"
+                    >
+
+                        <div class="sitemap-icon">
+                            🛠️
+                        </div>
+
+                        <h3>
+                            Online Tools
+                        </h3>
+
+                        <p>
+                            Useful everyday online tools
+                            and utilities.
+                        </p>
+
+                    </a>
+
+
+
+                    <!-- GOVERNMENT -->
+
+                    <a
+                        href="government.html"
+                        class="sitemap-card"
+                    >
+
+                        <div class="sitemap-icon">
+                            🇮🇳
+                        </div>
+
+                        <h3>
+                            Government
+                        </h3>
+
+                        <p>
+                            Government services, official
+                            links and useful information.
+                        </p>
+
+                    </a>
+
+
+
+                    <!-- JOBS -->
+
+                    <a
+                        href="jobs.html"
+                        class="sitemap-card"
+                    >
+
+                        <div class="sitemap-icon">
+                            💼
+                        </div>
+
+                        <h3>
+                            Jobs
+                        </h3>
+
+                        <p>
+                            Jobs, recruitment information,
+                            results and updates.
+                        </p>
+
+                    </a>
+
+
+
+                    <!-- EDUCATION -->
+
+                    <a
+                        href="education.html"
+                        class="sitemap-card"
+                    >
+
+                        <div class="sitemap-icon">
+                            📚
+                        </div>
+
+                        <h3>
+                            Education
+                        </h3>
+
+                        <p>
+                            Study resources, education
+                            information and useful links.
+                        </p>
+
+                    </a>
+
+
+
+                    <!-- SHOPPING -->
+
+                    <a
+                        href="shopping.html"
+                        class="sitemap-card"
+                    >
+
+                        <div class="sitemap-icon">
+                            🛒
+                        </div>
+
+                        <h3>
+                            Shopping
+                        </h3>
+
+                        <p>
+                            Discover products, deals and
+                            shopping links.
+                        </p>
+
+                    </a>
+
+
+
+                    <!-- BUSINESSES -->
+
+                    <a
+                        href="businesses.html"
+                        class="sitemap-card"
+                    >
+
+                        <div class="sitemap-icon">
+                            🔗
+                        </div>
+
+                        <h3>
+                            Businesses
+                        </h3>
+
+                        <p>
+                            Useful business services,
+                            websites and links.
+                        </p>
+
+                    </a>
+
+
+
+                    <!-- GAMES -->
+
+                    <a
+                        href="games.html"
+                        class="sitemap-card"
+                    >
+
+                        <div class="sitemap-icon">
+                            🎮
+                        </div>
+
+                        <h3>
+                            Games
+                        </h3>
+
+                        <p>
+                            Simple and entertaining games
+                            available on ZnovaFox.
+                        </p>
+
+                    </a>
+
+
+
+                    <!-- LATEST UPDATES -->
+
+                    <a
+                        href="updated.html"
+                        class="sitemap-card"
+                    >
+
+                        <div class="sitemap-icon">
+                            📢
+                        </div>
+
+                        <h3>
+                            Latest Updates
+                        </h3>
+
+                        <p>
+                            Latest government, jobs,
+                            education and AI updates.
+                        </p>
+
+                    </a>
+
+
+
+                    <!-- DISCLAIMER -->
+
+                    <a
+                        href="disclaimer.html"
+                        class="sitemap-card"
+                    >
+
+                        <div class="sitemap-icon">
+                            ⚠️
+                        </div>
+
+                        <h3>
+                            Disclaimer
+                        </h3>
+
+                        <p>
+                            Important information about
+                            ZnovaFox content and links.
+                        </p>
+
+                    </a>
+
+
+
+                    <!-- SITEMAP -->
+
+                    <a
+                        href="sitemap.html"
+                        class="sitemap-card"
+                    >
+
+                        <div class="sitemap-icon">
+                            🗺️
+                        </div>
+
+                        <h3>
+                            Sitemap
+                        </h3>
+
+                        <p>
+                            View all important ZnovaFox
+                            pages in one place.
+                        </p>
+
+                    </a>
+
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+
+    <!-- =========================================
+         FOOTER
+    ========================================= -->
+
+    <footer class="znova-footer">
+
+        <div class="container">
+
+
+            <div class="footer-about">
+
+                <a
+                    href="../index.html"
+                    class="footer-logo"
+                >
+
+                    <span class="footer-logo-icon">
+                        🦊
+                    </span>
+
+                    ZnovaFox
+
+                </a>
+
+
+                <p class="footer-description">
+
+                    ZnovaFox is an all-in-one platform
+                    for useful tools, AI tools, government
+                    services, jobs, education, shopping
+                    and more.
+
+                </p>
+
+            </div>
+
+
+            <div class="footer-divider"></div>
+
+
+            <div class="footer-bottom">
+
+                <p>
+                    © 2026
+                    <strong>ZnovaFox</strong>.
+                    All Rights Reserved.
+                </p>
+
+
+                <div class="footer-bottom-links">
+
+                    <a href="../index.html">
+                        Home
+                    </a>
+
+                    <a href="disclaimer.html">
+                        Disclaimer
+                    </a>
+
+                    <a href="sitemap.html">
+                        Sitemap
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </footer>
+
+
+
+    <!-- =========================================
+         JAVASCRIPT
+    ========================================= -->
+
+    <script>
+
+        /* =====================================
+           THEME
+        ===================================== */
+
+        const themeBtn =
+            document.getElementById("themeBtn");
+
+        const body =
+            document.body;
+
+
+        /* LOAD SAVED THEME */
+
+        const savedTheme =
+            localStorage.getItem("theme");
+
+
+        if (savedTheme === "dark") {
+
+            body.classList.add("dark");
+
+            themeBtn.textContent = "☀️";
+
+        }
+
+
+        /* THEME BUTTON */
+
+        themeBtn.addEventListener(
+            "click",
+            function () {
+
+                body.classList.toggle("dark");
+
+
+                if (
+                    body.classList.contains("dark")
+                ) {
+
+                    themeBtn.textContent = "☀️";
+
+                    localStorage.setItem(
+                        "theme",
+                        "dark"
+                    );
+
+                } else {
+
+                    themeBtn.textContent = "🌙";
+
+                    localStorage.setItem(
+                        "theme",
+                        "light"
+                    );
+
+                }
+
+            }
+        );
+
+
+
+        /* =====================================
+           MOBILE MENU
+        ===================================== */
+
+        const menuBtn =
+            document.getElementById("menuBtn");
+
+        const mobileNav =
+            document.getElementById("mobileNav");
+
+
+        menuBtn.addEventListener(
+            "click",
+            function () {
+
+                mobileNav.classList.toggle(
+                    "active"
+                );
+
+            }
+        );
+
+    </script>
+
+
+</body>
+
+</html>
